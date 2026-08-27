@@ -198,34 +198,34 @@
                         <i :data-lucide="theme === 'dark' ? 'sun' : 'moon'" class="w-4 h-4 text-gold-750 dark:text-gold-500"></i>
                     </button>
                 </div>
-                <p class="text-[9px] text-center text-stone-400 dark:text-stone-600 tracking-wider">Kocekku Premium &bull; v2.3</p>
+                <p class="text-[9px] text-center text-stone-400 dark:text-stone-600 tracking-wider">Kocekku Premium &bull; v2.5</p>
             </div>
         </aside>
 
         <!-- BOTTOM NAVIGATION (Mobile Only) -->
-        <nav class="lg:hidden fixed bottom-0 left-0 right-0 z-50 glass-panel border-t px-3 py-2.5 flex items-center justify-around border-stone-200 dark:border-stone-900/50">
+        <nav class="lg:hidden fixed bottom-0 left-0 right-0 z-50 glass-panel border-t px-3 py-2 flex items-center justify-around border-stone-200 dark:border-stone-900/50">
             <template x-for="tab in navTabs" :key="tab.id">
                 <button 
                     @click="activeTab = tab.id; updateIcons()"
-                    class="flex flex-col items-center justify-center py-1 px-2 rounded-xl transition-all cursor-pointer"
+                    class="flex flex-col items-center justify-center py-1 px-1 rounded-xl transition-all cursor-pointer"
                     :class="activeTab === tab.id ? 'text-gold-700 dark:text-gold-500' : 'text-stone-500 dark:text-stone-400'"
                 >
-                    <i :data-lucide="tab.icon" class="w-5.5 h-5.5 mb-0.5"></i>
+                    <i :data-lucide="tab.icon" class="w-5 h-5 mb-0.5"></i>
                     <span class="text-[8px] font-extrabold uppercase tracking-wider" x-text="tab.name"></span>
                 </button>
             </template>
             <!-- Mobile Mode Switch -->
-            <button @click="toggleTheme()" class="flex flex-col items-center justify-center py-1 px-2 rounded-xl text-stone-500 dark:text-stone-400 cursor-pointer">
-                <i :data-lucide="theme === 'dark' ? 'sun' : 'moon'" class="w-5.5 h-5.5 mb-0.5 text-gold-750 dark:text-gold-500"></i>
+            <button @click="toggleTheme()" class="flex flex-col items-center justify-center py-1 px-1 rounded-xl text-stone-500 dark:text-stone-400 cursor-pointer">
+                <i :data-lucide="theme === 'dark' ? 'sun' : 'moon'" class="w-5 h-5 mb-0.5 text-gold-750 dark:text-gold-500"></i>
                 <span class="text-[8px] font-extrabold uppercase tracking-wider">Mode</span>
             </button>
         </nav>
 
         <!-- MAIN PANEL CONTENT -->
-        <main class="flex-1 p-5 md:p-8 lg:p-10 overflow-y-auto max-h-screen pb-24 lg:pb-10 custom-scrollbar">
+        <main class="flex-1 p-4 sm:p-6 md:p-8 lg:p-10 overflow-y-auto max-h-screen pb-24 lg:pb-10 custom-scrollbar">
             
             <!-- MOBILE HEADER (Mobile Only) -->
-            <header class="lg:hidden flex items-center justify-between mb-8 pb-4 border-b border-stone-200 dark:border-stone-900">
+            <header class="lg:hidden flex items-center justify-between mb-6 pb-4 border-b border-stone-200 dark:border-stone-900">
                 <div class="flex items-center space-x-3.5">
                     <svg viewBox="0 0 100 100" class="w-9 h-9 stroke-gold-500 fill-none" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
                         <path d="M28,22 L28,78" />
@@ -240,7 +240,7 @@
                     </div>
                 </div>
                 <div class="flex items-center space-x-3">
-                    <div class="w-9 h-9 rounded-full bg-stone-100 dark:bg-stone-900 flex items-center justify-center text-xs font-bold text-gold-700 dark:text-gold-500 border border-stone-200 dark:border-stone-850">
+                    <div class="w-8 h-8 rounded-full bg-stone-100 dark:bg-stone-900 flex items-center justify-center text-xs font-bold text-gold-700 dark:text-gold-500 border border-stone-200 dark:border-stone-850">
                         <span x-text="members[0] ? members[0].initials : 'K'"></span>
                     </div>
                 </div>
@@ -249,10 +249,10 @@
             <!-- TAB CONTAINER WITH WIDTH LIMITATION -->
             <div class="max-w-7xl mx-auto w-full pt-1">
                 <!-- ================== 1. DASHBOARD TAB ================== -->
-                <div x-show="activeTab === 'dashboard'" x-transition class="space-y-8 lg:space-y-10">
+                <div x-show="activeTab === 'dashboard'" x-transition class="space-y-6 md:space-y-8 lg:space-y-10">
                     
                     <!-- HERO BANNER FOR NET WORTH - Left gold trim & watermark background -->
-                    <div class="glass-panel p-6 md:p-8 lg:p-10 rounded-3xl relative overflow-hidden flex flex-col md:flex-row md:items-center md:justify-between gap-6 border-l-4 border-l-gold-500 border-stone-200/80 dark:border-l-gold-500 dark:border-gold-500/15">
+                    <div class="glass-panel p-5 sm:p-6 md:p-8 lg:p-10 rounded-3xl relative overflow-hidden flex flex-col md:flex-row md:items-center md:justify-between gap-5 border-l-4 border-l-gold-500 border-stone-200/80 dark:border-l-gold-500 dark:border-gold-500/15">
                         <!-- Glow effect -->
                         <div class="absolute -right-20 -top-20 w-72 h-72 bg-gold-500/10 rounded-full blur-[80px]"></div>
                         <div class="absolute -left-10 -bottom-10 w-48 h-48 bg-teal-500/5 rounded-full blur-[60px]"></div>
@@ -270,60 +270,104 @@
 
                         <div class="space-y-2.5 relative z-10">
                             <p class="text-[10px] lg:text-xs uppercase font-extrabold tracking-[0.25em] text-stone-500 dark:text-gold-500/90">Kekayaan Bersih Keluarga</p>
-                            <h2 class="font-sans text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-stone-900 dark:text-stone-100 leading-none" x-text="formatRupiah(calculateNetWorth())"></h2>
+                            <h2 class="font-sans text-3xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-stone-900 dark:text-stone-100 leading-none" x-text="formatRupiah(calculateNetWorth())"></h2>
                             <p class="text-xs text-stone-500 dark:text-stone-400 font-medium">
                                 Akumulasi aset likuid & investasi dikurangi beban kewajiban utang.
                             </p>
+                            
+                            <!-- Start from Zero (Reset) button next to text -->
+                            <button 
+                                @click="resetToZero()"
+                                class="px-3 py-1.5 border border-gold-500/25 hover:border-gold-500/50 hover:bg-gold-500/5 text-gold-750 dark:text-gold-500 text-[9px] font-bold uppercase tracking-widest rounded-xl transition cursor-pointer flex items-center space-x-1 mt-1.5 cursor-pointer"
+                            >
+                                <i data-lucide="refresh-cw" class="w-3 h-3"></i>
+                                <span>Mulai dari Nol (Reset)</span>
+                            </button>
                         </div>
                         
-                        <!-- FEATURE 1: HISTORICAL PERIOD NAVIGATION -->
-                        <div class="flex flex-col items-start md:items-end gap-3.5 relative z-10 shrink-0">
-                            <div class="flex items-center space-x-3 bg-stone-100 dark:bg-stone-900/40 p-2 rounded-2xl border border-stone-250 dark:border-stone-850">
-                                <button @click="navigatePeriod(-1)" class="w-8 h-8 rounded-lg flex items-center justify-center hover:bg-stone-200 dark:hover:bg-stone-850 text-gold-700 dark:text-gold-500 cursor-pointer" title="Bulan Sebelumnya">
-                                    <i data-lucide="chevron-left" class="w-4 h-4"></i>
+                        <!-- FEATURE 1: PERIOD NAVIGATION ENGINE WITH DROPDOWNS -->
+                        <div class="flex flex-col items-start md:items-end gap-3 relative z-10 shrink-0">
+                            <div class="flex items-center space-x-1.5 bg-stone-100 dark:bg-stone-900/40 p-1.5 rounded-2xl border border-stone-250 dark:border-stone-850">
+                                <button @click="navigatePeriod(-1)" class="w-7 h-7 rounded-lg flex items-center justify-center hover:bg-stone-200 dark:hover:bg-stone-850 text-gold-700 dark:text-gold-500 cursor-pointer" title="Bulan Sebelumnya">
+                                    <i data-lucide="chevron-left" class="w-3.5 h-3.5"></i>
                                 </button>
-                                <span class="text-xs font-extrabold uppercase tracking-widest text-stone-800 dark:text-stone-300 text-center min-w-[100px]" x-text="activeMonthLabel"></span>
-                                <button @click="navigatePeriod(1)" class="w-8 h-8 rounded-lg flex items-center justify-center hover:bg-stone-200 dark:hover:bg-stone-850 text-gold-700 dark:text-gold-500 cursor-pointer" title="Bulan Berikutnya">
-                                    <i data-lucide="chevron-right" class="w-4 h-4"></i>
+                                
+                                <div class="flex items-center space-x-0.5">
+                                    <!-- Month Dropdown Selector -->
+                                    <select 
+                                        :value="selectedMonth" 
+                                        @change="selectedMonth = parseInt($event.target.value); navigatePeriod(0)"
+                                        class="bg-transparent text-[10px] font-extrabold uppercase tracking-wider text-stone-850 dark:text-stone-300 outline-none border-none cursor-pointer py-1 pr-4 focus:ring-0"
+                                    >
+                                        <option class="dark:bg-stone-900" value="0">Jan</option>
+                                        <option class="dark:bg-stone-900" value="1">Feb</option>
+                                        <option class="dark:bg-stone-900" value="2">Mar</option>
+                                        <option class="dark:bg-stone-900" value="3">Apr</option>
+                                        <option class="dark:bg-stone-900" value="4">Mei</option>
+                                        <option class="dark:bg-stone-900" value="5">Jun</option>
+                                        <option class="dark:bg-stone-900" value="6">Jul</option>
+                                        <option class="dark:bg-stone-900" value="7">Agu</option>
+                                        <option class="dark:bg-stone-900" value="8">Sep</option>
+                                        <option class="dark:bg-stone-900" value="9">Okt</option>
+                                        <option class="dark:bg-stone-900" value="10">Nov</option>
+                                        <option class="dark:bg-stone-900" value="11">Des</option>
+                                    </select>
+                                    
+                                    <!-- Year Dropdown Selector -->
+                                    <select 
+                                        :value="selectedYear" 
+                                        @change="selectedYear = parseInt($event.target.value); navigatePeriod(0)"
+                                        class="bg-transparent text-[10px] font-extrabold uppercase tracking-wider text-stone-850 dark:text-stone-300 outline-none border-none cursor-pointer py-1 pr-4 focus:ring-0"
+                                    >
+                                        <option class="dark:bg-stone-900" value="2024">2024</option>
+                                        <option class="dark:bg-stone-900" value="2025">2025</option>
+                                        <option class="dark:bg-stone-900" value="2026">2026</option>
+                                        <option class="dark:bg-stone-900" value="2027">2027</option>
+                                        <option class="dark:bg-stone-900" value="2028">2028</option>
+                                    </select>
+                                </div>
+
+                                <button @click="navigatePeriod(1)" class="w-7 h-7 rounded-lg flex items-center justify-center hover:bg-stone-200 dark:hover:bg-stone-850 text-gold-700 dark:text-gold-500 cursor-pointer" title="Bulan Berikutnya">
+                                    <i data-lucide="chevron-right" class="w-3.5 h-3.5"></i>
                                 </button>
                             </div>
-                            <div class="flex items-center space-x-2 px-4 py-2 rounded-xl bg-gold-500/10 dark:bg-gold-500/10 border border-gold-500/25 ml-auto">
-                                <div class="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse"></div>
-                                <span class="text-xs font-bold text-gold-700 dark:text-gold-500 tracking-wider">Finansial Terkendali</span>
+                            <div class="flex items-center space-x-1.5 px-3 py-1.5 rounded-xl bg-gold-500/10 dark:bg-gold-500/10 border border-gold-500/20 ml-auto">
+                                <div class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></div>
+                                <span class="text-[10px] font-bold text-gold-700 dark:text-gold-500 tracking-wider">Finansial Terkendali</span>
                             </div>
                         </div>
                     </div>
 
                     <!-- FEATURE 2: SMART COMMAND BAR (AI PENCATATAN KILAT) - Left gold accent border -->
-                    <div class="glass-panel p-6 rounded-3xl space-y-4 relative overflow-hidden bg-[#FAF9F5] border-l-4 border-l-gold-500 border-stone-200/80 dark:bg-stone-900/20 dark:border-gold-500/20">
+                    <div class="glass-panel p-5 rounded-3xl space-y-3.5 relative overflow-hidden bg-[#FAF9F5] border-l-4 border-l-gold-500 border-stone-200/80 dark:bg-stone-900/20 dark:border-gold-500/20">
                         <div class="absolute -right-16 -bottom-16 w-36 h-36 bg-gold-500/5 rounded-full blur-2xl"></div>
-                        <div class="flex items-center space-x-2.5 pb-2.5 border-b border-stone-200 dark:border-stone-900/60">
-                            <div class="w-7.5 h-7.5 rounded-lg bg-gold-500/10 flex items-center justify-center text-gold-700 dark:text-gold-500">
+                        <div class="flex items-center space-x-2 pb-2 border-b border-stone-200 dark:border-stone-900/60">
+                            <div class="w-7 h-7 rounded-lg bg-gold-500/10 flex items-center justify-center text-gold-700 dark:text-gold-500">
                                 <i data-lucide="command" class="w-4 h-4"></i>
                             </div>
                             <div>
-                                <h3 class="font-serif text-lg font-bold text-stone-900 dark:text-gold-500 leading-none">Asisten Cepat (Smart Input)</h3>
-                                <p class="text-[10px] text-stone-500 mt-1">Ketik kalimat alami untuk mencatat transaksi secara otomatis.</p>
+                                <h3 class="font-serif text-base font-bold text-stone-900 dark:text-gold-500 leading-none">Asisten Cepat (Smart Input)</h3>
+                                <p class="text-[9px] text-stone-500 mt-1">Ketik kalimat alami untuk mencatat transaksi secara otomatis.</p>
                             </div>
                         </div>
                         
-                        <div class="relative space-y-3.5 pt-1.5">
+                        <div class="relative space-y-3 pt-0.5">
                             <div class="relative flex items-center">
                                 <input 
                                     type="text" 
                                     x-model="quickInputText"
-                                    placeholder="Ketik cepat transaksi... (Contoh: 'kopi 25rb gopay sari' atau 'gaji danu 12jt bca')"
-                                    class="w-full pl-11 pr-24 py-3.5 text-sm rounded-2xl bg-white border border-stone-255 focus:border-gold-600 outline-none text-stone-900 font-semibold transition-all duration-300 dark:bg-stone-900/50 dark:border-stone-850 dark:text-stone-100 dark:focus:border-gold-500/50 shadow-inner placeholder:text-stone-400 placeholder:font-normal"
+                                    placeholder="Contoh: 'kopi 25rb gopay sari' atau 'gaji danu 12jt bca'"
+                                    class="w-full pl-9 pr-16 py-2.5 text-xs rounded-xl bg-white border border-stone-255 focus:border-gold-600 outline-none text-stone-900 font-semibold transition-all duration-300 dark:bg-stone-900/50 dark:border-stone-855 dark:text-stone-100 dark:focus:border-gold-500/50 shadow-inner placeholder:text-stone-400 placeholder:font-normal"
                                 >
-                                <i data-lucide="sparkles" class="w-5 h-5 text-gold-550 absolute left-4"></i>
+                                <i data-lucide="sparkles" class="w-4 h-4 text-gold-550 absolute left-3"></i>
                                 
-                                <div class="absolute right-2.5 flex items-center space-x-2">
+                                <div class="absolute right-2 flex items-center space-x-1">
                                     <button 
                                         x-show="quickInputText" 
                                         @click="clearQuickInput()"
-                                        class="w-8 h-8 rounded-lg flex items-center justify-center hover:bg-stone-100 dark:hover:bg-stone-800 text-stone-500 hover:text-stone-855 cursor-pointer"
+                                        class="w-7 h-7 rounded-lg flex items-center justify-center hover:bg-stone-100 dark:hover:bg-stone-800 text-stone-500 hover:text-stone-855 cursor-pointer"
                                     >
-                                        <i data-lucide="x" class="w-4 h-4"></i>
+                                        <i data-lucide="x" class="w-3.5 h-3.5"></i>
                                     </button>
                                 </div>
                             </div>
@@ -332,45 +376,45 @@
                             <div 
                                 x-show="quickParseResult && quickParseResult.amount > 0" 
                                 x-transition
-                                class="p-4.5 rounded-2xl bg-gold-500/5 border border-gold-500/20 dark:bg-gold-500/10 flex flex-col md:flex-row md:items-center md:justify-between gap-4"
+                                class="p-3.5 rounded-xl bg-gold-500/5 border border-gold-500/20 dark:bg-gold-500/10 flex flex-col md:flex-row md:items-center md:justify-between gap-3"
                             >
-                                <div class="space-y-2.5 text-xs">
+                                <div class="space-y-2 text-[11px]">
                                     <div class="flex items-center space-x-2">
-                                        <span class="px-2.5 py-0.5 rounded-full text-[9px] font-extrabold uppercase"
-                                            :class="quickParseResult.type === 'income' ? 'bg-emerald-500/15 text-emerald-700 dark:text-emerald-555' : 'bg-rose-500/15 text-rose-700 dark:text-rose-555'"
+                                        <span class="px-2 py-0.5 rounded-full text-[8px] font-extrabold uppercase"
+                                            :class="quickParseResult.type === 'income' ? 'bg-emerald-500/15 text-emerald-700 dark:text-emerald-500' : 'bg-rose-500/15 text-rose-700 dark:text-rose-555'"
                                             x-text="quickParseResult.type === 'income' ? 'Pemasukan' : 'Pengeluaran'"
                                         ></span>
-                                        <span class="font-bold text-stone-850 dark:text-stone-200 text-sm" x-text="quickParseResult.note"></span>
+                                        <span class="font-bold text-stone-850 dark:text-stone-200 text-xs" x-text="quickParseResult.note"></span>
                                     </div>
-                                    <div class="grid grid-cols-2 md:grid-cols-4 gap-x-6 gap-y-1.5 font-bold text-[10px] text-stone-600 dark:text-stone-400">
-                                        <div class="flex items-center space-x-1.5">
-                                            <i data-lucide="wallet" class="w-3.5 h-3.5 text-gold-700 dark:text-gold-500/70"></i>
+                                    <div class="grid grid-cols-2 md:grid-cols-4 gap-x-4 gap-y-1 font-bold text-[9px] text-stone-650 dark:text-stone-400">
+                                        <div class="flex items-center space-x-1">
+                                            <i data-lucide="wallet" class="w-3 h-3 text-gold-700 dark:text-gold-500/70"></i>
                                             <span x-text="`Dompet: ${getWalletName(quickParseResult.accountId)}`"></span>
                                         </div>
-                                        <div class="flex items-center space-x-1.5">
-                                            <i data-lucide="user" class="w-3.5 h-3.5 text-gold-700 dark:text-gold-500/70"></i>
+                                        <div class="flex items-center space-x-1">
+                                            <i data-lucide="user" class="w-3 h-3 text-gold-700 dark:text-gold-500/70"></i>
                                             <span x-text="`Pelaku: ${getMemberName(quickParseResult.memberId)}`"></span>
                                         </div>
-                                        <div class="flex items-center space-x-1.5">
-                                            <i data-lucide="tag" class="w-3.5 h-3.5 text-gold-700 dark:text-gold-500/70"></i>
+                                        <div class="flex items-center space-x-1">
+                                            <i data-lucide="tag" class="w-3 h-3 text-gold-700 dark:text-gold-500/70"></i>
                                             <span x-text="`Kategori: ${getCategoryName(quickParseResult.categoryId)}`"></span>
                                         </div>
-                                        <div class="flex items-center space-x-1.5">
-                                            <i data-lucide="coins" class="w-3.5 h-3.5 text-gold-700 dark:text-gold-500/70"></i>
+                                        <div class="flex items-center space-x-1">
+                                            <i data-lucide="coins" class="w-3 h-3 text-gold-700 dark:text-gold-500/70"></i>
                                             <span class="font-bold text-amber-800 dark:text-gold-500" x-text="formatRupiah(quickParseResult.amount)"></span>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="flex space-x-2.5 shrink-0">
+                                <div class="flex space-x-2 shrink-0">
                                     <button 
                                         @click="editQuickTransaction()"
-                                        class="px-4.5 py-2 rounded-xl border border-stone-255 hover:border-gold-500/50 text-stone-600 hover:text-gold-700 text-[10px] font-bold uppercase tracking-wider transition cursor-pointer dark:border-stone-800 dark:text-stone-400 dark:hover:text-gold-500"
+                                        class="px-3.5 py-1.5 rounded-lg border border-stone-255 hover:border-gold-500/50 text-stone-600 hover:text-gold-700 text-[9px] font-bold uppercase tracking-wider transition cursor-pointer dark:border-stone-800 dark:text-stone-450 dark:hover:text-gold-500"
                                     >
                                         Koreksi
                                     </button>
                                     <button 
                                         @click="saveQuickTransaction()"
-                                        class="px-4.5 py-2 rounded-xl bg-gold-600 hover:bg-gold-500 text-white dark:text-stone-955 text-[10px] font-extrabold uppercase tracking-wider transition cursor-pointer shadow-md shadow-gold-500/5"
+                                        class="px-3.5 py-1.5 rounded-lg bg-gold-600 hover:bg-gold-500 text-white dark:text-stone-955 text-[9px] font-extrabold uppercase tracking-wider transition cursor-pointer shadow-sm shadow-gold-500/5"
                                     >
                                         Simpan
                                     </button>
@@ -379,21 +423,21 @@
                         </div>
                     </div>
 
-                    <!-- Top Summary Stats (Income, Expense, Saving Rate) - BOLD HIGH CONTRAST NUMBERS & Left Accent lines -->
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8">
+                    <!-- Top Summary Stats (Income, Expense, Saving Rate) - BOLD NUMBERS & HORIZONTAL SWIPING ON MOBILE -->
+                    <div class="flex md:grid md:grid-cols-3 gap-5 overflow-x-auto no-scrollbar snap-x snap-mandatory pb-2">
                         
                         <!-- Monthly Income - Emerald Border Accent -->
-                        <div class="glass-panel p-6 lg:p-8 rounded-3xl glass-card-hover relative overflow-hidden border-l-4 border-l-emerald-600 border-stone-200/80 dark:border-stone-900/50">
+                        <div class="glass-panel p-5 rounded-2xl glass-card-hover relative overflow-hidden border-l-4 border-l-emerald-600 border-stone-200/80 dark:border-stone-900/50 w-[78vw] shrink-0 snap-center md:w-auto md:p-6 lg:p-8">
                             <div class="absolute -right-6 -bottom-6 w-24 h-24 bg-emerald-500/5 rounded-full blur-xl"></div>
-                            <div class="flex items-center justify-between mb-3.5">
-                                <span class="text-[10px] tracking-widest uppercase font-extrabold text-stone-500 dark:text-stone-500">Total Pendapatan</span>
-                                <div class="w-9 h-9 rounded-xl bg-emerald-500/10 flex items-center justify-center text-emerald-700 dark:text-emerald-500">
-                                    <i data-lucide="trending-up" class="w-4.5 h-4.5"></i>
+                            <div class="flex items-center justify-between mb-3">
+                                <span class="text-[9px] tracking-widest uppercase font-extrabold text-stone-500 dark:text-stone-500">Total Pendapatan</span>
+                                <div class="w-8 h-8 rounded-lg bg-emerald-500/10 flex items-center justify-center text-emerald-700 dark:text-emerald-555">
+                                    <i data-lucide="trending-up" class="w-4 h-4"></i>
                                 </div>
                             </div>
-                            <div class="font-sans text-2xl lg:text-3xl font-bold tracking-tight text-stone-900 dark:text-stone-100" x-text="formatRupiah(dashboardStats.totalIncome)"></div>
-                            <div class="mt-3">
-                                <span class="inline-flex items-center space-x-1 px-2.5 py-0.5 rounded-lg bg-emerald-500/10 text-emerald-700 dark:text-emerald-555 text-[9px] font-bold">
+                            <div class="font-sans text-xl lg:text-2xl font-bold tracking-tight text-stone-900 dark:text-stone-100" x-text="formatRupiah(dashboardStats.totalIncome)"></div>
+                            <div class="mt-2.5">
+                                <span class="inline-flex items-center space-x-1 px-2 py-0.5 rounded-lg bg-emerald-500/10 text-emerald-700 dark:text-emerald-555 text-[9px] font-bold">
                                     <i data-lucide="check" class="w-3 h-3"></i>
                                     <span x-text="`${dashboardStats.incomeCount} Transaksi`"></span>
                                 </span>
@@ -401,17 +445,17 @@
                         </div>
 
                         <!-- Monthly Expense - Rose Border Accent -->
-                        <div class="glass-panel p-6 lg:p-8 rounded-3xl glass-card-hover relative overflow-hidden border-l-4 border-l-rose-600 border-stone-200/80 dark:border-stone-900/50">
+                        <div class="glass-panel p-5 rounded-2xl glass-card-hover relative overflow-hidden border-l-4 border-l-rose-600 border-stone-200/80 dark:border-stone-900/50 w-[78vw] shrink-0 snap-center md:w-auto md:p-6 lg:p-8">
                             <div class="absolute -right-6 -bottom-6 w-24 h-24 bg-rose-500/5 rounded-full blur-xl"></div>
-                            <div class="flex items-center justify-between mb-3.5">
-                                <span class="text-[10px] tracking-widest uppercase font-extrabold text-stone-500 dark:text-stone-500">Total Pengeluaran</span>
-                                <div class="w-9 h-9 rounded-xl bg-rose-500/10 flex items-center justify-center text-rose-700 dark:text-rose-500">
-                                    <i data-lucide="trending-down" class="w-4.5 h-4.5"></i>
+                            <div class="flex items-center justify-between mb-3">
+                                <span class="text-[9px] tracking-widest uppercase font-extrabold text-stone-500 dark:text-stone-500">Total Pengeluaran</span>
+                                <div class="w-8 h-8 rounded-lg bg-rose-500/10 flex items-center justify-center text-rose-700 dark:text-rose-555">
+                                    <i data-lucide="trending-down" class="w-4 h-4"></i>
                                 </div>
                             </div>
-                            <div class="font-sans text-2xl lg:text-3xl font-bold tracking-tight text-stone-900 dark:text-stone-100" x-text="formatRupiah(dashboardStats.totalExpense)"></div>
-                            <div class="mt-3">
-                                <span class="inline-flex items-center space-x-1 px-2.5 py-0.5 rounded-lg bg-rose-500/10 text-rose-700 dark:text-rose-555 text-[9px] font-bold">
+                            <div class="font-sans text-xl lg:text-2xl font-bold tracking-tight text-stone-900 dark:text-stone-100" x-text="formatRupiah(dashboardStats.totalExpense)"></div>
+                            <div class="mt-2.5">
+                                <span class="inline-flex items-center space-x-1 px-2 py-0.5 rounded-lg bg-rose-500/10 text-rose-700 dark:text-rose-555 text-[9px] font-bold">
                                     <i data-lucide="receipt" class="w-3 h-3"></i>
                                     <span x-text="`${dashboardStats.expenseCount} Transaksi`"></span>
                                 </span>
@@ -419,59 +463,60 @@
                         </div>
 
                         <!-- Saving Rate - Teal Border Accent -->
-                        <div class="glass-panel p-6 lg:p-8 rounded-3xl glass-card-hover relative overflow-hidden border-l-4 border-l-teal-600 border-stone-200/80 dark:border-stone-900/50">
+                        <div class="glass-panel p-5 rounded-2xl glass-card-hover relative overflow-hidden border-l-4 border-l-teal-600 border-stone-200/80 dark:border-stone-900/50 w-[78vw] shrink-0 snap-center md:w-auto md:p-6 lg:p-8">
                             <div class="absolute -right-6 -bottom-6 w-24 h-24 bg-teal-500/5 rounded-full blur-xl"></div>
-                            <div class="flex items-center justify-between mb-3.5">
-                                <span class="text-[10px] tracking-widest uppercase font-extrabold text-stone-500 dark:text-stone-500">Rasio Menabung</span>
-                                <div class="w-9 h-9 rounded-xl bg-teal-500/10 flex items-center justify-center text-teal-700 dark:text-teal-500">
-                                    <i data-lucide="piggy-bank" class="w-4.5 h-4.5"></i>
+                            <div class="flex items-center justify-between mb-3">
+                                <span class="text-[9px] tracking-widest uppercase font-extrabold text-stone-500 dark:text-stone-500">Rasio Menabung</span>
+                                <div class="w-8 h-8 rounded-lg bg-teal-500/10 flex items-center justify-center text-teal-700 dark:text-teal-555">
+                                    <i data-lucide="piggy-bank" class="w-4 h-4"></i>
                                 </div>
                             </div>
-                            <div class="font-sans text-2xl lg:text-3xl font-bold tracking-tight text-stone-900 dark:text-stone-100" x-text="`${calculateSavingRate()}%`"></div>
-                            <div class="w-full bg-stone-100 dark:bg-stone-900/60 h-1.5 rounded-full mt-4 overflow-hidden border border-stone-250 dark:border-stone-850">
+                            <div class="font-sans text-xl lg:text-2xl font-bold tracking-tight text-stone-900 dark:text-stone-100" x-text="`${calculateSavingRate()}%`"></div>
+                            <div class="w-full bg-stone-100 dark:bg-stone-900/60 h-1.5 rounded-full mt-3 overflow-hidden border border-stone-250 dark:border-stone-850">
                                 <div class="bg-teal-600 dark:bg-teal-500 h-full rounded-full transition-all duration-500" :style="`width: ${Math.min(100, calculateSavingRate())}%`"></div>
                             </div>
                         </div>
                     </div>
 
-                    <!-- Charts Section (ApexCharts Grid) -->
+                    <!-- Charts Section (ApexCharts Grid) - Dynamically tighter on mobile -->
                     <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 lg:gap-8">
                         <!-- Line/Area Chart: Cashflow History -->
-                        <div class="glass-panel p-6 lg:p-8 rounded-3xl lg:col-span-2 border-stone-200/80 dark:border-stone-900/50">
-                            <div class="flex items-center justify-between mb-6">
-                                <h3 class="font-serif text-xl font-medium tracking-wide text-stone-900 dark:text-gold-500">Tren Arus Kas (6 Bulan Historis)</h3>
+                        <div class="glass-panel p-5 sm:p-6 lg:p-8 rounded-3xl lg:col-span-2 border-stone-200/80 dark:border-stone-900/50">
+                            <div class="flex items-center justify-between mb-4">
+                                <h3 class="font-serif text-lg font-medium tracking-wide text-stone-900 dark:text-gold-500">Tren Arus Kas (6 Bulan Historis)</h3>
                                 <i data-lucide="activity" class="w-4.5 h-4.5 text-stone-400 dark:text-stone-500"></i>
                             </div>
-                            <div id="cashflowTrendChart" class="w-full min-h-[300px]"></div>
+                            <div id="cashflowTrendChart" class="w-full min-h-[220px]"></div>
                         </div>
 
                         <!-- Donut Chart: Expense breakdown -->
-                        <div class="glass-panel p-6 lg:p-8 rounded-3xl border-stone-200/80 dark:border-stone-900/50">
-                            <div class="flex items-center justify-between mb-6">
-                                <h3 class="font-serif text-xl font-medium tracking-wide text-stone-900 dark:text-gold-500">Alokasi Kategori</h3>
+                        <div class="glass-panel p-5 sm:p-6 lg:p-8 rounded-3xl border-stone-200/80 dark:border-stone-900/50">
+                            <div class="flex items-center justify-between mb-4">
+                                <h3 class="font-serif text-lg font-medium tracking-wide text-stone-900 dark:text-gold-500">Alokasi Kategori</h3>
                                 <i data-lucide="pie-chart" class="w-4.5 h-4.5 text-stone-400 dark:text-stone-500"></i>
                             </div>
-                            <div id="expenseCategoryChart" class="w-full min-h-[300px] flex items-center justify-center"></div>
+                            <div id="expenseCategoryChart" class="w-full min-h-[220px] flex items-center justify-center"></div>
                         </div>
                     </div>
 
                     <!-- Dynamic Widgets: Wallets Grid & Quick Log & Spender Chart -->
                     <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 lg:gap-8">
                         
-                        <!-- Wallets Quick View - Amber border trim -->
-                        <div class="glass-panel p-6 lg:p-8 rounded-3xl space-y-6 border-l-4 border-l-amber-600 border-stone-200/80 dark:border-stone-900/50">
-                            <div class="flex items-center justify-between pb-4 border-b border-stone-200 dark:border-stone-900/60">
-                                <h3 class="font-serif text-xl font-medium tracking-wide text-stone-900 dark:text-gold-500">Daftar Dompet</h3>
-                                <button @click="activeTab = 'settings'; updateIcons()" class="text-[10px] tracking-widest font-extrabold uppercase text-gold-700 dark:text-gold-500 hover:text-gold-600 dark:hover:text-gold-400 flex items-center space-x-1 cursor-pointer">
+                        <!-- Wallets Quick View - Amber border trim - Scrollable lists to keep page short -->
+                        <div class="glass-panel p-5 sm:p-6 lg:p-8 rounded-3xl space-y-4 border-l-4 border-l-amber-600 border-stone-200/80 dark:border-stone-900/50">
+                            <div class="flex items-center justify-between pb-3 border-b border-stone-200 dark:border-stone-900/60">
+                                <h3 class="font-serif text-lg font-medium tracking-wide text-stone-900 dark:text-gold-500">Daftar Dompet</h3>
+                                <button @click="activeTab = 'settings'; updateIcons()" class="text-[9px] tracking-widest font-extrabold uppercase text-gold-700 dark:text-gold-500 hover:text-gold-600 dark:hover:text-gold-400 flex items-center space-x-0.5 cursor-pointer">
                                     <span>Kelola</span>
-                                    <i data-lucide="chevron-right" class="w-4 h-4"></i>
+                                    <i data-lucide="chevron-right" class="w-3.5 h-3.5"></i>
                                 </button>
                             </div>
-                            <div class="space-y-3.5 max-h-[300px] overflow-y-auto no-scrollbar pr-1">
+                            <!-- Fixed height with internal scroll to reduce page length -->
+                            <div class="space-y-2.5 max-h-[180px] overflow-y-auto custom-scrollbar pr-1">
                                 <template x-for="acc in accounts" :key="acc.id">
-                                    <div class="flex items-center justify-between p-3.5 rounded-2xl bg-stone-50 border border-stone-200 hover:border-gold-500/35 transition-all duration-300 dark:bg-stone-900/20 dark:border-stone-850/40 dark:hover:border-gold-500/25">
-                                        <div class="flex items-center space-x-3.5">
-                                            <div class="w-9 h-9 rounded-xl flex items-center justify-center shrink-0 border border-stone-200 dark:border-stone-850/40"
+                                    <div class="flex items-center justify-between p-3 rounded-2xl bg-stone-50 border border-stone-200 hover:border-gold-500/35 transition-all duration-300 dark:bg-stone-900/20 dark:border-stone-850/40 dark:hover:border-gold-500/25">
+                                        <div class="flex items-center space-x-3">
+                                            <div class="w-8 h-8 rounded-xl flex items-center justify-center shrink-0 border border-stone-200 dark:border-stone-850/40"
                                                 :class="{
                                                     'bg-teal-500/10 text-teal-700 dark:text-teal-500': acc.type === 'cash' || acc.type === 'piutang',
                                                     'bg-blue-500/10 text-blue-700 dark:text-blue-500': acc.type === 'bank' || acc.type === 'bank-digital',
@@ -485,15 +530,15 @@
                                                     acc.type === 'ewallet' ? 'smartphone' : 
                                                     acc.type === 'investasi' ? 'line-chart' : 
                                                     acc.type === 'utang' ? 'credit-card' : 'hand-coins'" 
-                                                    class="w-5 h-5"
+                                                    class="w-4.5 h-4.5"
                                                 ></i>
                                             </div>
                                             <div>
-                                                <p class="text-xs font-bold text-stone-855 dark:text-stone-200" x-text="acc.name"></p>
-                                                <p class="text-[9px] font-bold text-stone-500 uppercase tracking-widest mt-0.5" x-text="acc.type"></p>
+                                                <p class="text-[11px] font-bold text-stone-855 dark:text-stone-200" x-text="acc.name"></p>
+                                                <p class="text-[8px] font-bold text-stone-500 uppercase tracking-wider mt-0.5" x-text="acc.type"></p>
                                             </div>
                                         </div>
-                                        <div class="font-sans text-sm font-bold tracking-tight" 
+                                        <div class="font-sans text-xs font-bold tracking-tight" 
                                             :class="acc.type === 'utang' ? 'text-rose-700 dark:text-rose-500' : 'text-stone-855 dark:text-stone-200'"
                                             x-text="formatRupiah(acc.balance)"
                                         ></div>
@@ -503,42 +548,42 @@
                         </div>
 
                         <!-- Spender Analysis (Bar/Radial) - Indigo border trim -->
-                        <div class="glass-panel p-6 lg:p-8 rounded-3xl border-l-4 border-l-indigo-650 border-stone-200/80 dark:border-stone-900/50">
-                            <div class="flex items-center justify-between mb-6">
-                                <h3 class="font-serif text-xl font-medium tracking-wide text-stone-900 dark:text-gold-500">Beban per Anggota</h3>
+                        <div class="glass-panel p-5 sm:p-6 lg:p-8 rounded-3xl border-l-4 border-l-indigo-650 border-stone-200/80 dark:border-stone-900/50">
+                            <div class="flex items-center justify-between mb-4">
+                                <h3 class="font-serif text-lg font-medium tracking-wide text-stone-900 dark:text-gold-500">Beban per Anggota</h3>
                                 <i data-lucide="users" class="w-4.5 h-4.5 text-stone-400 dark:text-stone-500"></i>
                             </div>
-                            <div id="spenderBreakdownChart" class="w-full min-h-[300px] flex items-center justify-center"></div>
+                            <div id="spenderBreakdownChart" class="w-full min-h-[200px]"></div>
                         </div>
 
                         <!-- Quick Action Card - Gold border trim -->
-                        <div class="glass-panel p-6 lg:p-8 rounded-3xl space-y-6 relative overflow-hidden flex flex-col justify-between border-l-4 border-l-gold-550 border-stone-200/80 dark:border-stone-900/50">
+                        <div class="glass-panel p-5 sm:p-6 lg:p-8 rounded-3xl space-y-4 relative overflow-hidden flex flex-col justify-between border-l-4 border-l-gold-550 border-stone-200/80 dark:border-stone-900/50">
                             <div class="absolute -right-10 -top-10 w-28 h-28 bg-gold-500/5 rounded-full blur-xl"></div>
                             
-                            <div class="pb-4 border-b border-stone-200 dark:border-stone-900/60">
-                                <h3 class="font-serif text-xl font-medium tracking-wide text-stone-900 dark:text-gold-500">Pencatatan Kilat</h3>
+                            <div class="pb-3 border-b border-stone-200 dark:border-stone-900/60">
+                                <h3 class="font-serif text-lg font-medium tracking-wide text-stone-900 dark:text-gold-500">Pencatatan Kilat</h3>
                                 <p class="text-xs text-stone-500 dark:text-stone-400 mt-1">Simpan pengeluaran harian dalam sekali ketuk.</p>
                             </div>
                             
-                            <div class="grid grid-cols-2 gap-3.5 my-4">
+                            <div class="grid grid-cols-2 gap-2.5 my-2">
                                 <template x-for="cat in categories.filter(c => c.kind === 'expense').slice(0,4)" :key="cat.id">
                                     <button 
                                         @click="openQuickTransactionModal(cat)"
-                                        class="p-4 rounded-2xl border bg-stone-50 border-stone-200 hover:border-gold-500/50 hover:bg-gold-500/5 transition-all duration-300 group flex flex-col items-center space-y-2 cursor-pointer dark:border-stone-855 dark:bg-stone-900/10 dark:hover:border-gold-500/25"
+                                        class="p-3 rounded-2xl border bg-stone-50 border-stone-200 hover:border-gold-500/50 hover:bg-gold-500/5 transition-all duration-300 group flex flex-col items-center space-y-1.5 cursor-pointer dark:border-stone-855 dark:bg-stone-900/10 dark:hover:border-gold-500/25"
                                     >
-                                        <div class="w-9 h-9 rounded-full bg-white text-gold-700 border border-stone-200 flex items-center justify-center group-hover:scale-110 group-hover:text-gold-600 transition-all duration-300 dark:bg-stone-955 dark:text-gold-500 dark:border-stone-900">
-                                            <i :data-lucide="cat.icon" class="w-4.5 h-4.5"></i>
+                                        <div class="w-8 h-8 rounded-full bg-white text-gold-700 border border-stone-200 flex items-center justify-center group-hover:scale-110 group-hover:text-gold-600 transition-all duration-300 dark:bg-stone-955 dark:text-gold-500 dark:border-stone-900">
+                                            <i :data-lucide="cat.icon" class="w-4 h-4"></i>
                                         </div>
-                                        <span class="text-[10px] font-extrabold tracking-wider text-stone-600 dark:text-stone-300 truncate w-full uppercase" x-text="cat.name"></span>
+                                        <span class="text-[9px] font-extrabold tracking-wider text-stone-600 dark:text-stone-300 truncate w-full uppercase" x-text="cat.name"></span>
                                     </button>
                                 </template>
                             </div>
                             
                             <button 
                                 @click="openTransactionModal()"
-                                class="w-full py-3.5 rounded-2xl bg-gradient-to-r from-gold-600 to-gold-400 hover:from-gold-500 hover:to-gold-300 text-white dark:text-stone-955 font-bold text-xs tracking-widest flex items-center justify-center space-x-2.5 shadow-lg shadow-gold-500/5 cursor-pointer"
+                                class="w-full py-3 rounded-xl bg-gradient-to-r from-gold-600 to-gold-400 hover:from-gold-500 hover:to-gold-300 text-white dark:text-stone-955 font-bold text-xs tracking-widest flex items-center justify-center space-x-2 shadow-lg shadow-gold-500/5 cursor-pointer"
                             >
-                                <i data-lucide="plus-circle" class="w-4.5 h-4.5 stroke-[2.5]"></i>
+                                <i data-lucide="plus-circle" class="w-4 h-4 stroke-[2.5]"></i>
                                 <span>MANUAL LOG</span>
                             </button>
                         </div>
@@ -547,44 +592,44 @@
                 </div>
 
                 <!-- ================== 2. TRANSAKSI TAB ================== -->
-                <div x-show="activeTab === 'transactions'" x-transition class="space-y-8 lg:space-y-10">
-                    <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-6">
+                <div x-show="activeTab === 'transactions'" x-transition class="space-y-6 md:space-y-8 lg:space-y-10">
+                    <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
                         <div>
                             <h2 class="font-serif text-3xl lg:text-4xl font-light tracking-wide text-stone-955 dark:text-gold-500">Buku Riwayat Transaksi</h2>
                             <p class="text-xs text-stone-500 dark:text-stone-400 mt-1">Seluruh catatan pemasukan, pengeluaran, dan transfer kas keluarga.</p>
                         </div>
                         <button 
                             @click="openTransactionModal()"
-                            class="px-6 py-3.5 rounded-2xl bg-gradient-to-r from-gold-600 to-gold-400 hover:from-gold-500 hover:to-gold-300 text-white dark:text-stone-955 font-bold text-xs tracking-widest flex items-center justify-center space-x-2.5 cursor-pointer shadow-lg shadow-gold-500/5"
+                            class="px-6 py-3 rounded-xl bg-gradient-to-r from-gold-600 to-gold-400 hover:from-gold-500 hover:to-gold-300 text-white dark:text-stone-955 font-bold text-xs tracking-widest flex items-center justify-center space-x-2 cursor-pointer shadow-lg shadow-gold-500/5"
                         >
-                            <i data-lucide="plus" class="w-5 h-5 stroke-[2.5]"></i>
+                            <i data-lucide="plus" class="w-4.5 h-4.5 stroke-[2.5]"></i>
                             <span>TRANSAKSI BARU</span>
                         </button>
                     </div>
 
                     <!-- Filters & Search Toolbar -->
-                    <div class="glass-panel p-6 lg:p-8 rounded-3xl space-y-4 border-stone-200/80 dark:border-stone-900/50">
-                        <div class="grid grid-cols-1 md:grid-cols-4 gap-5">
+                    <div class="glass-panel p-5 sm:p-6 lg:p-8 rounded-3xl space-y-4 border-stone-200/80 dark:border-stone-900/50">
+                        <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
                             <!-- Search text -->
                             <div class="relative">
-                                <label class="block text-[11px] uppercase font-bold text-stone-500 dark:text-stone-400 tracking-wider mb-2">Cari Catatan</label>
+                                <label class="block text-[10px] uppercase font-bold text-stone-500 dark:text-stone-400 tracking-wider mb-2">Cari Catatan</label>
                                 <div class="relative">
                                     <input 
                                         type="text" 
                                         x-model="filters.search"
                                         placeholder="Kata kunci catatan..."
-                                        class="w-full pl-9 pr-4 py-2.5 text-sm rounded-xl bg-white border border-stone-205 text-stone-900 dark:bg-stone-900/50 dark:border-stone-850 dark:text-stone-100 outline-none focus:border-gold-600 dark:focus:border-gold-500/50 transition duration-200"
+                                        class="w-full pl-9 pr-4 py-2.5 text-xs rounded-xl bg-white border border-stone-205 text-stone-900 dark:bg-stone-900/50 dark:border-stone-850 dark:text-stone-100 outline-none focus:border-gold-600 dark:focus:border-gold-500/50 transition duration-200"
                                     >
-                                    <i data-lucide="search" class="w-4 h-4 text-stone-450 absolute left-3.5 top-3.5"></i>
+                                    <i data-lucide="search" class="w-3.5 h-3.5 text-stone-450 absolute left-3.5 top-3.5"></i>
                                 </div>
                             </div>
 
                             <!-- Filter category -->
                             <div>
-                                <label class="block text-[11px] uppercase font-bold text-stone-500 dark:text-stone-400 tracking-wider mb-2">Kategori</label>
+                                <label class="block text-[10px] uppercase font-bold text-stone-500 dark:text-stone-400 tracking-wider mb-2">Kategori</label>
                                 <select 
                                     x-model="filters.category"
-                                    class="w-full px-3.5 py-2.5 text-sm rounded-xl bg-white border border-stone-205 text-stone-900 dark:bg-stone-900/50 dark:border-stone-850 dark:text-stone-100 outline-none focus:border-gold-600 dark:focus:border-gold-500/50 transition duration-200 cursor-pointer"
+                                    class="w-full px-3 py-2.5 text-xs rounded-xl bg-white border border-stone-205 text-stone-900 dark:bg-stone-900/50 dark:border-stone-850 dark:text-stone-100 outline-none focus:border-gold-600 dark:focus:border-gold-500/50 transition duration-200 cursor-pointer"
                                 >
                                     <option value="all">Semua Kategori</option>
                                     <template x-for="cat in categories" :key="cat.id">
@@ -595,10 +640,10 @@
 
                             <!-- Filter Wallet -->
                             <div>
-                                <label class="block text-[11px] uppercase font-bold text-stone-500 dark:text-stone-400 tracking-wider mb-2">Sumber Dompet</label>
+                                <label class="block text-[10px] uppercase font-bold text-stone-500 dark:text-stone-400 tracking-wider mb-2">Sumber Dompet</label>
                                 <select 
                                     x-model="filters.wallet"
-                                    class="w-full px-3.5 py-2.5 text-sm rounded-xl bg-white border border-stone-205 text-stone-900 dark:bg-stone-900/50 dark:border-stone-850 dark:text-stone-100 outline-none focus:border-gold-600 dark:focus:border-gold-500/50 transition duration-200 cursor-pointer"
+                                    class="w-full px-3 py-2.5 text-xs rounded-xl bg-white border border-stone-205 text-stone-900 dark:bg-stone-900/50 dark:border-stone-850 dark:text-stone-100 outline-none focus:border-gold-600 dark:focus:border-gold-500/50 transition duration-200 cursor-pointer"
                                 >
                                     <option value="all">Semua Dompet</option>
                                     <template x-for="acc in accounts" :key="acc.id">
@@ -609,10 +654,10 @@
 
                             <!-- Filter Spender -->
                             <div>
-                                <label class="block text-[11px] uppercase font-bold text-stone-500 dark:text-stone-400 tracking-wider mb-2">Anggota Keluarga</label>
+                                <label class="block text-[10px] uppercase font-bold text-stone-500 dark:text-stone-400 tracking-wider mb-2">Anggota Keluarga</label>
                                 <select 
                                     x-model="filters.member"
-                                    class="w-full px-3.5 py-2.5 text-sm rounded-xl bg-white border border-stone-205 text-stone-900 dark:bg-stone-900/50 dark:border-stone-850 dark:text-stone-100 outline-none focus:border-gold-600 dark:focus:border-gold-500/50 transition duration-200 cursor-pointer"
+                                    class="w-full px-3 py-2.5 text-xs rounded-xl bg-white border border-stone-205 text-stone-900 dark:bg-stone-900/50 dark:border-stone-850 dark:text-stone-100 outline-none focus:border-gold-600 dark:focus:border-gold-500/50 transition duration-200 cursor-pointer"
                                 >
                                     <option value="all">Semua Anggota</option>
                                     <template x-for="m in members" :key="m.id">
@@ -623,72 +668,72 @@
                         </div>
 
                         <!-- All Periods Toggle -->
-                        <div class="flex items-center justify-between pt-2">
-                            <label class="flex items-center space-x-2.5 text-xs font-bold text-stone-600 dark:text-stone-400 cursor-pointer">
+                        <div class="flex items-center justify-between pt-1">
+                            <label class="flex items-center space-x-2 text-xs font-bold text-stone-600 dark:text-stone-400 cursor-pointer">
                                 <input type="checkbox" x-model="filters.allPeriods" class="rounded text-gold-500 focus:ring-gold-500 cursor-pointer border-stone-300 dark:border-stone-855">
                                 <span>Lihat Semua Periode Transaksi (Tanpa Filter Bulan Aktif)</span>
                             </label>
                         </div>
                     </div>
 
-                    <!-- Transactions Table -->
+                    <!-- Transactions Table - fixed internal scroll for mobile readability -->
                     <div class="glass-panel rounded-3xl overflow-hidden border-stone-200/80 dark:border-stone-900/50">
-                        <div class="overflow-x-auto w-full">
+                        <div class="overflow-x-auto w-full max-h-[400px] overflow-y-auto custom-scrollbar">
                             <table class="w-full text-left border-collapse">
-                                <thead>
+                                <thead class="sticky top-0 bg-white dark:bg-stone-950 z-20 shadow-sm">
                                     <tr class="border-b text-[9px] tracking-widest font-extrabold text-stone-500 uppercase border-stone-200 dark:border-stone-900/60">
-                                        <th class="p-5">Detail Transaksi</th>
-                                        <th class="p-5 hidden md:table-cell">Dompet</th>
-                                        <th class="p-5 hidden md:table-cell">Spender</th>
-                                        <th class="p-5">Tanggal</th>
-                                        <th class="p-5 text-right">Jumlah</th>
-                                        <th class="p-5 text-center">Aksi</th>
+                                        <th class="p-4">Detail Transaksi</th>
+                                        <th class="p-4 hidden md:table-cell">Dompet</th>
+                                        <th class="p-4 hidden md:table-cell">Spender</th>
+                                        <th class="p-4">Tanggal</th>
+                                        <th class="p-4 text-right">Jumlah</th>
+                                        <th class="p-4 text-center">Aksi</th>
                                     </tr>
                                 </thead>
                                 <tbody class="divide-y divide-stone-150 dark:divide-stone-900/30">
                                     <template x-for="tx in filteredTransactions" :key="tx.id">
                                         <tr class="transition-all text-xs font-semibold hover:bg-stone-100/50 dark:hover:bg-stone-900/10">
                                             <!-- Category and note -->
-                                            <td class="p-5 flex items-center space-x-4">
-                                                <div class="w-9 h-9 rounded-xl flex items-center justify-center shrink-0 border border-stone-200 dark:border-stone-900/40"
+                                            <td class="p-4 flex items-center space-x-3.5">
+                                                <div class="w-8.5 h-8.5 rounded-xl flex items-center justify-center shrink-0 border border-stone-200 dark:border-stone-900/40"
                                                     :class="tx.type === 'income' ? 'bg-emerald-500/10 text-emerald-700 dark:text-emerald-500' : 'bg-rose-500/10 text-rose-700 dark:text-rose-500'"
                                                 >
-                                                    <i :data-lucide="getCategoryIcon(tx.categoryId)" class="w-4.5 h-4.5"></i>
+                                                    <i :data-lucide="getCategoryIcon(tx.categoryId)" class="w-4 h-4"></i>
                                                 </div>
-                                                <div class="truncate max-w-[150px] md:max-w-[250px]">
+                                                <div class="truncate max-w-[140px] md:max-w-[240px]">
                                                     <p class="font-bold text-stone-850 dark:text-stone-200" x-text="tx.note || getCategoryName(tx.categoryId)"></p>
-                                                    <p class="text-[9px] text-stone-500 font-bold uppercase tracking-wider mt-0.5" x-text="getCategoryName(tx.categoryId)"></p>
+                                                    <p class="text-[8px] text-stone-500 font-bold uppercase tracking-wider mt-0.5" x-text="getCategoryName(tx.categoryId)"></p>
                                                 </div>
                                             </td>
                                             
                                             <!-- Wallet -->
-                                            <td class="p-5 hidden md:table-cell text-stone-600 dark:text-stone-400" x-text="getWalletName(tx.accountId)"></td>
+                                            <td class="p-4 hidden md:table-cell text-stone-600 dark:text-stone-400" x-text="getWalletName(tx.accountId)"></td>
                                             
                                             <!-- Spender -->
-                                            <td class="p-5 hidden md:table-cell">
-                                                <span class="inline-flex items-center px-3 py-1 rounded-full text-[9px] font-extrabold uppercase tracking-wide"
+                                            <td class="p-4 hidden md:table-cell">
+                                                <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-[8px] font-extrabold uppercase tracking-wide"
                                                     :class="getMemberColorClasses(tx.memberId)"
                                                     x-text="getMemberName(tx.memberId)"
                                                 ></span>
                                             </td>
                                             
                                             <!-- Date -->
-                                            <td class="p-5 text-stone-600 dark:text-stone-400" x-text="formatDate(tx.date)"></td>
+                                            <td class="p-4 text-stone-600 dark:text-stone-400" x-text="formatDate(tx.date)"></td>
                                             
                                             <!-- Amount -->
-                                            <td class="p-5 text-right font-bold font-sans text-sm tracking-tight"
+                                            <td class="p-4 text-right font-bold font-sans tracking-tight"
                                                 :class="tx.type === 'income' ? 'text-emerald-700 dark:text-emerald-500' : 'text-rose-700 dark:text-rose-500'"
                                                 x-text="(tx.type === 'income' ? '+ ' : '- ') + formatRupiah(tx.amount)"
                                             ></td>
                                             
                                             <!-- Actions -->
-                                            <td class="p-5 text-center">
-                                                <div class="flex items-center justify-center space-x-2">
-                                                    <button @click="editTransaction(tx)" class="p-2 hover:text-gold-600 text-stone-400 transition-colors cursor-pointer" title="Edit">
-                                                        <i data-lucide="edit-3" class="w-4 h-4"></i>
+                                            <td class="p-4 text-center">
+                                                <div class="flex items-center justify-center space-x-1.5">
+                                                    <button @click="editTransaction(tx)" class="p-1.5 hover:text-gold-600 text-stone-400 transition-colors cursor-pointer" title="Edit">
+                                                        <i data-lucide="edit-3" class="w-3.5 h-3.5"></i>
                                                     </button>
-                                                    <button @click="deleteTransaction(tx.id)" class="p-2 hover:text-rose-600 text-stone-400 transition-colors cursor-pointer" title="Hapus">
-                                                        <i data-lucide="trash-2" class="w-4 h-4"></i>
+                                                    <button @click="deleteTransaction(tx.id)" class="p-1.5 hover:text-rose-600 text-stone-400 transition-colors cursor-pointer" title="Hapus">
+                                                        <i data-lucide="trash-2" class="w-3.5 h-3.5"></i>
                                                     </button>
                                                 </div>
                                             </td>
@@ -696,8 +741,8 @@
                                     </template>
                                     <template x-if="filteredTransactions.length === 0">
                                         <tr>
-                                            <td colspan="6" class="p-16 text-center text-stone-400 dark:text-stone-500">
-                                                <i data-lucide="inbox" class="w-10 h-10 mx-auto mb-3 opacity-40"></i>
+                                            <td colspan="6" class="p-12 text-center text-stone-400 dark:text-stone-500">
+                                                <i data-lucide="inbox" class="w-8 h-8 mx-auto mb-2 opacity-40"></i>
                                                 <span class="text-xs font-semibold">Tidak ada transaksi yang ditemukan.</span>
                                             </td>
                                         </tr>
@@ -709,31 +754,31 @@
                 </div>
 
                 <!-- ================== 3. ANGGARAN TAB ================== -->
-                <div x-show="activeTab === 'budgets'" x-transition class="space-y-8 lg:space-y-10">
-                    <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-6">
+                <div x-show="activeTab === 'budgets'" x-transition class="space-y-6 md:space-y-8 lg:space-y-10">
+                    <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
                         <div>
                             <h2 class="font-serif text-3xl lg:text-4xl font-light tracking-wide text-stone-955 dark:text-gold-500">Anggaran Pengeluaran</h2>
                             <p class="text-xs text-stone-500 dark:text-stone-400 mt-1">Batasi dan awasi batas pengeluaran kategori bulanan Anda.</p>
                         </div>
                         <button 
                             @click="openBudgetModal()"
-                            class="px-6 py-3.5 rounded-2xl bg-gradient-to-r from-gold-600 to-gold-400 hover:from-gold-500 hover:to-gold-300 text-white dark:text-stone-955 font-bold text-xs tracking-widest flex items-center justify-center space-x-2.5 cursor-pointer shadow-lg shadow-gold-500/5"
+                            class="px-6 py-3 rounded-xl bg-gradient-to-r from-gold-600 to-gold-400 hover:from-gold-500 hover:to-gold-300 text-white dark:text-stone-955 font-bold text-xs tracking-widest flex items-center justify-center space-x-2 cursor-pointer shadow-lg shadow-gold-500/5"
                         >
-                            <i data-lucide="sliders-horizontal" class="w-5 h-5"></i>
+                            <i data-lucide="sliders-horizontal" class="w-4.5 h-4.5"></i>
                             <span>ATUR LIMIT ANGGARAN</span>
                         </button>
                     </div>
 
                     <!-- Overall Budget Progress bar -->
-                    <div class="glass-panel p-6 lg:p-8 rounded-3xl space-y-5 border-stone-200/80 dark:border-stone-900/50">
-                        <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+                    <div class="glass-panel p-5 sm:p-6 lg:p-8 rounded-3xl space-y-4 border-stone-200/80 dark:border-stone-900/50">
+                        <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2.5">
                             <div>
-                                <p class="text-[10px] tracking-widest font-extrabold uppercase text-stone-500">Konsumsi Anggaran Gabungan</p>
-                                <p class="font-sans text-2xl lg:text-3xl font-bold text-stone-900 dark:text-stone-200 mt-1.5" x-text="`${formatRupiah(calculateTotalSpend())} dari ${formatRupiah(calculateTotalBudgetLimit())}`"></p>
+                                <p class="text-[9px] tracking-widest font-extrabold uppercase text-stone-500">Konsumsi Anggaran Gabungan</p>
+                                <p class="font-sans text-xl lg:text-2xl font-bold text-stone-900 dark:text-stone-200 mt-1" x-text="`${formatRupiah(calculateTotalSpend())} dari ${formatRupiah(calculateTotalBudgetLimit())}`"></p>
                             </div>
                             <div class="sm:text-right">
-                                <p class="text-[10px] tracking-widest font-extrabold uppercase text-stone-500">Pemakaian Total</p>
-                                <p class="font-sans text-2xl lg:text-3xl font-extrabold text-amber-800 dark:text-gold-500 mt-1.5" x-text="`${calculateTotalBudgetPercentage()}%`"></p>
+                                <p class="text-[9px] tracking-widest font-extrabold uppercase text-stone-500">Pemakaian Total</p>
+                                <p class="font-sans text-xl lg:text-2xl font-extrabold text-amber-800 dark:text-gold-500 mt-1" x-text="`${calculateTotalBudgetPercentage()}%`"></p>
                             </div>
                         </div>
                         <div class="w-full bg-stone-100 dark:bg-stone-900/60 h-1.5 rounded-full overflow-hidden border border-stone-250 dark:border-stone-850">
@@ -744,37 +789,37 @@
                         </div>
                     </div>
 
-                    <!-- Category Budgets Grid -->
+                    <!-- Category Budgets Grid - Compact height on mobile -->
                     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
                         <template x-for="env in envelopes" :key="env.id">
-                            <div class="glass-panel p-6 rounded-3xl space-y-5 glass-card-hover relative overflow-hidden flex flex-col justify-between min-h-[190px] border-stone-200/80 dark:border-stone-900/50">
-                                <div class="space-y-4">
+                            <div class="glass-panel p-5 rounded-3xl space-y-4 glass-card-hover relative overflow-hidden flex flex-col justify-between min-h-[170px] border-stone-200/80 dark:border-stone-900/50">
+                                <div class="space-y-3.5">
                                     <div class="flex items-center justify-between">
-                                        <div class="flex items-center space-x-3.5">
-                                            <div class="w-9 h-9 rounded-xl bg-gold-500/10 text-gold-700 dark:text-gold-500 flex items-center justify-center border border-gold-500/10">
-                                                <i :data-lucide="getCategoryIcon(env.categoryId)" class="w-4.5 h-4.5"></i>
+                                        <div class="flex items-center space-x-3">
+                                            <div class="w-8.5 h-8.5 rounded-xl bg-gold-500/10 text-gold-700 dark:text-gold-500 flex items-center justify-center border border-gold-500/10">
+                                                <i :data-lucide="getCategoryIcon(env.categoryId)" class="w-4 h-4"></i>
                                             </div>
                                             <div>
                                                 <h4 class="text-xs font-bold text-stone-850 dark:text-stone-200" x-text="getCategoryName(env.categoryId)"></h4>
-                                                <p class="text-[9px] font-bold text-stone-500 uppercase tracking-widest mt-0.5">Bulan Ini</p>
+                                                <p class="text-[8px] font-bold text-stone-500 uppercase tracking-widest mt-0.5">Bulan Ini</p>
                                             </div>
                                         </div>
                                         <div>
-                                            <span class="inline-block px-2.5 py-0.5 rounded-full text-[9px] font-extrabold uppercase"
+                                            <span class="inline-block px-2 py-0.5 rounded-full text-[8px] font-extrabold uppercase"
                                                 :class="getBudgetProgressPercentage(env) >= 100 ? 'bg-rose-500/15 text-rose-700 dark:text-rose-555' : (getBudgetProgressPercentage(env) >= 80 ? 'bg-amber-500/15 text-amber-700 dark:text-amber-555' : 'bg-teal-500/15 text-teal-700 dark:text-teal-555')"
                                                 x-text="`${getBudgetProgressPercentage(env)}%`"
                                             ></span>
                                         </div>
                                     </div>
 
-                                    <div class="space-y-2">
+                                    <div class="space-y-2.5">
                                         <div class="w-full bg-stone-100 dark:bg-stone-900/60 h-1.5 rounded-full overflow-hidden border border-stone-250 dark:border-stone-850">
                                             <div class="h-full rounded-full transition-all duration-300"
                                                 :class="getBudgetProgressPercentage(env) >= 100 ? 'bg-rose-600' : (getBudgetProgressPercentage(env) >= 80 ? 'bg-amber-600' : 'bg-gold-600 dark:bg-gold-500')"
                                                 :style="`width: ${Math.min(100, getBudgetProgressPercentage(env))}%`"
                                             ></div>
                                         </div>
-                                        <div class="flex items-center justify-between text-[10px] font-bold font-sans">
+                                        <div class="flex items-center justify-between text-[9px] font-bold font-sans">
                                             <span class="text-stone-850 dark:text-stone-200" x-text="formatRupiah(getCategorySpend(env.categoryId))"></span>
                                             <span class="text-stone-500" x-text="`Limit: ${formatRupiah(env.limit)}`"></span>
                                         </div>
@@ -782,7 +827,7 @@
                                 </div>
 
                                 <!-- Actions -->
-                                <div class="pt-3.5 flex justify-end space-x-4 text-[10px] uppercase tracking-widest font-extrabold border-t border-stone-200 dark:border-stone-900/50">
+                                <div class="pt-3 flex justify-end space-x-3.5 text-[9px] uppercase tracking-widest font-extrabold border-t border-stone-200 dark:border-stone-900/50">
                                     <button @click="openBudgetEditModal(env)" class="text-gold-700 hover:text-gold-600 dark:text-gold-500 dark:hover:text-gold-455 cursor-pointer">Ubah Limit</button>
                                     <button @click="deleteEnvelope(env.id)" class="text-stone-500 hover:text-rose-600 dark:hover:text-rose-500 cursor-pointer">Hapus</button>
                                 </div>
@@ -790,9 +835,9 @@
                         </template>
 
                         <template x-if="envelopes.length === 0">
-                            <div class="lg:col-span-3 p-16 text-center text-stone-500 dark:text-stone-400 glass-panel rounded-3xl border-stone-200/80 dark:border-stone-900/50">
-                                <i data-lucide="sliders" class="w-10 h-10 mx-auto mb-3 opacity-40"></i>
-                                <p class="text-xs font-bold mb-2">Belum ada batas anggaran yang diatur.</p>
+                            <div class="lg:col-span-3 p-12 text-center text-stone-500 dark:text-stone-400 glass-panel rounded-3xl border-stone-200/80 dark:border-stone-900/50">
+                                <i data-lucide="sliders" class="w-8 h-8 mx-auto mb-2 opacity-40"></i>
+                                <p class="text-xs font-bold mb-1.5">Belum ada batas anggaran yang diatur.</p>
                                 <button @click="openBudgetModal()" class="text-xs text-gold-700 dark:text-gold-500 hover:underline font-bold cursor-pointer">Atur Anggaran Pertama Anda &rarr;</button>
                             </div>
                         </template>
@@ -800,64 +845,64 @@
                 </div>
 
                 <!-- ================== 4. TABUNGAN TAB ================== -->
-                <div x-show="activeTab === 'goals'" x-transition class="space-y-8 lg:space-y-10">
-                    <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-6">
+                <div x-show="activeTab === 'goals'" x-transition class="space-y-6 md:space-y-8 lg:space-y-10">
+                    <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
                         <div>
                             <h2 class="font-serif text-3xl lg:text-4xl font-light tracking-wide text-stone-955 dark:text-gold-500">Pos Tabungan & Target</h2>
                             <p class="text-xs text-stone-500 dark:text-stone-400 mt-1">Alokasikan dana khusus untuk masa depan dan target impian keluarga.</p>
                         </div>
                         <button 
                             @click="openGoalModal()"
-                            class="px-6 py-3.5 rounded-2xl bg-gradient-to-r from-gold-600 to-gold-400 hover:from-gold-500 hover:to-gold-300 text-white dark:text-stone-955 font-bold text-xs tracking-widest flex items-center justify-center space-x-2.5 cursor-pointer shadow-lg shadow-gold-500/5"
+                            class="px-6 py-3 rounded-xl bg-gradient-to-r from-gold-600 to-gold-400 hover:from-gold-500 hover:to-gold-300 text-white dark:text-stone-955 font-bold text-xs tracking-widest flex items-center justify-center space-x-2 cursor-pointer shadow-lg shadow-gold-500/5"
                         >
-                            <i data-lucide="piggy-bank" class="w-5 h-5"></i>
+                            <i data-lucide="piggy-bank" class="w-4.5 h-4.5"></i>
                             <span>TARGET BARU</span>
                         </button>
                     </div>
 
-                    <!-- Goals grid -->
+                    <!-- Goals grid - Compact height on mobile -->
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8">
                         <template x-for="g in goals" :key="g.id">
-                            <div class="glass-panel p-6 rounded-3xl space-y-6 glass-card-hover relative overflow-hidden flex flex-col justify-between min-h-[220px] border-stone-200/80 dark:border-stone-900/50">
+                            <div class="glass-panel p-5 rounded-3xl space-y-4 glass-card-hover relative overflow-hidden flex flex-col justify-between min-h-[190px] border-stone-200/80 dark:border-stone-900/50">
                                 <div>
                                     <div class="flex items-center justify-between">
-                                        <div class="flex items-center space-x-3.5">
-                                            <div class="w-10 h-10 rounded-xl bg-gold-500/10 text-gold-700 dark:text-gold-500 flex items-center justify-center shrink-0 border border-gold-500/10">
-                                                <i :data-lucide="g.icon" class="w-5.5 h-5.5"></i>
+                                        <div class="flex items-center space-x-3">
+                                            <div class="w-9 h-9 rounded-xl bg-gold-500/10 text-gold-700 dark:text-gold-500 flex items-center justify-center shrink-0 border border-gold-500/10">
+                                                <i :data-lucide="g.icon" class="w-5 h-5"></i>
                                             </div>
                                             <div>
-                                                <h3 class="text-base font-bold text-stone-850 dark:text-stone-200" x-text="g.name"></h3>
-                                                <p class="text-[9px] font-bold text-stone-500 uppercase tracking-widest mt-0.5" x-text="`Jatuh Tempo: ${g.targetDate ? formatDateMonth(g.targetDate) : 'Tidak ada batas'}`"></p>
+                                                <h3 class="text-sm font-bold text-stone-850 dark:text-stone-200" x-text="g.name"></h3>
+                                                <p class="text-[8px] font-bold text-stone-500 uppercase tracking-widest mt-0.5" x-text="`Jatuh Tempo: ${g.targetDate ? formatDateMonth(g.targetDate) : 'Tidak ada batas'}`"></p>
                                             </div>
                                         </div>
                                         <div class="text-right">
-                                            <span class="text-2xl font-sans font-extrabold text-amber-800 dark:text-gold-500" x-text="`${Math.round((g.current / g.target) * 100)}%`"></span>
+                                            <span class="text-xl font-sans font-extrabold text-amber-800 dark:text-gold-500" x-text="`${Math.round((g.current / g.target) * 100)}%`"></span>
                                         </div>
                                     </div>
 
-                                    <div class="space-y-2 mt-6">
+                                    <div class="space-y-2 mt-4">
                                         <div class="w-full bg-stone-100 dark:bg-stone-900/60 h-1.5 rounded-full overflow-hidden border border-stone-250 dark:border-stone-850">
                                             <div class="bg-gold-600 dark:bg-gold-500 h-full rounded-full transition-all duration-500" :style="`width: ${Math.min(100, (g.current / g.target) * 100)}%`"></div>
                                         </div>
-                                        <div class="flex items-center justify-between text-[10px] font-bold font-sans">
+                                        <div class="flex items-center justify-between text-[9px] font-bold font-sans">
                                             <span class="text-stone-850 dark:text-stone-200" x-text="formatRupiah(g.current)"></span>
                                             <span class="text-stone-550" x-text="`Target: ${formatRupiah(g.target)}`"></span>
                                         </div>
                                     </div>
                                     
                                     <!-- Monthly savings requirement calculation -->
-                                    <div class="mt-4 p-3 rounded-xl bg-stone-50 border border-stone-200 text-[10px] flex items-center justify-between dark:bg-stone-900/60 dark:border-stone-850" x-show="g.targetDate">
+                                    <div class="mt-3.5 p-2.5 rounded-xl bg-stone-50 border border-stone-200 text-[9px] flex items-center justify-between dark:bg-stone-900/60 dark:border-stone-850" x-show="g.targetDate">
                                         <span class="text-stone-500 font-bold uppercase tracking-wider">Saran Nabung Bulanan:</span>
                                         <span class="font-bold text-amber-800 dark:text-gold-500 tracking-wider font-sans" x-text="formatRupiah(calculateMonthlyGoalTarget(g))"></span>
                                     </div>
                                 </div>
 
-                                <div class="pt-4 border-t border-stone-200 dark:border-stone-900/50 flex items-center justify-between">
-                                    <div class="flex space-x-3.5">
-                                        <button @click="openAdjustGoalModal(g, 'add')" class="px-4 py-2 rounded-xl bg-gold-500/10 hover:bg-gold-500/15 text-gold-700 dark:text-gold-500 text-[10px] font-extrabold uppercase tracking-widest transition cursor-pointer border border-gold-500/20">Setor</button>
-                                        <button @click="openAdjustGoalModal(g, 'withdraw')" class="px-4 py-2 rounded-xl border border-stone-250 hover:border-stone-300 text-stone-600 hover:text-stone-900 text-[10px] font-extrabold uppercase tracking-widest transition cursor-pointer dark:border-stone-800 dark:text-stone-400 dark:hover:text-rose-500">Tarik</button>
+                                <div class="pt-3 border-t border-stone-200 dark:border-stone-900/50 flex items-center justify-between">
+                                    <div class="flex space-x-2.5">
+                                        <button @click="openAdjustGoalModal(g, 'add')" class="px-3.5 py-1.5 rounded-xl bg-gold-500/10 hover:bg-gold-500/15 text-gold-700 dark:text-gold-500 text-[9px] font-extrabold uppercase tracking-widest transition cursor-pointer border border-gold-500/20">Setor</button>
+                                        <button @click="openAdjustGoalModal(g, 'withdraw')" class="px-3.5 py-1.5 rounded-xl border border-stone-250 hover:border-stone-300 text-stone-600 hover:text-stone-900 text-[9px] font-extrabold uppercase tracking-widest transition cursor-pointer dark:border-stone-800 dark:text-stone-400 dark:hover:text-rose-500">Tarik</button>
                                     </div>
-                                    <div class="flex space-x-3 text-[10px] font-extrabold uppercase tracking-widest">
+                                    <div class="flex space-x-2.5 text-[9px] font-extrabold uppercase tracking-widest">
                                         <button @click="openGoalEditModal(g)" class="text-gold-700 hover:text-gold-600 dark:text-gold-500 dark:hover:text-gold-455 cursor-pointer">Edit</button>
                                         <span class="text-stone-300 dark:text-stone-800">|</span>
                                         <button @click="deleteGoal(g.id)" class="text-stone-500 hover:text-rose-600 dark:hover:text-rose-500 cursor-pointer">Hapus</button>
@@ -866,9 +911,9 @@
                             </div>
                         </template>
                         <template x-if="goals.length === 0">
-                            <div class="md:col-span-2 p-16 text-center text-stone-500 dark:text-stone-400 glass-panel rounded-3xl border-stone-200/80 dark:border-stone-900/50">
-                                <i data-lucide="target" class="w-10 h-10 mx-auto mb-3 opacity-40"></i>
-                                <p class="text-xs font-bold mb-2">Belum ada target tabungan yang diatur.</p>
+                            <div class="md:col-span-2 p-12 text-center text-stone-500 dark:text-stone-400 glass-panel rounded-3xl border-stone-200/80 dark:border-stone-900/50">
+                                <i data-lucide="target" class="w-8 h-8 mx-auto mb-2 opacity-40"></i>
+                                <p class="text-xs font-bold mb-1.5">Belum ada target tabungan yang diatur.</p>
                                 <button @click="openGoalModal()" class="text-xs text-gold-700 dark:text-gold-500 hover:underline font-bold cursor-pointer">Buat Target Pertama Anda &rarr;</button>
                             </div>
                         </template>
@@ -876,82 +921,82 @@
                 </div>
 
                 <!-- ================== 5. TAGIHAN TAB ================== -->
-                <div x-show="activeTab === 'bills'" x-transition class="space-y-8 lg:space-y-10">
-                    <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-6">
+                <div x-show="activeTab === 'bills'" x-transition class="space-y-6 md:space-y-8 lg:space-y-10">
+                    <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
                         <div>
                             <h2 class="font-serif text-3xl lg:text-4xl font-light tracking-wide text-stone-955 dark:text-gold-500">Tagihan & Langganan Rutin</h2>
                             <p class="text-xs text-stone-500 dark:text-stone-400 mt-1">Pantau dan bayar kewajiban periodik rutin keluarga tepat waktu.</p>
                         </div>
                         <button 
                             @click="openBillModal()"
-                            class="px-6 py-3.5 rounded-2xl bg-gradient-to-r from-gold-600 to-gold-400 hover:from-gold-500 hover:to-gold-300 text-white dark:text-stone-955 font-bold text-xs tracking-widest flex items-center justify-center space-x-2.5 cursor-pointer shadow-lg shadow-gold-500/5"
+                            class="px-6 py-3 rounded-xl bg-gradient-to-r from-gold-600 to-gold-400 hover:from-gold-500 hover:to-gold-300 text-white dark:text-stone-955 font-bold text-xs tracking-widest flex items-center justify-center space-x-2.5 cursor-pointer shadow-lg shadow-gold-500/5"
                         >
-                            <i data-lucide="receipt" class="w-5 h-5"></i>
+                            <i data-lucide="receipt" class="w-4.5 h-4.5"></i>
                             <span>TAMBAH TAGIHAN</span>
                         </button>
                     </div>
 
                     <!-- Summary calculation -->
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8">
-                        <div class="glass-panel p-6 lg:p-8 rounded-3xl border-stone-200/80 dark:border-stone-900/50">
-                            <p class="text-[9px] uppercase tracking-widest font-extrabold text-stone-500">Beban Wajib Bulanan</p>
-                            <p class="font-sans text-2xl lg:text-3xl font-bold text-stone-900 dark:text-stone-200 mt-1.5" x-text="formatRupiah(calculateTotalBills())"></p>
+                        <div class="glass-panel p-5 sm:p-6 lg:p-8 rounded-3xl border-stone-200/80 dark:border-stone-900/50">
+                            <p class="text-[8px] uppercase tracking-widest font-extrabold text-stone-500">Beban Wajib Bulanan</p>
+                            <p class="font-sans text-xl lg:text-2xl font-bold text-stone-900 dark:text-stone-200 mt-1" x-text="formatRupiah(calculateTotalBills())"></p>
                         </div>
-                        <div class="glass-panel p-6 lg:p-8 rounded-3xl border-stone-200/80 dark:border-stone-900/50">
-                            <p class="text-[9px] uppercase tracking-widest font-extrabold text-stone-500">Lunas Bulan Ini</p>
-                            <p class="font-sans text-2xl lg:text-3xl font-bold text-emerald-700 dark:text-emerald-500 mt-1.5" x-text="formatRupiah(calculatePaidBills())"></p>
+                        <div class="glass-panel p-5 sm:p-6 lg:p-8 rounded-3xl border-stone-200/80 dark:border-stone-900/50">
+                            <p class="text-[8px] uppercase tracking-widest font-extrabold text-stone-500">Lunas Bulan Ini</p>
+                            <p class="font-sans text-xl lg:text-2xl font-bold text-emerald-700 dark:text-emerald-500 mt-1" x-text="formatRupiah(calculatePaidBills())"></p>
                         </div>
-                        <div class="glass-panel p-6 lg:p-8 rounded-3xl border-stone-200/80 dark:border-stone-900/50">
-                            <p class="text-[9px] uppercase tracking-widest font-extrabold text-stone-550">Sisa Belum Dibayar</p>
-                            <p class="font-sans text-2xl lg:text-3xl font-bold text-rose-700 dark:text-rose-500 mt-1.5" x-text="formatRupiah(calculateUnpaidBills())"></p>
+                        <div class="glass-panel p-5 sm:p-6 lg:p-8 rounded-3xl border-stone-200/80 dark:border-stone-900/50">
+                            <p class="text-[8px] uppercase tracking-widest font-extrabold text-stone-500">Sisa Belum Dibayar</p>
+                            <p class="font-sans text-xl lg:text-2xl font-bold text-rose-700 dark:text-rose-555 mt-1" x-text="formatRupiah(calculateUnpaidBills())"></p>
                         </div>
                     </div>
 
-                    <!-- Bills list -->
+                    <!-- Bills list - fixed internal scroll -->
                     <div class="glass-panel rounded-3xl overflow-hidden border-stone-200/80 dark:border-stone-900/50">
-                        <div class="overflow-x-auto w-full">
+                        <div class="overflow-x-auto w-full max-h-[350px] overflow-y-auto custom-scrollbar">
                             <table class="w-full text-left border-collapse">
                                 <thead>
                                     <tr class="border-b text-[9px] tracking-widest font-extrabold text-stone-500 uppercase border-stone-200 dark:border-stone-900/60">
-                                        <th class="p-5">Tagihan / Langganan</th>
-                                        <th class="p-5">Tanggal Jatuh Tempo</th>
-                                        <th class="p-5">Jumlah</th>
-                                        <th class="p-5 text-center">Status Pembayaran</th>
-                                        <th class="p-5 text-center">Aksi</th>
+                                        <th class="p-4">Tagihan / Langganan</th>
+                                        <th class="p-4">Tanggal Jatuh Tempo</th>
+                                        <th class="p-4">Jumlah</th>
+                                        <th class="p-4 text-center">Status Pembayaran</th>
+                                        <th class="p-4 text-center">Aksi</th>
                                     </tr>
                                 </thead>
                                 <tbody class="divide-y divide-stone-150 dark:divide-stone-900/30">
                                     <template x-for="bill in bills" :key="bill.id">
                                         <tr class="transition-colors text-xs font-semibold hover:bg-stone-50 dark:hover:bg-stone-900/10">
-                                            <td class="p-5 flex items-center space-x-4">
-                                                <div class="w-9 h-9 bg-white rounded-xl flex items-center justify-center shrink-0 border border-stone-250 dark:bg-stone-900/40 dark:border-stone-850/40">
-                                                    <i data-lucide="receipt" class="w-4.5 h-4.5 text-gold-600 dark:text-gold-500"></i>
+                                            <td class="p-4 flex items-center space-x-3.5">
+                                                <div class="w-8.5 h-8.5 bg-white rounded-xl flex items-center justify-center shrink-0 border border-stone-250 dark:bg-stone-900/40 dark:border-stone-850/40">
+                                                    <i data-lucide="receipt" class="w-4 h-4 text-gold-600 dark:text-gold-500"></i>
                                                 </div>
                                                 <div>
                                                     <p class="font-bold text-stone-855 dark:text-stone-200" x-text="bill.name"></p>
-                                                    <p class="text-[9px] text-stone-500 font-bold uppercase tracking-wider mt-0.5" x-text="getCategoryName(bill.categoryId)"></p>
+                                                    <p class="text-[8px] text-stone-500 font-bold uppercase tracking-wider mt-0.5" x-text="getCategoryName(bill.categoryId)"></p>
                                                 </div>
                                             </td>
-                                            <td class="p-5 text-stone-600 dark:text-stone-400" x-text="`Setiap Tanggal ${bill.dueDate}`"></td>
-                                            <td class="p-5 font-bold font-sans text-stone-900 dark:text-stone-200" x-text="formatRupiah(bill.amount)"></td>
-                                            <td class="p-5 text-center">
+                                            <td class="p-4 text-stone-600 dark:text-stone-400" x-text="`Setiap Tanggal ${bill.dueDate}`"></td>
+                                            <td class="p-4 font-bold font-sans text-stone-900 dark:text-stone-200" x-text="formatRupiah(bill.amount)"></td>
+                                            <td class="p-4 text-center">
                                                 <template x-if="bill.paidThisMonth">
-                                                    <span class="inline-flex items-center space-x-1.5 px-3.5 py-1.5 rounded-full bg-emerald-500/10 text-emerald-700 dark:text-emerald-555 text-[10px] font-extrabold uppercase tracking-wider">
-                                                        <i data-lucide="check" class="w-3.5 h-3.5"></i>
+                                                    <span class="inline-flex items-center space-x-1.5 px-3 py-1 rounded-full bg-emerald-500/10 text-emerald-700 dark:text-emerald-555 text-[9px] font-extrabold uppercase tracking-wider">
+                                                        <i data-lucide="check" class="w-3 h-3"></i>
                                                         <span>Lunas</span>
                                                     </span>
                                                 </template>
                                                 <template x-if="!bill.paidThisMonth">
                                                     <button 
                                                         @click="payBill(bill)"
-                                                        class="px-4 py-1.5 rounded-xl bg-rose-500/10 hover:bg-rose-500/15 text-rose-700 dark:text-rose-555 text-[10px] font-extrabold uppercase tracking-widest border border-rose-500/20 transition cursor-pointer"
+                                                        class="px-3.5 py-1 rounded-xl bg-rose-500/10 hover:bg-rose-500/15 text-rose-700 dark:text-rose-555 text-[9px] font-extrabold uppercase tracking-widest border border-rose-500/20 transition cursor-pointer"
                                                     >
                                                         Bayar
                                                     </button>
                                                 </template>
                                             </td>
-                                            <td class="p-5 text-center">
-                                                <div class="flex items-center justify-center space-x-4 text-[10px] font-extrabold uppercase tracking-widest">
+                                            <td class="p-4 text-center">
+                                                <div class="flex items-center justify-center space-x-3.5 text-[9px] font-extrabold uppercase tracking-widest">
                                                     <button @click="openBillEditModal(bill)" class="text-gold-700 hover:text-gold-600 dark:text-gold-500 dark:hover:text-gold-455 cursor-pointer">Ubah</button>
                                                     <button @click="deleteBill(bill.id)" class="text-stone-500 hover:text-rose-600 dark:hover:text-rose-500 cursor-pointer">Hapus</button>
                                                 </div>
@@ -960,8 +1005,8 @@
                                     </template>
                                     <template x-if="bills.length === 0">
                                         <tr>
-                                            <td colspan="5" class="p-16 text-center text-stone-550 dark:text-stone-400">
-                                                <i data-lucide="bell-off" class="w-10 h-10 mx-auto mb-3 opacity-40"></i>
+                                            <td colspan="5" class="p-12 text-center text-stone-550 dark:text-stone-400">
+                                                <i data-lucide="bell-off" class="w-8 h-8 mx-auto mb-2 opacity-40"></i>
                                                 <span class="text-xs font-semibold">Tidak ada tagihan bulanan.</span>
                                             </td>
                                         </tr>
@@ -973,7 +1018,7 @@
                 </div>
 
                 <!-- ================== 6. KALKULATOR & KESEHATAN TAB ================== -->
-                <div x-show="activeTab === 'health'" x-transition class="space-y-8 lg:space-y-10">
+                <div x-show="activeTab === 'health'" x-transition class="space-y-6 md:space-y-8 lg:space-y-10">
                     <div>
                         <h2 class="font-serif text-3xl lg:text-4xl font-light tracking-wide text-stone-955 dark:text-gold-500">Evaluasi Finansial Keluarga</h2>
                         <p class="text-xs text-stone-500 dark:text-stone-400 mt-1">Diagnosis otomatis tingkat ketahanan dana dan rasio beban keuangan.</p>
@@ -982,19 +1027,19 @@
                     <!-- Health Cards Row -->
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8">
                         <!-- Rasio Dana Darurat -->
-                        <div class="glass-panel p-6 lg:p-8 rounded-3xl space-y-4 border-stone-200/80 dark:border-stone-900/50">
+                        <div class="glass-panel p-5 sm:p-6 lg:p-8 rounded-3xl space-y-4 border-stone-200/80 dark:border-stone-900/50">
                             <div class="flex items-center justify-between pb-3 border-b border-stone-200 dark:border-stone-900/60">
                                 <h3 class="font-serif text-base font-bold text-stone-850 dark:text-stone-200">Rasio Dana Darurat</h3>
                                 <i data-lucide="shield-alert" class="w-5 h-5 text-gold-600 dark:text-gold-500"></i>
                             </div>
-                            <div class="flex items-baseline space-x-2 pt-2">
-                                <span class="text-4xl font-sans font-extrabold text-amber-800 dark:text-gold-500" x-text="`${calculateEmergencyFundRatio().months}x`"></span>
-                                <span class="text-[10px] text-stone-500 font-extrabold uppercase tracking-wider">Bulan Biaya Hidup</span>
+                            <div class="flex items-baseline space-x-1.5 pt-1.5">
+                                <span class="text-3xl font-sans font-extrabold text-amber-800 dark:text-gold-500" x-text="`${calculateEmergencyFundRatio().months}x`"></span>
+                                <span class="text-[9px] text-stone-500 font-extrabold uppercase tracking-wider">Bulan Biaya Hidup</span>
                             </div>
                             <p class="text-xs text-stone-650 dark:text-stone-400 leading-relaxed" x-text="calculateEmergencyFundRatio().text"></p>
-                            <div class="pt-4 flex items-center justify-between border-t border-stone-200 dark:border-stone-900/40">
-                                <span class="text-[9px] font-extrabold uppercase tracking-wider text-stone-550">Batas Keamanan:</span>
-                                <span class="px-2.5 py-0.5 rounded-full text-[9px] font-extrabold uppercase"
+                            <div class="pt-3 flex items-center justify-between border-t border-stone-200 dark:border-stone-900/40">
+                                <span class="text-[8px] font-extrabold uppercase tracking-wider text-stone-550">Batas Keamanan:</span>
+                                <span class="px-2 py-0.5 rounded-full text-[8px] font-extrabold uppercase"
                                     :class="calculateEmergencyFundRatio().score === 'aman' ? 'bg-emerald-500/10 text-emerald-700 dark:text-emerald-500' : (calculateEmergencyFundRatio().score === 'waspada' ? 'bg-amber-500/10 text-amber-700 dark:text-amber-500' : 'bg-rose-500/10 text-rose-700 dark:text-rose-555')"
                                     x-text="calculateEmergencyFundRatio().score"
                                 ></span>
@@ -1002,19 +1047,19 @@
                         </div>
 
                         <!-- Rasio Menabung -->
-                        <div class="glass-panel p-6 lg:p-8 rounded-3xl space-y-4 border-stone-200/80 dark:border-stone-900/50">
+                        <div class="glass-panel p-5 sm:p-6 lg:p-8 rounded-3xl space-y-4 border-stone-200/80 dark:border-stone-900/50">
                             <div class="flex items-center justify-between pb-3 border-b border-stone-200 dark:border-stone-900/60">
                                 <h3 class="font-serif text-base font-bold text-stone-850 dark:text-stone-200">Rasio Menabung</h3>
                                 <i data-lucide="pie-chart" class="w-5 h-5 text-gold-600 dark:text-gold-500"></i>
                             </div>
-                            <div class="flex items-baseline space-x-2 pt-2">
-                                <span class="text-4xl font-sans font-extrabold text-amber-800 dark:text-gold-500" x-text="`${calculateSavingRate()}%`"></span>
-                                <span class="text-[10px] text-stone-500 font-extrabold uppercase tracking-wider">Dari Pemasukan</span>
+                            <div class="flex items-baseline space-x-1.5 pt-1.5">
+                                <span class="text-3xl font-sans font-extrabold text-amber-800 dark:text-gold-500" x-text="`${calculateSavingRate()}%`"></span>
+                                <span class="text-[9px] text-stone-500 font-extrabold uppercase tracking-wider">Dari Pemasukan</span>
                             </div>
                             <p class="text-xs text-stone-650 dark:text-stone-400 leading-relaxed" x-text="calculateSavingRateText()"></p>
-                            <div class="pt-4 flex items-center justify-between border-t border-stone-200 dark:border-stone-900/40">
-                                <span class="text-[9px] font-extrabold uppercase tracking-wider text-stone-550">Status Alokasi:</span>
-                                <span class="px-2.5 py-0.5 rounded-full text-[9px] font-extrabold uppercase"
+                            <div class="pt-3 flex items-center justify-between border-t border-stone-200 dark:border-stone-900/40">
+                                <span class="text-[8px] font-extrabold uppercase tracking-wider text-stone-550">Status Alokasi:</span>
+                                <span class="px-2 py-0.5 rounded-full text-[8px] font-extrabold uppercase"
                                     :class="calculateSavingRate() >= 20 ? 'bg-emerald-500/10 text-emerald-700 dark:text-emerald-500' : (calculateSavingRate() >= 10 ? 'bg-amber-500/10 text-amber-700 dark:text-amber-500' : 'bg-rose-500/10 text-rose-700 dark:text-rose-555')"
                                     x-text="calculateSavingRate() >= 20 ? 'SEHAT' : (calculateSavingRate() >= 10 ? 'CUKUP' : 'KRITIS')"
                                 ></span>
@@ -1022,19 +1067,19 @@
                         </div>
 
                         <!-- Rasio Utang -->
-                        <div class="glass-panel p-6 lg:p-8 rounded-3xl space-y-4 border-stone-200/80 dark:border-stone-900/50">
+                        <div class="glass-panel p-5 sm:p-6 lg:p-8 rounded-3xl space-y-4 border-stone-200/80 dark:border-stone-900/50">
                             <div class="flex items-center justify-between pb-3 border-b border-stone-200 dark:border-stone-900/60">
                                 <h3 class="font-serif text-base font-bold text-stone-855 dark:text-stone-200">Beban Kewajiban</h3>
                                 <i data-lucide="credit-card" class="w-5 h-5 text-gold-600 dark:text-gold-500"></i>
                             </div>
-                            <div class="flex items-baseline space-x-2 pt-2">
-                                <span class="text-4xl font-sans font-extrabold text-amber-800 dark:text-gold-500" x-text="`${calculateDebtRatio().ratio}%`"></span>
-                                <span class="text-[10px] text-stone-500 font-extrabold uppercase tracking-wider">Beban Arus Kas</span>
+                            <div class="flex items-baseline space-x-1.5 pt-1.5">
+                                <span class="text-3xl font-sans font-extrabold text-amber-800 dark:text-gold-500" x-text="`${calculateDebtRatio().ratio}%`"></span>
+                                <span class="text-[9px] text-stone-500 font-extrabold uppercase tracking-wider">Beban Arus Kas</span>
                             </div>
                             <p class="text-xs text-stone-655 dark:text-stone-400 leading-relaxed" x-text="calculateDebtRatio().text"></p>
-                            <div class="pt-4 flex items-center justify-between border-t border-stone-200 dark:border-stone-900/40">
-                                <span class="text-[9px] font-extrabold uppercase tracking-wider text-stone-550">Tingkat Risiko:</span>
-                                <span class="px-2.5 py-0.5 rounded-full text-[9px] font-extrabold uppercase"
+                            <div class="pt-3 flex items-center justify-between border-t border-stone-200 dark:border-stone-900/40">
+                                <span class="text-[8px] font-extrabold uppercase tracking-wider text-stone-550">Tingkat Risiko:</span>
+                                <span class="px-2 py-0.5 rounded-full text-[8px] font-extrabold uppercase"
                                     :class="calculateDebtRatio().score === 'aman' ? 'bg-emerald-500/10 text-emerald-700 dark:text-emerald-500' : (calculateDebtRatio().score === 'waspada' ? 'bg-amber-500/10 text-amber-700 dark:text-amber-500' : 'bg-rose-500/10 text-rose-700 dark:text-rose-555')"
                                     x-text="calculateDebtRatio().score"
                                 ></span>
@@ -1043,24 +1088,24 @@
                     </div>
 
                     <!-- Action Plan -->
-                    <div class="glass-panel p-6 lg:p-8 rounded-3xl space-y-5 border-stone-200/80 dark:border-stone-900/50">
+                    <div class="glass-panel p-5 sm:p-6 lg:p-8 rounded-3xl space-y-4 border-stone-200/80 dark:border-stone-900/50">
                         <h3 class="font-serif text-2xl font-light tracking-wide text-stone-955 dark:text-gold-500">Saran Aksi Keuangan Keluarga</h3>
-                        <div class="space-y-4">
-                            <div class="flex items-start space-x-4 p-5 rounded-2xl bg-[#FAF9F5] border border-stone-200 dark:bg-stone-900/20 dark:border-stone-850/40">
-                                <div class="w-9 h-9 rounded-xl bg-gold-500/10 text-gold-700 dark:text-gold-500 flex items-center justify-center shrink-0 mt-0.5">
-                                    <i data-lucide="check-circle-2" class="w-5 h-5"></i>
+                        <div class="space-y-3.5">
+                            <div class="flex items-start space-x-3.5 p-4 rounded-2xl bg-[#FAF9F5] border border-stone-200 dark:bg-stone-900/20 dark:border-stone-850/40">
+                                <div class="w-8 h-8 rounded-xl bg-gold-500/10 text-gold-700 dark:text-gold-500 flex items-center justify-center shrink-0 mt-0.5">
+                                    <i data-lucide="check-circle-2" class="w-4.5 h-4.5"></i>
                                 </div>
                                 <div class="space-y-1">
-                                    <h4 class="text-xs font-bold text-stone-850 dark:text-stone-200">1. Optimalisasi Dana Mengendap (Cash Surplus)</h4>
+                                    <h4 class="text-xs font-bold text-stone-855 dark:text-stone-200">1. Optimalisasi Dana Mengendap (Cash Surplus)</h4>
                                     <p class="text-xs text-stone-500 dark:text-stone-400 leading-relaxed">
                                         Pastikan kelebihan saldo di tabungan utama dialirkan ke instrumen likuid berbalas hasil seperti Reksadana Bareksa guna melindunginya dari inflasi bulanan.
                                     </p>
                                 </div>
                             </div>
 
-                            <div class="flex items-start space-x-4 p-5 rounded-2xl bg-[#FAF9F5] border border-stone-200 dark:bg-stone-900/20 dark:border-stone-850/40">
-                                <div class="w-9 h-9 rounded-xl bg-gold-500/10 text-gold-700 dark:text-gold-500 flex items-center justify-center shrink-0 mt-0.5">
-                                    <i data-lucide="shield-check" class="w-5 h-5"></i>
+                            <div class="flex items-start space-x-3.5 p-4 rounded-2xl bg-[#FAF9F5] border border-stone-200 dark:bg-stone-900/20 dark:border-stone-850/40">
+                                <div class="w-8 h-8 rounded-xl bg-gold-500/10 text-gold-700 dark:text-gold-500 flex items-center justify-center shrink-0 mt-0.5">
+                                    <i data-lucide="shield-check" class="w-4.5 h-4.5"></i>
                                 </div>
                                 <div class="space-y-1">
                                     <h4 class="text-xs font-bold text-stone-855 dark:text-stone-200">2. Disiplin Batas Pos Anggaran</h4>
@@ -1074,7 +1119,7 @@
                 </div>
 
                 <!-- ================== 7. PENGATURAN TAB ================== -->
-                <div x-show="activeTab === 'settings'" x-transition class="space-y-8 lg:space-y-10">
+                <div x-show="activeTab === 'settings'" x-transition class="space-y-6 md:space-y-8 lg:space-y-10">
                     <div>
                         <h2 class="font-serif text-3xl lg:text-4xl font-light tracking-wide text-stone-955 dark:text-gold-500">Konfigurasi & Manajemen Data</h2>
                         <p class="text-xs text-stone-500 dark:text-stone-400 mt-1">Konfigurasikan database kas lokal keluarga Anda, tambah dompet, atau ekspor data.</p>
@@ -1083,25 +1128,25 @@
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8">
                         
                         <!-- Family Members Settings -->
-                        <div class="glass-panel p-6 rounded-3xl space-y-5 border-stone-200/80 dark:border-stone-900/50">
-                            <div class="flex items-center justify-between pb-3 border-b border-stone-200 dark:border-stone-900/60">
+                        <div class="glass-panel p-5 rounded-3xl space-y-4 border-stone-200/80 dark:border-stone-900/50">
+                            <div class="flex items-center justify-between pb-2.5 border-b border-stone-200 dark:border-stone-900/60">
                                 <h3 class="font-serif text-lg font-bold text-stone-850 dark:text-stone-200">Anggota Keluarga</h3>
                                 <button @click="openMemberAddModal()" class="text-xs text-gold-700 dark:text-gold-500 hover:text-gold-600 font-bold cursor-pointer">+ Tambah</button>
                             </div>
-                            <div class="space-y-3.5">
+                            <div class="space-y-2.5">
                                 <template x-for="m in members" :key="m.id">
-                                    <div class="flex items-center justify-between p-3.5 rounded-2xl bg-stone-50 border border-stone-200 dark:bg-stone-900/20 dark:border-stone-850/40">
-                                        <div class="flex items-center space-x-3.5">
-                                            <div class="w-9 h-9 rounded-full flex items-center justify-center text-xs font-bold"
+                                    <div class="flex items-center justify-between p-3 rounded-2xl bg-stone-50 border border-stone-200 dark:bg-stone-900/20 dark:border-stone-850/40">
+                                        <div class="flex items-center space-x-3">
+                                            <div class="w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold"
                                                 :class="getMemberColorClasses(m.id)"
                                                 x-text="m.initials"
                                             ></div>
                                             <div>
                                                 <p class="text-xs font-bold text-stone-855 dark:text-stone-200" x-text="m.name"></p>
-                                                <p class="text-[9px] font-bold text-stone-500 uppercase tracking-widest mt-0.5" x-text="m.role"></p>
+                                                <p class="text-[8px] font-bold text-stone-500 uppercase tracking-widest mt-0.5" x-text="m.role"></p>
                                             </div>
                                         </div>
-                                        <button @click="deleteMember(m.id)" class="text-stone-400 hover:text-rose-600 p-2 cursor-pointer transition-colors">
+                                        <button @click="deleteMember(m.id)" class="text-stone-400 hover:text-rose-600 p-1.5 cursor-pointer transition-colors">
                                             <i data-lucide="trash-2" class="w-4 h-4"></i>
                                         </button>
                                     </div>
@@ -1110,26 +1155,26 @@
                         </div>
 
                         <!-- Wallets Settings -->
-                        <div class="glass-panel p-6 rounded-3xl space-y-5 border-stone-200/80 dark:border-stone-900/50">
-                            <div class="flex items-center justify-between pb-3 border-b border-stone-200 dark:border-stone-900/60">
+                        <div class="glass-panel p-5 rounded-3xl space-y-4 border-stone-200/80 dark:border-stone-900/50">
+                            <div class="flex items-center justify-between pb-2.5 border-b border-stone-200 dark:border-stone-900/60">
                                 <h3 class="font-serif text-lg font-bold text-stone-850 dark:text-stone-200">Akun & Rekening</h3>
                                 <button @click="openWalletAddModal()" class="text-xs text-gold-700 dark:text-gold-500 hover:text-gold-600 font-bold cursor-pointer">+ Tambah</button>
                             </div>
-                            <div class="space-y-3.5">
+                            <div class="space-y-2.5">
                                 <template x-for="acc in accounts" :key="acc.id">
-                                    <div class="flex items-center justify-between p-3.5 rounded-2xl bg-stone-50 border border-stone-200 dark:bg-stone-900/20 dark:border-stone-855/40">
-                                        <div class="flex items-center space-x-3.5">
+                                    <div class="flex items-center justify-between p-3 rounded-2xl bg-stone-50 border border-stone-200 dark:bg-stone-900/20 dark:border-stone-850/40">
+                                        <div class="flex items-center space-x-3">
                                             <div class="w-8 h-8 rounded-lg bg-white flex items-center justify-center text-gold-700 border border-stone-200 dark:bg-stone-955 dark:text-gold-500 dark:border-stone-855">
                                                 <i data-lucide="wallet" class="w-4 h-4"></i>
                                             </div>
                                             <div>
                                                 <p class="text-xs font-bold text-stone-855 dark:text-stone-200" x-text="acc.name"></p>
-                                                <p class="text-[9px] font-bold text-stone-500 uppercase tracking-widest mt-0.5" x-text="acc.type"></p>
+                                                <p class="text-[8px] font-bold text-stone-500 uppercase tracking-widest mt-0.5" x-text="acc.type"></p>
                                             </div>
                                         </div>
-                                        <div class="flex items-center space-x-4">
+                                        <div class="flex items-center space-x-3">
                                             <span class="font-sans text-xs font-bold text-stone-800 dark:text-stone-200" x-text="formatRupiah(acc.balance)"></span>
-                                            <button @click="deleteWallet(acc.id)" class="text-stone-400 hover:text-rose-600 p-2 cursor-pointer transition-colors">
+                                            <button @click="deleteWallet(acc.id)" class="text-stone-400 hover:text-rose-600 p-1.5 cursor-pointer transition-colors">
                                                 <i data-lucide="trash-2" class="w-4 h-4"></i>
                                             </button>
                                         </div>
@@ -1139,44 +1184,61 @@
                         </div>
 
                         <!-- Data Portability Tools -->
-                        <div class="glass-panel p-6 lg:p-8 rounded-3xl space-y-6 md:col-span-2 border-stone-200/80 dark:border-stone-900/50">
+                        <div class="glass-panel p-5 sm:p-6 lg:p-8 rounded-3xl space-y-5 md:col-span-2 border-stone-200/80 dark:border-stone-900/50">
                             <h3 class="font-serif text-xl font-medium text-stone-855 dark:text-stone-200 pb-3 border-b border-stone-200 dark:border-stone-900/60">Keamanan Data & Cadangan</h3>
-                            <div class="grid grid-cols-1 sm:grid-cols-3 gap-5 pt-2">
+                            <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-1">
                                 <!-- Export JSON -->
-                                <div class="p-5 rounded-2xl bg-stone-50 border border-stone-200 text-center dark:bg-stone-900/20 dark:border-stone-850/40">
-                                    <i data-lucide="download" class="w-7 h-7 mx-auto mb-3 text-gold-700 dark:text-gold-500"></i>
+                                <div class="p-4.5 rounded-2xl bg-stone-50 border border-stone-200 text-center dark:bg-stone-900/20 dark:border-stone-855/40">
+                                    <i data-lucide="download" class="w-6.5 h-6.5 mx-auto mb-2 text-gold-700 dark:text-gold-500"></i>
                                     <h4 class="text-xs font-bold text-stone-855 dark:text-stone-200">Backup Database JSON</h4>
-                                    <p class="text-[10px] text-stone-500 mt-1 mb-4">Simpan seluruh kas lokal dalam satu berkas terenkripsi.</p>
-                                    <button @click="exportJSON()" class="px-4 py-2.5 rounded-xl bg-gold-600 hover:bg-gold-500 text-white dark:text-stone-955 text-[10px] font-bold w-full transition cursor-pointer">Cadangkan JSON</button>
+                                    <p class="text-[9px] text-stone-500 mt-1 mb-3.5">Simpan seluruh kas lokal dalam satu berkas terenkripsi.</p>
+                                    <button @click="exportJSON()" class="px-4 py-2 rounded-xl bg-gold-600 hover:bg-gold-500 text-white dark:text-stone-955 text-[9px] font-bold w-full transition cursor-pointer">Cadangkan JSON</button>
                                 </div>
 
                                 <!-- Export CSV -->
-                                <div class="p-5 rounded-2xl bg-stone-50 border border-stone-200 text-center dark:bg-stone-900/20 dark:border-stone-850/40">
-                                    <i data-lucide="file-spreadsheet" class="w-7 h-7 mx-auto mb-3 text-gold-700 dark:text-gold-500"></i>
+                                <div class="p-4.5 rounded-2xl bg-stone-50 border border-stone-200 text-center dark:bg-stone-900/20 dark:border-stone-855/40">
+                                    <i data-lucide="file-spreadsheet" class="w-6.5 h-6.5 mx-auto mb-2 text-gold-700 dark:text-gold-500"></i>
                                     <h4 class="text-xs font-bold text-stone-855 dark:text-stone-200">Ekspor Kas CSV</h4>
-                                    <p class="text-[10px] text-stone-500 mt-1 mb-4">Ubah riwayat transaksi ke format CSV untuk Excel atau Sheets.</p>
-                                    <button @click="exportCSV()" class="px-4 py-2.5 rounded-xl bg-gold-600 hover:bg-gold-500 text-white dark:text-stone-955 text-[10px] font-bold w-full transition cursor-pointer">Ekspor CSV</button>
+                                    <p class="text-[9px] text-stone-500 mt-1 mb-3.5">Ubah riwayat transaksi ke format CSV untuk Excel atau Sheets.</p>
+                                    <button @click="exportCSV()" class="px-4 py-2 rounded-xl bg-gold-600 hover:bg-gold-500 text-white dark:text-stone-955 text-[9px] font-bold w-full transition cursor-pointer">Ekspor CSV</button>
                                 </div>
 
                                 <!-- Import JSON -->
-                                <div class="p-5 rounded-2xl bg-stone-50 border border-stone-200 text-center dark:bg-stone-900/20 dark:border-stone-850/40">
-                                    <i data-lucide="upload" class="w-7 h-7 mx-auto mb-3 text-gold-700 dark:text-gold-500"></i>
+                                <div class="p-4.5 rounded-2xl bg-stone-50 border border-stone-200 text-center dark:bg-stone-900/20 dark:border-stone-855/40">
+                                    <i data-lucide="upload" class="w-6.5 h-6.5 mx-auto mb-2 text-gold-700 dark:text-gold-500"></i>
                                     <h4 class="text-xs font-bold text-stone-855 dark:text-stone-200">Pulihkan Kas JSON</h4>
-                                    <p class="text-[10px] text-stone-500 mt-1 mb-4">Gunakan file cadangan JSON untuk memulihkan seluruh riwayat kas.</p>
+                                    <p class="text-[9px] text-stone-500 mt-1 mb-3.5">Gunakan file cadangan JSON untuk memulihkan seluruh riwayat kas.</p>
                                     <label class="block cursor-pointer">
-                                        <span class="px-4 py-2.5 rounded-xl border border-stone-250 hover:border-gold-500/20 text-stone-500 hover:text-gold-700 text-[10px] font-bold block text-center transition dark:border-stone-800">Pilih Berkas</span>
+                                        <span class="px-4 py-2 rounded-xl border border-stone-250 hover:border-gold-500/20 text-stone-500 hover:text-gold-700 text-[9px] font-bold block text-center transition dark:border-stone-800">Pilih Berkas</span>
                                         <input type="file" @change="importJSON($event)" class="hidden" accept=".json">
                                     </label>
                                 </div>
                             </div>
 
-                            <!-- Danger Zone -->
-                            <div class="pt-6 border-t border-stone-200 dark:border-stone-900/60 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-                                <div>
-                                    <h4 class="text-xs font-bold text-rose-700 dark:text-rose-500 uppercase tracking-wider">Danger Zone</h4>
-                                    <p class="text-[10px] text-stone-500 mt-0.5">Tindakan ini akan menghapus permanen seluruh riwayat kas dan menyetel ulang data.</p>
+                            <!-- Reset to Zero & Danger Zone Group -->
+                            <div class="pt-5 border-t border-stone-200 dark:border-stone-900/60 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                                <div class="space-y-1">
+                                    <h4 class="text-xs font-bold text-rose-700 dark:text-rose-500 uppercase tracking-wider">Zona Penyetelan Ulang</h4>
+                                    <p class="text-[9px] text-stone-500 leading-normal">
+                                        Gunakan **Mulai dari Nol** untuk mengosongkan data transaksi demo dan mulai mencatat keuangan asli Anda. Gunakan **Hapus Semua Data** untuk reset total *factory settings*.
+                                    </p>
                                 </div>
-                                <button @click="resetToFactory()" class="px-5 py-2.5 bg-rose-50 hover:bg-rose-100 border border-rose-250 text-rose-700 text-[10px] font-extrabold uppercase tracking-widest rounded-xl transition cursor-pointer dark:bg-rose-955/15 dark:border-rose-900/35 dark:text-rose-500">Hapus Semua Data</button>
+                                <div class="flex flex-wrap gap-3">
+                                    <!-- START FROM ZERO BUTTON (SETTINGS) -->
+                                    <button 
+                                        @click="resetToZero()" 
+                                        class="px-4.5 py-2.5 bg-gold-500/10 hover:bg-gold-500/15 border border-gold-500/30 text-gold-800 dark:text-gold-500 text-[9px] font-extrabold uppercase tracking-widest rounded-xl transition cursor-pointer"
+                                    >
+                                        Mulai Dari Nol
+                                    </button>
+                                    <!-- TOTAL RESET BUTTON -->
+                                    <button 
+                                        @click="resetToFactory()" 
+                                        class="px-4.5 py-2.5 bg-rose-50 hover:bg-rose-100 border border-rose-250 text-rose-700 text-[9px] font-extrabold uppercase tracking-widest rounded-xl transition cursor-pointer dark:bg-rose-955/15 dark:border-rose-900/35 dark:text-rose-500"
+                                    >
+                                        Hapus Semua Data
+                                    </button>
+                                </div>
                             </div>
                         </div>
 
@@ -1198,8 +1260,8 @@
         x-transition
         x-cloak
     >
-        <div @click.away="modals.transaction = false" class="glass-panel w-full max-w-md p-6 lg:p-8 rounded-3xl space-y-5 border-stone-200/80 dark:border-gold-500/15">
-            <div class="flex items-center justify-between pb-3 border-b border-stone-200 dark:border-stone-900/60">
+        <div @click.away="modals.transaction = false" class="glass-panel w-full max-w-md p-5 sm:p-6 lg:p-8 rounded-3xl space-y-4 border-stone-200/80 dark:border-gold-500/15">
+            <div class="flex items-center justify-between pb-2 border-b border-stone-200 dark:border-stone-900/60">
                 <h3 class="font-serif text-xl font-bold text-stone-900 dark:text-gold-500" x-text="editingTxId ? 'Ubah Catatan Transaksi' : 'Catat Transaksi Baru'"></h3>
                 <button @click="modals.transaction = false" class="text-stone-400 hover:text-stone-855 dark:text-stone-500 dark:hover:text-stone-200 cursor-pointer">
                     <i data-lucide="x" class="w-5 h-5"></i>
@@ -1207,17 +1269,17 @@
             </div>
 
             <!-- Form -->
-            <form @submit.prevent="saveTransaction()" class="space-y-4 text-xs font-semibold">
+            <form @submit.prevent="saveTransaction()" class="space-y-3.5 text-xs font-semibold">
                 <!-- Type Toggle -->
                 <div>
-                    <label class="block text-[11px] uppercase font-bold text-stone-500 dark:text-stone-455 tracking-wider mb-2">Jenis Transaksi</label>
-                    <div class="grid grid-cols-2 gap-3">
+                    <label class="block text-[10px] uppercase font-bold text-stone-500 dark:text-stone-450 tracking-wider mb-1.5">Jenis Transaksi</label>
+                    <div class="grid grid-cols-2 gap-2.5">
                         <button 
                             type="button"
                             @click="txForm.type = 'expense'; updateFormCategories()"
-                            class="py-3 rounded-xl font-bold uppercase tracking-wider transition-all border cursor-pointer text-center text-xs"
+                            class="py-2.5 rounded-xl font-bold uppercase tracking-wider transition-all border cursor-pointer text-center text-xs"
                             :class="txForm.type === 'expense' 
-                                ? 'bg-rose-500/10 border-rose-500/30 text-rose-700 dark:text-rose-555 shadow-md shadow-rose-500/5' 
+                                ? 'bg-rose-500/10 border-rose-500/30 text-rose-700 dark:text-rose-500 shadow-md shadow-rose-500/5' 
                                 : 'border-stone-250 bg-white text-stone-500 dark:border-stone-850 dark:bg-stone-900/20 dark:text-stone-550'"
                         >
                             Pengeluaran
@@ -1225,7 +1287,7 @@
                         <button 
                             type="button"
                             @click="txForm.type = 'income'; updateFormCategories()"
-                            class="py-3 rounded-xl font-bold uppercase tracking-wider transition-all border cursor-pointer text-center text-xs"
+                            class="py-2.5 rounded-xl font-bold uppercase tracking-wider transition-all border cursor-pointer text-center text-xs"
                             :class="txForm.type === 'income' 
                                 ? 'bg-emerald-500/10 border-emerald-500/30 text-emerald-700 dark:text-emerald-500 shadow-md shadow-emerald-500/5' 
                                 : 'border-stone-250 bg-white text-stone-500 dark:border-stone-850 dark:bg-stone-900/20 dark:text-stone-550'"
@@ -1237,37 +1299,37 @@
 
                 <!-- Note / Description -->
                 <div>
-                    <label class="block text-[11px] uppercase font-bold text-stone-500 dark:text-stone-455 tracking-wider mb-2">Catatan Deskripsi</label>
+                    <label class="block text-[10px] uppercase font-bold text-stone-500 dark:text-stone-450 tracking-wider mb-1.5">Catatan Deskripsi</label>
                     <input 
                         type="text" 
                         x-model="txForm.note"
                         placeholder="Keterangan singkat..."
                         required
-                        class="w-full px-3.5 py-2.5 text-sm rounded-xl bg-white border border-stone-255 text-stone-900 dark:bg-stone-900/50 dark:border-stone-850 dark:text-stone-100 outline-none focus:border-gold-600 dark:focus:border-gold-500/50 transition duration-200"
+                        class="w-full px-3.5 py-2.5 text-xs rounded-xl bg-white border border-stone-255 text-stone-900 dark:bg-stone-900/50 dark:border-stone-850 dark:text-stone-100 outline-none focus:border-gold-600 dark:focus:border-gold-500/50 transition duration-200"
                     >
                 </div>
 
                 <!-- Amount -->
                 <div>
-                    <label class="block text-[11px] uppercase font-bold text-stone-500 dark:text-stone-455 tracking-wider mb-2">Nominal Rupiah (Rp)</label>
+                    <label class="block text-[10px] uppercase font-bold text-stone-500 dark:text-stone-455 tracking-wider mb-1.5">Nominal Rupiah (Rp)</label>
                     <input 
                         type="number" 
                         x-model.number="txForm.amount"
                         placeholder="Masukkan nominal..."
                         required
                         min="1"
-                        class="w-full px-3.5 py-2.5 text-sm font-sans rounded-xl bg-white border border-stone-255 text-stone-900 dark:bg-stone-900/50 dark:border-stone-850 dark:text-stone-100 outline-none focus:border-gold-600 dark:focus:border-gold-500/50 transition duration-200"
+                        class="w-full px-3.5 py-2.5 text-xs font-sans rounded-xl bg-white border border-stone-255 text-stone-900 dark:bg-stone-900/50 dark:border-stone-850 dark:text-stone-100 outline-none focus:border-gold-600 dark:focus:border-gold-500/50 transition duration-200"
                     >
                 </div>
 
                 <!-- Category, Wallet & Family Spender Row -->
-                <div class="grid grid-cols-2 gap-4">
+                <div class="grid grid-cols-2 gap-3.5">
                     <div>
-                        <label class="block text-[11px] uppercase font-bold text-stone-500 dark:text-stone-455 tracking-wider mb-2">Kategori</label>
+                        <label class="block text-[10px] uppercase font-bold text-stone-500 dark:text-stone-455 tracking-wider mb-1.5">Kategori</label>
                         <select 
                             x-model="txForm.categoryId"
                             required
-                            class="w-full px-3.5 py-2.5 text-sm rounded-xl bg-white border border-stone-255 text-stone-900 dark:bg-stone-900/50 dark:border-stone-850 dark:text-stone-100 outline-none focus:border-gold-600 dark:focus:border-gold-500/50 transition duration-200 cursor-pointer"
+                            class="w-full px-3.5 py-2.5 text-xs rounded-xl bg-white border border-stone-255 text-stone-900 dark:bg-stone-900/50 dark:border-stone-850 dark:text-stone-100 outline-none focus:border-gold-600 dark:focus:border-gold-500/50 transition duration-200 cursor-pointer"
                         >
                             <template x-for="cat in formCategories" :key="cat.id">
                                 <option :value="cat.id" x-text="cat.name"></option>
@@ -1276,11 +1338,11 @@
                     </div>
 
                     <div>
-                        <label class="block text-[11px] uppercase font-bold text-stone-500 dark:text-stone-455 tracking-wider mb-2">Sumber Dompet</label>
+                        <label class="block text-[10px] uppercase font-bold text-stone-500 dark:text-stone-455 tracking-wider mb-1.5">Sumber Dompet</label>
                         <select 
                             x-model="txForm.accountId"
                             required
-                            class="w-full px-3.5 py-2.5 text-sm rounded-xl bg-white border border-stone-255 text-stone-900 dark:bg-stone-900/50 dark:border-stone-850 dark:text-stone-100 outline-none focus:border-gold-600 dark:focus:border-gold-500/50 transition duration-200 cursor-pointer"
+                            class="w-full px-3.5 py-2.5 text-xs rounded-xl bg-white border border-stone-255 text-stone-900 dark:bg-stone-900/50 dark:border-stone-850 dark:text-stone-100 outline-none focus:border-gold-600 dark:focus:border-gold-500/50 transition duration-200 cursor-pointer"
                         >
                             <template x-for="acc in accounts" :key="acc.id">
                                 <option :value="acc.id" x-text="`${acc.name} (${formatRupiah(acc.balance)})`"></option>
@@ -1289,13 +1351,13 @@
                     </div>
                 </div>
 
-                <div class="grid grid-cols-2 gap-4">
+                <div class="grid grid-cols-2 gap-3.5">
                     <div>
-                        <label class="block text-[11px] uppercase font-bold text-stone-500 dark:text-stone-455 tracking-wider mb-2">Pencatat Kas</label>
+                        <label class="block text-[10px] uppercase font-bold text-stone-500 dark:text-stone-455 tracking-wider mb-1.5">Pencatat Kas</label>
                         <select 
                             x-model="txForm.memberId"
                             required
-                            class="w-full px-3.5 py-2.5 text-sm rounded-xl bg-white border border-stone-255 text-stone-900 dark:bg-stone-900/50 dark:border-stone-850 dark:text-stone-100 outline-none focus:border-gold-600 dark:focus:border-gold-500/50 transition duration-200 cursor-pointer"
+                            class="w-full px-3.5 py-2.5 text-xs rounded-xl bg-white border border-stone-255 text-stone-900 dark:bg-stone-900/50 dark:border-stone-850 dark:text-stone-100 outline-none focus:border-gold-600 dark:focus:border-gold-500/50 transition duration-200 cursor-pointer"
                         >
                             <template x-for="m in members" :key="m.id">
                                 <option :value="m.id" x-text="m.name"></option>
@@ -1304,28 +1366,28 @@
                     </div>
 
                     <div>
-                        <label class="block text-[11px] uppercase font-bold text-stone-500 dark:text-stone-455 tracking-wider mb-2">Tanggal Catatan</label>
+                        <label class="block text-[10px] uppercase font-bold text-stone-500 dark:text-stone-455 tracking-wider mb-1.5">Tanggal Catatan</label>
                         <input 
                             type="date" 
                             x-model="txForm.date"
                             required
-                            class="w-full px-3.5 py-2.5 text-sm rounded-xl bg-white border border-stone-255 text-stone-900 dark:bg-stone-900/50 dark:border-stone-850 dark:text-stone-100 outline-none focus:border-gold-600 dark:focus:border-gold-500/50 transition duration-200 cursor-pointer"
+                            class="w-full px-3.5 py-2.5 text-xs rounded-xl bg-white border border-stone-255 text-stone-900 dark:bg-stone-900/50 dark:border-stone-850 dark:text-stone-100 outline-none focus:border-gold-600 dark:focus:border-gold-500/50 transition duration-200 cursor-pointer"
                         >
                     </div>
                 </div>
 
                 <!-- Buttons -->
-                <div class="pt-4 flex space-x-3.5">
+                <div class="pt-3 flex space-x-3">
                     <button 
                         type="button" 
                         @click="modals.transaction = false"
-                        class="flex-1 py-3 border border-stone-200 hover:bg-stone-100 text-stone-600 font-bold rounded-xl transition cursor-pointer dark:border-stone-800 dark:text-stone-400 dark:hover:bg-stone-900/30"
+                        class="flex-1 py-2.5 border border-stone-200 hover:bg-stone-100 text-stone-600 font-bold rounded-xl transition cursor-pointer dark:border-stone-800 dark:text-stone-400 dark:hover:bg-stone-900/30"
                     >
                         Batal
                     </button>
                     <button 
                         type="submit"
-                        class="flex-1 py-3 bg-gradient-to-r from-gold-600 to-gold-400 hover:from-gold-500 hover:to-gold-300 text-white dark:text-stone-955 font-bold rounded-xl transition cursor-pointer shadow-md"
+                        class="flex-1 py-2.5 bg-gradient-to-r from-gold-600 to-gold-400 hover:from-gold-500 hover:to-gold-300 text-white dark:text-stone-955 font-bold rounded-xl transition cursor-pointer shadow-md"
                     >
                         Simpan Catatan
                     </button>
@@ -1341,20 +1403,20 @@
         x-transition
         x-cloak
     >
-        <div @click.away="modals.budget = false" class="glass-panel w-full max-w-sm p-6 lg:p-8 rounded-3xl space-y-5 border-stone-200/80 dark:border-gold-500/15">
-            <div class="flex items-center justify-between pb-3 border-b border-stone-200 dark:border-stone-900/60">
+        <div @click.away="modals.budget = false" class="glass-panel w-full max-w-sm p-6 lg:p-8 rounded-3xl space-y-4 border-stone-200/80 dark:border-gold-500/15">
+            <div class="flex items-center justify-between pb-2 border-b border-stone-200 dark:border-stone-900/60">
                 <h3 class="font-serif text-xl font-bold text-stone-900 dark:text-gold-500" x-text="editingEnvId ? 'Ubah Batas Pos' : 'Batas Pos Anggaran Baru'"></h3>
                 <button @click="modals.budget = false" class="text-stone-400 hover:text-stone-800 dark:text-stone-500 dark:hover:text-stone-200 cursor-pointer">
                     <i data-lucide="x" class="w-5 h-5"></i>
                 </button>
             </div>
 
-            <form @submit.prevent="saveEnvelope()" class="space-y-4 text-xs font-semibold">
+            <form @submit.prevent="saveEnvelope()" class="space-y-3.5 text-xs font-semibold">
                 <div x-show="!editingEnvId">
-                    <label class="block text-[11px] uppercase font-bold text-stone-500 dark:text-stone-450 tracking-wider mb-2">Pilih Pos Pengeluaran</label>
+                    <label class="block text-[10px] uppercase font-bold text-stone-500 dark:text-stone-450 tracking-wider mb-1.5">Pilih Pos Pengeluaran</label>
                     <select 
                         x-model="envForm.categoryId"
-                        class="w-full px-3.5 py-2.5 text-sm rounded-xl bg-white border border-stone-255 text-stone-900 dark:bg-stone-900/50 dark:border-stone-850 dark:text-stone-100 outline-none focus:border-gold-600 dark:focus:border-gold-500/50 transition duration-200 cursor-pointer"
+                        class="w-full px-3.5 py-2.5 text-xs rounded-xl bg-white border border-stone-255 text-stone-900 dark:bg-stone-900/50 dark:border-stone-850 dark:text-stone-100 outline-none focus:border-gold-600 dark:focus:border-gold-500/50 transition duration-200 cursor-pointer"
                     >
                         <template x-for="cat in categories.filter(c => c.kind === 'expense')" :key="cat.id">
                             <option :value="cat.id" x-text="cat.name"></option>
@@ -1363,20 +1425,20 @@
                 </div>
 
                 <div>
-                    <label class="block text-[11px] uppercase font-bold text-stone-500 dark:text-stone-455 tracking-wider mb-2">Batas Pengeluaran Bulanan (Limit)</label>
+                    <label class="block text-[10px] uppercase font-bold text-stone-500 dark:text-stone-450 tracking-wider mb-1.5">Batas Pengeluaran Bulanan (Limit)</label>
                     <input 
                         type="number" 
                         x-model.number="envForm.limit"
                         placeholder="Misal: 1500000"
                         required
                         min="1"
-                        class="w-full px-3.5 py-2.5 text-sm rounded-xl bg-white border border-stone-255 text-stone-900 dark:bg-stone-900/50 dark:border-stone-850 dark:text-stone-100 outline-none focus:border-gold-600 dark:focus:border-gold-500/50 transition duration-200"
+                        class="w-full px-3.5 py-2.5 text-xs rounded-xl bg-white border border-stone-255 text-stone-900 dark:bg-stone-900/50 dark:border-stone-850 dark:text-stone-100 outline-none focus:border-gold-600 dark:focus:border-gold-500/50 transition duration-200"
                     >
                 </div>
 
-                <div class="pt-4 flex space-x-3.5">
-                    <button type="button" @click="modals.budget = false" class="flex-1 py-3 border border-stone-200 hover:bg-stone-100 text-stone-600 font-bold rounded-xl transition cursor-pointer dark:border-stone-800 dark:text-stone-400 dark:hover:bg-stone-900/30">Batal</button>
-                    <button type="submit" class="flex-1 py-3 bg-gradient-to-r from-gold-600 to-gold-400 text-white dark:text-stone-955 font-bold rounded-xl cursor-pointer">Simpan Limit</button>
+                <div class="pt-3 flex space-x-3">
+                    <button type="button" @click="modals.budget = false" class="flex-1 py-2.5 border border-stone-200 hover:bg-stone-100 text-stone-600 font-bold rounded-xl transition cursor-pointer dark:border-stone-800 dark:text-stone-400 dark:hover:bg-stone-900/30">Batal</button>
+                    <button type="submit" class="flex-1 py-2.5 bg-gradient-to-r from-gold-600 to-gold-400 text-white dark:text-stone-955 font-bold rounded-xl cursor-pointer">Simpan Limit</button>
                 </div>
             </form>
         </div>
@@ -1389,66 +1451,66 @@
         x-transition
         x-cloak
     >
-        <div @click.away="modals.goal = false" class="glass-panel w-full max-w-sm p-6 lg:p-8 rounded-3xl space-y-5 border-stone-200/80 dark:border-gold-500/15">
-            <div class="flex items-center justify-between pb-3 border-b border-stone-200 dark:border-stone-900/60">
+        <div @click.away="modals.goal = false" class="glass-panel w-full max-w-sm p-6 lg:p-8 rounded-3xl space-y-4 border-stone-200/80 dark:border-gold-500/15">
+            <div class="flex items-center justify-between pb-2 border-b border-stone-200 dark:border-stone-900/60">
                 <h3 class="font-serif text-xl font-bold text-stone-900 dark:text-gold-500" x-text="editingGoalId ? 'Ubah Rencana Tabungan' : 'Target Rencana Baru'"></h3>
-                <button @click="modals.goal = false" class="text-stone-400 hover:text-stone-850 dark:text-stone-500 dark:hover:text-stone-200 cursor-pointer">
+                <button @click="modals.goal = false" class="text-stone-400 hover:text-stone-800 dark:text-stone-500 dark:hover:text-stone-200 cursor-pointer">
                     <i data-lucide="x" class="w-5 h-5"></i>
                 </button>
             </div>
 
-            <form @submit.prevent="saveGoal()" class="space-y-4 text-xs font-semibold">
+            <form @submit.prevent="saveGoal()" class="space-y-3.5 text-xs font-semibold">
                 <div>
-                    <label class="block text-[11px] uppercase font-bold text-stone-500 dark:text-stone-455 tracking-wider mb-2">Nama Target Tabungan</label>
+                    <label class="block text-[10px] uppercase font-bold text-stone-500 dark:text-stone-455 tracking-wider mb-1.5">Nama Target Tabungan</label>
                     <input 
                         type="text" 
                         x-model="goalForm.name"
                         placeholder="Contoh: DP Rumah, Dana Liburan..."
                         required
-                        class="w-full px-3.5 py-2.5 text-sm rounded-xl bg-white border border-stone-255 text-stone-900 dark:bg-stone-900/50 dark:border-stone-850 dark:text-stone-100 outline-none focus:border-gold-600 dark:focus:border-gold-500/50 transition duration-200"
+                        class="w-full px-3.5 py-2.5 text-xs rounded-xl bg-white border border-stone-255 text-stone-900 dark:bg-stone-900/50 dark:border-stone-850 dark:text-stone-100 outline-none focus:border-gold-600 dark:focus:border-gold-500/50 transition duration-200"
                     >
                 </div>
 
-                <div class="grid grid-cols-2 gap-4">
+                <div class="grid grid-cols-2 gap-3.5">
                     <div>
-                        <label class="block text-[11px] uppercase font-bold text-stone-500 dark:text-stone-455 tracking-wider mb-2">Target (Rp)</label>
+                        <label class="block text-[10px] uppercase font-bold text-stone-500 dark:text-stone-455 tracking-wider mb-1.5">Target (Rp)</label>
                         <input 
                             type="number" 
                             x-model.number="goalForm.target"
                             placeholder="Target..."
                             required
                             min="1"
-                            class="w-full px-3.5 py-2.5 text-sm rounded-xl bg-white border border-stone-255 text-stone-900 dark:bg-stone-900/50 dark:border-stone-850 dark:text-stone-100 outline-none focus:border-gold-600 dark:focus:border-gold-500/50 transition duration-200"
+                            class="w-full px-3.5 py-2.5 text-xs rounded-xl bg-white border border-stone-255 text-stone-900 dark:bg-stone-900/50 dark:border-stone-850 dark:text-stone-100 outline-none focus:border-gold-600 dark:focus:border-gold-500/50 transition duration-200"
                         >
                     </div>
 
                     <div>
-                        <label class="block text-[11px] uppercase font-bold text-stone-500 dark:text-stone-455 tracking-wider mb-2">Saldo Awal</label>
+                        <label class="block text-[10px] uppercase font-bold text-stone-500 dark:text-stone-455 tracking-wider mb-1.5">Saldo Awal</label>
                         <input 
                             type="number" 
                             x-model.number="goalForm.current"
                             placeholder="Mulai..."
                             min="0"
-                            class="w-full px-3.5 py-2.5 text-sm rounded-xl bg-white border border-stone-255 text-stone-900 dark:bg-stone-900/50 dark:border-stone-850 dark:text-stone-100 outline-none focus:border-gold-600 dark:focus:border-gold-500/50 transition duration-200"
+                            class="w-full px-3.5 py-2.5 text-xs rounded-xl bg-white border border-stone-255 text-stone-900 dark:bg-stone-900/50 dark:border-stone-850 dark:text-stone-100 outline-none focus:border-gold-600 dark:focus:border-gold-500/50 transition duration-200"
                         >
                     </div>
                 </div>
 
-                <div class="grid grid-cols-2 gap-4">
+                <div class="grid grid-cols-2 gap-3.5">
                     <div>
-                        <label class="block text-[11px] uppercase font-bold text-stone-500 dark:text-stone-455 tracking-wider mb-2">Target Bulan</label>
+                        <label class="block text-[10px] uppercase font-bold text-stone-500 dark:text-stone-455 tracking-wider mb-1.5">Target Bulan</label>
                         <input 
                             type="month" 
                             x-model="goalForm.targetDate"
-                            class="w-full px-3.5 py-2.5 text-sm rounded-xl bg-white border border-stone-255 text-stone-900 dark:bg-stone-900/50 dark:border-stone-850 dark:text-stone-100 outline-none focus:border-gold-600 dark:focus:border-gold-500/50 transition duration-200 cursor-pointer"
+                            class="w-full px-3.5 py-2.5 text-xs rounded-xl bg-white border border-stone-255 text-stone-900 dark:bg-stone-900/50 dark:border-stone-850 dark:text-stone-100 outline-none focus:border-gold-600 dark:focus:border-gold-500/50 transition duration-200 cursor-pointer"
                         >
                     </div>
 
                     <div>
-                        <label class="block text-[11px] uppercase font-bold text-stone-500 dark:text-stone-455 tracking-wider mb-2">Ikon</label>
+                        <label class="block text-[10px] uppercase font-bold text-stone-500 dark:text-stone-455 tracking-wider mb-1.5">Ikon</label>
                         <select 
                             x-model="goalForm.icon"
-                            class="w-full px-3.5 py-2.5 text-sm rounded-xl bg-white border border-stone-255 text-stone-900 dark:bg-stone-900/50 dark:border-stone-850 dark:text-stone-100 outline-none focus:border-gold-600 dark:focus:border-gold-500/50 transition duration-200 cursor-pointer"
+                            class="w-full px-3.5 py-2.5 text-xs rounded-xl bg-white border border-stone-255 text-stone-900 dark:bg-stone-900/50 dark:border-stone-850 dark:text-stone-100 outline-none focus:border-gold-600 dark:focus:border-gold-500/50 transition duration-200 cursor-pointer"
                         >
                             <option value="ShieldCheck">Perisai (Dana Darurat)</option>
                             <option value="Home">Rumah (DP Properti)</option>
@@ -1460,9 +1522,9 @@
                     </div>
                 </div>
 
-                <div class="pt-4 flex space-x-3.5">
-                    <button type="button" @click="modals.goal = false" class="flex-1 py-3 border border-stone-200 hover:bg-stone-100 text-stone-600 font-bold rounded-xl transition cursor-pointer dark:border-stone-800 dark:text-stone-400 dark:hover:bg-stone-900/30">Batal</button>
-                    <button type="submit" class="flex-1 py-3 bg-gradient-to-r from-gold-600 to-gold-400 text-white dark:text-stone-955 font-bold rounded-xl cursor-pointer">Simpan Rencana</button>
+                <div class="pt-3 flex space-x-3">
+                    <button type="button" @click="modals.goal = false" class="flex-1 py-2.5 border border-stone-200 hover:bg-stone-100 text-stone-600 font-bold rounded-xl transition cursor-pointer dark:border-stone-800 dark:text-stone-400 dark:hover:bg-stone-900/30">Batal</button>
+                    <button type="submit" class="flex-1 py-2.5 bg-gradient-to-r from-gold-600 to-gold-400 text-white dark:text-stone-955 font-bold rounded-xl cursor-pointer">Simpan Rencana</button>
                 </div>
             </form>
         </div>
@@ -1475,23 +1537,23 @@
         x-transition
         x-cloak
     >
-        <div @click.away="modals.adjustGoal = false" class="glass-panel w-full max-w-sm p-6 lg:p-8 rounded-3xl space-y-5 border-stone-200/80 dark:border-gold-500/15">
-            <div class="flex items-center justify-between pb-3 border-b border-stone-200 dark:border-stone-900/60">
+        <div @click.away="modals.adjustGoal = false" class="glass-panel w-full max-w-sm p-6 lg:p-8 rounded-3xl space-y-4 border-stone-200/80 dark:border-gold-500/15">
+            <div class="flex items-center justify-between pb-2 border-b border-stone-200 dark:border-stone-900/60">
                 <h3 class="font-serif text-xl font-bold text-stone-900 dark:text-gold-500" x-text="adjustGoalMode === 'add' ? 'Setor Tabungan' : 'Tarik Dana Tabungan'"></h3>
-                <button @click="modals.adjustGoal = false" class="text-stone-400 hover:text-stone-850 dark:text-stone-500 dark:hover:text-stone-200 cursor-pointer">
+                <button @click="modals.adjustGoal = false" class="text-stone-400 hover:text-stone-800 dark:text-stone-500 dark:hover:text-stone-200 cursor-pointer">
                     <i data-lucide="x" class="w-5 h-5"></i>
                 </button>
             </div>
 
             <p class="text-xs text-stone-600 dark:text-stone-400 font-bold" x-text="`Target tabungan: ${adjustGoalObject ? adjustGoalObject.name : ''}`"></p>
 
-            <form @submit.prevent="saveGoalAdjustment()" class="space-y-4 text-xs font-semibold">
+            <form @submit.prevent="saveGoalAdjustment()" class="space-y-3.5 text-xs font-semibold">
                 <div>
-                    <label class="block text-[11px] uppercase font-bold text-stone-500 dark:text-stone-455 tracking-wider mb-2" x-text="adjustGoalMode === 'add' ? 'Kirim Dana Dari Dompet' : 'Kirim Dana Ke Dompet'"></label>
+                    <label class="block text-[10px] uppercase font-bold text-stone-500 dark:text-stone-455 tracking-wider mb-1.5" x-text="adjustGoalMode === 'add' ? 'Kirim Dana Dari Dompet' : 'Kirim Dana Ke Dompet'"></label>
                     <select 
                         x-model="adjustGoalForm.accountId"
                         required
-                        class="w-full px-3.5 py-2.5 text-sm rounded-xl bg-white border border-stone-255 text-stone-900 dark:bg-stone-900/50 dark:border-stone-850 dark:text-stone-100 outline-none focus:border-gold-600 dark:focus:border-gold-500/50 transition duration-200 cursor-pointer"
+                        class="w-full px-3.5 py-2.5 text-xs rounded-xl bg-white border border-stone-255 text-stone-900 dark:bg-stone-900/50 dark:border-stone-850 dark:text-stone-100 outline-none focus:border-gold-600 dark:focus:border-gold-500/50 transition duration-200 cursor-pointer"
                     >
                         <template x-for="acc in accounts.filter(a => a.type !== 'utang')" :key="acc.id">
                             <option :value="acc.id" x-text="`${acc.name} (${formatRupiah(acc.balance)})`"></option>
@@ -1500,20 +1562,20 @@
                 </div>
 
                 <div>
-                    <label class="block text-[11px] uppercase font-bold text-stone-500 dark:text-stone-455 tracking-wider mb-2">Jumlah Nominal Rupiah (Rp)</label>
+                    <label class="block text-[10px] uppercase font-bold text-stone-500 dark:text-stone-455 tracking-wider mb-1.5">Jumlah Nominal Rupiah (Rp)</label>
                     <input 
                         type="number" 
                         x-model.number="adjustGoalForm.amount"
                         placeholder="Contoh: 1000000"
                         required
                         min="1"
-                        class="w-full px-3.5 py-2.5 text-sm rounded-xl bg-white border border-stone-255 text-stone-900 dark:bg-stone-900/50 dark:border-stone-850 dark:text-stone-100 outline-none focus:border-gold-600 dark:focus:border-gold-500/50 transition duration-200"
+                        class="w-full px-3.5 py-2.5 text-xs rounded-xl bg-white border border-stone-255 text-stone-900 dark:bg-stone-900/50 dark:border-stone-850 dark:text-stone-100 outline-none focus:border-gold-600 dark:focus:border-gold-500/50 transition duration-200"
                     >
                 </div>
 
-                <div class="pt-4 flex space-x-3.5">
-                    <button type="button" @click="modals.adjustGoal = false" class="flex-1 py-3 border border-stone-200 hover:bg-stone-100 text-stone-600 font-bold rounded-xl transition cursor-pointer dark:border-stone-800 dark:text-stone-400 dark:hover:bg-stone-900/30">Batal</button>
-                    <button type="submit" class="flex-1 py-3 bg-gradient-to-r from-gold-600 to-gold-400 text-white dark:text-stone-955 font-bold rounded-xl cursor-pointer">Konfirmasi</button>
+                <div class="pt-3 flex space-x-3">
+                    <button type="button" @click="modals.adjustGoal = false" class="flex-1 py-2.5 border border-stone-200 hover:bg-stone-100 text-stone-600 font-bold rounded-xl transition cursor-pointer dark:border-stone-800 dark:text-stone-400 dark:hover:bg-stone-900/30">Batal</button>
+                    <button type="submit" class="flex-1 py-2.5 bg-gradient-to-r from-gold-600 to-gold-400 text-white dark:text-stone-955 font-bold rounded-xl cursor-pointer">Konfirmasi</button>
                 </div>
             </form>
         </div>
@@ -1526,41 +1588,41 @@
         x-transition
         x-cloak
     >
-        <div @click.away="modals.bill = false" class="glass-panel w-full max-w-sm p-6 lg:p-8 rounded-3xl space-y-5 border-stone-200/80 dark:border-gold-500/15">
-            <div class="flex items-center justify-between pb-3 border-b border-stone-200 dark:border-stone-900/60">
+        <div @click.away="modals.bill = false" class="glass-panel w-full max-w-sm p-6 lg:p-8 rounded-3xl space-y-4 border-stone-200/80 dark:border-gold-500/15">
+            <div class="flex items-center justify-between pb-2 border-b border-stone-200 dark:border-stone-900/60">
                 <h3 class="font-serif text-xl font-bold text-stone-900 dark:text-gold-500" x-text="editingBillId ? 'Ubah Rincian Tagihan' : 'Tambah Tagihan Rutin'"></h3>
                 <button @click="modals.bill = false" class="text-stone-400 hover:text-stone-855 dark:text-stone-500 dark:hover:text-stone-200 cursor-pointer">
                     <i data-lucide="x" class="w-5 h-5"></i>
                 </button>
             </div>
 
-            <form @submit.prevent="saveBill()" class="space-y-4 text-xs font-semibold">
+            <form @submit.prevent="saveBill()" class="space-y-3.5 text-xs font-semibold">
                 <div>
-                    <label class="block text-[11px] uppercase font-bold text-stone-500 dark:text-stone-455 tracking-wider mb-2">Nama Tagihan / Layanan</label>
+                    <label class="block text-[10px] uppercase font-bold text-stone-500 dark:text-stone-455 tracking-wider mb-1.5">Nama Tagihan / Layanan</label>
                     <input 
                         type="text" 
                         x-model="billForm.name"
-                        placeholder="Contoh: Tagihan Wifi, Netflix..."
+                        placeholder="Contoh: Wifi, Netflix..."
                         required
-                        class="w-full px-3.5 py-2.5 text-sm rounded-xl bg-white border border-stone-255 text-stone-900 dark:bg-stone-900/50 dark:border-stone-850 dark:text-stone-100 outline-none focus:border-gold-600 dark:focus:border-gold-500/50 transition duration-200"
+                        class="w-full px-3.5 py-2.5 text-xs rounded-xl bg-white border border-stone-255 text-stone-900 dark:bg-stone-900/50 dark:border-stone-850 dark:text-stone-100 outline-none focus:border-gold-600 dark:focus:border-gold-500/50 transition duration-200"
                     >
                 </div>
 
-                <div class="grid grid-cols-2 gap-4">
+                <div class="grid grid-cols-2 gap-3.5">
                     <div>
-                        <label class="block text-[11px] uppercase font-bold text-stone-500 dark:text-stone-455 tracking-wider mb-2">Nominal Tagihan (Rp)</label>
+                        <label class="block text-[10px] uppercase font-bold text-stone-500 dark:text-stone-455 tracking-wider mb-1.5">Nominal Tagihan (Rp)</label>
                         <input 
                             type="number" 
                             x-model.number="billForm.amount"
                             placeholder="Tagihan..."
                             required
                             min="1"
-                            class="w-full px-3.5 py-2.5 text-sm rounded-xl bg-white border border-stone-255 text-stone-900 dark:bg-stone-900/50 dark:border-stone-850 dark:text-stone-100 outline-none focus:border-gold-600 dark:focus:border-gold-500/50 transition duration-200"
+                            class="w-full px-3.5 py-2.5 text-xs rounded-xl bg-white border border-stone-255 text-stone-900 dark:bg-stone-900/50 dark:border-stone-850 dark:text-stone-100 outline-none focus:border-gold-600 dark:focus:border-gold-500/50 transition duration-200"
                         >
                     </div>
 
                     <div>
-                        <label class="block text-[11px] uppercase font-bold text-stone-500 dark:text-stone-455 tracking-wider mb-2">Hari Jatuh Tempo</label>
+                        <label class="block text-[10px] uppercase font-bold text-stone-500 dark:text-stone-455 tracking-wider mb-1.5">Hari Jatuh Tempo</label>
                         <input 
                             type="number" 
                             x-model.number="billForm.dueDate"
@@ -1568,16 +1630,16 @@
                             required
                             min="1"
                             max="31"
-                            class="w-full px-3.5 py-2.5 text-sm rounded-xl bg-white border border-stone-255 text-stone-900 dark:bg-stone-900/50 dark:border-stone-850 dark:text-stone-100 outline-none focus:border-gold-600 dark:focus:border-gold-500/50 transition duration-200"
+                            class="w-full px-3.5 py-2.5 text-xs rounded-xl bg-white border border-stone-255 text-stone-900 dark:bg-stone-900/50 dark:border-stone-850 dark:text-stone-100 outline-none focus:border-gold-600 dark:focus:border-gold-500/50 transition duration-200"
                         >
                     </div>
                 </div>
 
                 <div>
-                    <label class="block text-[11px] uppercase font-bold text-stone-500 dark:text-stone-455 tracking-wider mb-2">Kategori Terkait</label>
+                    <label class="block text-[10px] uppercase font-bold text-stone-500 dark:text-stone-455 tracking-wider mb-1.5">Kategori Terkait</label>
                     <select 
                         x-model="billForm.categoryId"
-                        class="w-full px-3.5 py-2.5 text-sm rounded-xl bg-white border border-stone-255 text-stone-900 dark:bg-stone-900/50 dark:border-stone-850 dark:text-stone-100 outline-none focus:border-gold-600 dark:focus:border-gold-500/50 transition duration-200 cursor-pointer"
+                        class="w-full px-3.5 py-2.5 text-xs rounded-xl bg-white border border-stone-255 text-stone-900 dark:bg-stone-900/50 dark:border-stone-850 dark:text-stone-100 outline-none focus:border-gold-600 dark:focus:border-gold-500/50 transition duration-200 cursor-pointer"
                     >
                         <template x-for="cat in categories.filter(c => c.kind === 'expense')" :key="cat.id">
                             <option :value="cat.id" x-text="cat.name"></option>
@@ -1585,9 +1647,9 @@
                     </select>
                 </div>
 
-                <div class="pt-4 flex space-x-3.5">
-                    <button type="button" @click="modals.bill = false" class="flex-1 py-3 border border-stone-200 hover:bg-stone-100 text-stone-600 font-bold rounded-xl transition cursor-pointer dark:border-stone-800 dark:text-stone-400 dark:hover:bg-stone-900/30">Batal</button>
-                    <button type="submit" class="flex-1 py-3 bg-gradient-to-r from-gold-600 to-gold-400 text-white dark:text-stone-955 font-bold rounded-xl cursor-pointer">Simpan Tagihan</button>
+                <div class="pt-3 flex space-x-3">
+                    <button type="button" @click="modals.bill = false" class="flex-1 py-2.5 border border-stone-200 hover:bg-stone-100 text-stone-600 font-bold rounded-xl transition cursor-pointer dark:border-stone-800 dark:text-stone-400 dark:hover:bg-stone-900/30">Batal</button>
+                    <button type="submit" class="flex-1 py-2.5 bg-gradient-to-r from-gold-600 to-gold-400 text-white dark:text-stone-955 font-bold rounded-xl cursor-pointer">Simpan Tagihan</button>
                 </div>
             </form>
         </div>
@@ -1600,44 +1662,44 @@
         x-transition
         x-cloak
     >
-        <div @click.away="modals.wallet = false" class="glass-panel w-full max-w-sm p-6 lg:p-8 rounded-3xl space-y-5 border-stone-200/80 dark:border-gold-500/15">
-            <div class="flex items-center justify-between pb-3 border-b border-stone-200 dark:border-stone-900/60">
+        <div @click.away="modals.wallet = false" class="glass-panel w-full max-w-sm p-6 lg:p-8 rounded-3xl space-y-4 border-stone-200/80 dark:border-gold-500/15">
+            <div class="flex items-center justify-between pb-2 border-b border-stone-200 dark:border-stone-900/60">
                 <h3 class="font-serif text-xl font-bold text-stone-900 dark:text-gold-500">Tambah Dompet / Rekening</h3>
                 <button @click="modals.wallet = false" class="text-stone-400 hover:text-stone-855 dark:text-stone-500 dark:hover:text-stone-200 cursor-pointer">
                     <i data-lucide="x" class="w-5 h-5"></i>
                 </button>
             </div>
 
-            <form @submit.prevent="saveWallet()" class="space-y-4 text-xs font-semibold">
+            <form @submit.prevent="saveWallet()" class="space-y-3.5 text-xs font-semibold">
                 <div>
-                    <label class="block text-[11px] uppercase font-bold text-stone-500 dark:text-stone-450 tracking-wider mb-2">Nama Akun / Dompet</label>
+                    <label class="block text-[10px] uppercase font-bold text-stone-500 dark:text-stone-450 tracking-wider mb-1.5">Nama Akun / Dompet</label>
                     <input 
                         type="text" 
                         x-model="walletForm.name"
-                        placeholder="Contoh: BCA Bersama, Gopay..."
+                        placeholder="Contoh: BCA, Gopay..."
                         required
-                        class="w-full px-3.5 py-2.5 text-sm rounded-xl bg-white border border-stone-255 text-stone-900 dark:bg-stone-900/50 dark:border-stone-850 dark:text-stone-100 outline-none focus:border-gold-600 dark:focus:border-gold-500/50 transition duration-200"
+                        class="w-full px-3.5 py-2.5 text-xs rounded-xl bg-white border border-stone-255 text-stone-900 dark:bg-stone-900/50 dark:border-stone-850 dark:text-stone-100 outline-none focus:border-gold-600 dark:focus:border-gold-500/50 transition duration-200"
                     >
                 </div>
 
-                <div class="grid grid-cols-2 gap-4">
+                <div class="grid grid-cols-2 gap-3.5">
                     <div>
-                        <label class="block text-[11px] uppercase font-bold text-stone-500 dark:text-stone-455 tracking-wider mb-2">Saldo Awal (Rp)</label>
+                        <label class="block text-[10px] uppercase font-bold text-stone-500 dark:text-stone-455 tracking-wider mb-1.5">Saldo Awal (Rp)</label>
                         <input 
                             type="number" 
                             x-model.number="walletForm.balance"
                             placeholder="Nominal..."
                             required
                             min="0"
-                            class="w-full px-3.5 py-2.5 text-sm rounded-xl bg-white border border-stone-255 text-stone-900 dark:bg-stone-900/50 dark:border-stone-850 dark:text-stone-100 outline-none focus:border-gold-600 dark:focus:border-gold-500/50 transition duration-200"
+                            class="w-full px-3.5 py-2.5 text-xs rounded-xl bg-white border border-stone-255 text-stone-900 dark:bg-stone-900/50 dark:border-stone-850 dark:text-stone-100 outline-none focus:border-gold-600 dark:focus:border-gold-500/50 transition duration-200"
                         >
                     </div>
 
                     <div>
-                        <label class="block text-[11px] uppercase font-bold text-stone-500 dark:text-stone-455 tracking-wider mb-2">Tipe Aset</label>
+                        <label class="block text-[10px] uppercase font-bold text-stone-500 dark:text-stone-455 tracking-wider mb-1.5">Tipe Aset</label>
                         <select 
                             x-model="walletForm.type"
-                            class="w-full px-3.5 py-2.5 text-sm rounded-xl bg-white border border-stone-255 text-stone-900 dark:bg-stone-900/50 dark:border-stone-850 dark:text-stone-100 outline-none focus:border-gold-600 dark:focus:border-gold-500/50 transition duration-200 cursor-pointer"
+                            class="w-full px-3.5 py-2.5 text-xs rounded-xl bg-white border border-stone-255 text-stone-900 dark:bg-stone-900/50 dark:border-stone-850 dark:text-stone-100 outline-none focus:border-gold-600 dark:focus:border-gold-500/50 transition duration-200 cursor-pointer"
                         >
                             <option value="cash">Tunai (Cash)</option>
                             <option value="bank">Bank Utama</option>
@@ -1650,9 +1712,9 @@
                     </div>
                 </div>
 
-                <div class="pt-4 flex space-x-3.5">
-                    <button type="button" @click="modals.wallet = false" class="flex-1 py-3 border border-stone-200 hover:bg-stone-100 text-stone-600 font-bold rounded-xl transition cursor-pointer dark:border-stone-800 dark:text-stone-400 dark:hover:bg-stone-900/30">Batal</button>
-                    <button type="submit" class="flex-1 py-3 bg-gradient-to-r from-gold-600 to-gold-400 text-white dark:text-stone-955 font-bold rounded-xl cursor-pointer">Simpan Dompet</button>
+                <div class="pt-3 flex space-x-3">
+                    <button type="button" @click="modals.wallet = false" class="flex-1 py-2.5 border border-stone-200 hover:bg-stone-100 text-stone-600 font-bold rounded-xl transition cursor-pointer dark:border-stone-800 dark:text-stone-400 dark:hover:bg-stone-900/30">Batal</button>
+                    <button type="submit" class="flex-1 py-2.5 bg-gradient-to-r from-gold-600 to-gold-400 text-white dark:text-stone-955 font-bold rounded-xl cursor-pointer">Simpan Dompet</button>
                 </div>
             </form>
         </div>
@@ -1665,32 +1727,32 @@
         x-transition
         x-cloak
     >
-        <div @click.away="modals.member = false" class="glass-panel w-full max-w-sm p-6 lg:p-8 rounded-3xl space-y-5 border-stone-200/80 dark:border-gold-500/15">
-            <div class="flex items-center justify-between pb-3 border-b border-stone-200 dark:border-stone-900/60">
+        <div @click.away="modals.member = false" class="glass-panel w-full max-w-sm p-6 lg:p-8 rounded-3xl space-y-4 border-stone-200/80 dark:border-gold-500/15">
+            <div class="flex items-center justify-between pb-2 border-b border-stone-200 dark:border-stone-900/60">
                 <h3 class="font-serif text-xl font-bold text-stone-900 dark:text-gold-500">Tambah Anggota Keluarga</h3>
                 <button @click="modals.member = false" class="text-stone-400 hover:text-stone-855 dark:text-stone-555 dark:hover:text-stone-200 cursor-pointer">
                     <i data-lucide="x" class="w-5 h-5"></i>
                 </button>
             </div>
 
-            <form @submit.prevent="saveMember()" class="space-y-4 text-xs font-semibold">
+            <form @submit.prevent="saveMember()" class="space-y-3.5 text-xs font-semibold">
                 <div>
-                    <label class="block text-[11px] uppercase font-bold text-stone-500 dark:text-stone-450 tracking-wider mb-2">Nama Panggilan</label>
+                    <label class="block text-[10px] uppercase font-bold text-stone-500 dark:text-stone-450 tracking-wider mb-1.5">Nama Panggilan</label>
                     <input 
                         type="text" 
                         x-model="memberForm.name"
-                        placeholder="Contoh: Sari, Danu..."
+                        placeholder="Contoh: Danu..."
                         required
-                        class="w-full px-3.5 py-2.5 text-sm rounded-xl bg-white border border-stone-255 text-stone-900 dark:bg-stone-900/50 dark:border-stone-850 dark:text-stone-100 outline-none focus:border-gold-600 dark:focus:border-gold-500/50 transition duration-200"
+                        class="w-full px-3.5 py-2.5 text-xs rounded-xl bg-white border border-stone-255 text-stone-900 dark:bg-stone-900/50 dark:border-stone-850 dark:text-stone-100 outline-none focus:border-gold-600 dark:focus:border-gold-500/50 transition duration-200"
                     >
                 </div>
 
-                <div class="grid grid-cols-2 gap-4">
+                <div class="grid grid-cols-2 gap-3.5">
                     <div>
-                        <label class="block text-[11px] uppercase font-bold text-stone-500 dark:text-stone-455 tracking-wider mb-2">Peran</label>
+                        <label class="block text-[10px] uppercase font-bold text-stone-500 dark:text-stone-455 tracking-wider mb-1.5">Peran</label>
                         <select 
                             x-model="memberForm.role"
-                            class="w-full px-3.5 py-2.5 text-sm rounded-xl bg-white border border-stone-255 text-stone-900 dark:bg-stone-900/50 dark:border-stone-850 dark:text-stone-100 outline-none focus:border-gold-600 dark:focus:border-gold-500/50 transition duration-200 cursor-pointer"
+                            class="w-full px-3.5 py-2.5 text-xs rounded-xl bg-white border border-stone-255 text-stone-900 dark:bg-stone-900/50 dark:border-stone-850 dark:text-stone-100 outline-none focus:border-gold-600 dark:focus:border-gold-500/50 transition duration-200 cursor-pointer"
                         >
                             <option value="Admin">Admin Utama</option>
                             <option value="Anggota">Anggota Keluarga</option>
@@ -1700,10 +1762,10 @@
                     </div>
 
                     <div>
-                        <label class="block text-[11px] uppercase font-bold text-stone-500 dark:text-stone-455 tracking-wider mb-2">Warna</label>
+                        <label class="block text-[10px] uppercase font-bold text-stone-500 dark:text-stone-455 tracking-wider mb-1.5">Warna</label>
                         <select 
                             x-model="memberForm.color"
-                            class="w-full px-3.5 py-2.5 text-sm rounded-xl bg-white border border-stone-255 text-stone-900 dark:bg-stone-900/50 dark:border-stone-850 dark:text-stone-100 outline-none focus:border-gold-600 dark:focus:border-gold-500/50 transition duration-200 cursor-pointer"
+                            class="w-full px-3.5 py-2.5 text-xs rounded-xl bg-white border border-stone-255 text-stone-900 dark:bg-stone-900/50 dark:border-stone-850 dark:text-stone-100 outline-none focus:border-gold-600 dark:focus:border-gold-500/50 transition duration-200 cursor-pointer"
                         >
                             <option value="teal">Teal (Hijau Toska)</option>
                             <option value="gold">Gold (Emas Mewah)</option>
@@ -1714,9 +1776,9 @@
                     </div>
                 </div>
 
-                <div class="pt-4 flex space-x-3.5">
-                    <button type="button" @click="modals.member = false" class="flex-1 py-3 border border-stone-200 hover:bg-stone-100 text-stone-600 font-bold rounded-xl transition cursor-pointer dark:border-stone-800 dark:text-stone-400 dark:hover:bg-stone-900/30">Batal</button>
-                    <button type="submit" class="flex-1 py-3 bg-gradient-to-r from-gold-600 to-gold-400 text-white dark:text-stone-955 font-bold rounded-xl cursor-pointer">Simpan Anggota</button>
+                <div class="pt-3 flex space-x-3">
+                    <button type="button" @click="modals.member = false" class="flex-1 py-2.5 border border-stone-200 hover:bg-stone-100 text-stone-600 font-bold rounded-xl transition cursor-pointer dark:border-stone-800 dark:text-stone-400 dark:hover:bg-stone-900/30">Batal</button>
+                    <button type="submit" class="flex-1 py-2.5 bg-gradient-to-r from-gold-600 to-gold-400 text-white dark:text-stone-955 font-bold rounded-xl cursor-pointer">Simpan Anggota</button>
                 </div>
             </form>
         </div>
@@ -1761,8 +1823,10 @@
                 {id:"a7",name:"Pinjaman ke Adik",type:"piutang",balance:1000000}
             ];
 
-            // Setup date generator offsets relative to today
-            const baseDate = new Date();
+            // Setup date generator offsets relative to a FIXED base date of August 27, 2026
+            // This guarantees demo data ONLY exists in August 2026 and earlier.
+            // September 2026 onwards is kept completely empty of demo data!
+            const baseDate = new Date('2026-08-27T00:00:00');
             function dateOffset(days) {
                 let d = new Date(baseDate);
                 d.setDate(d.getDate() - days);
@@ -1960,7 +2024,7 @@
                     });
                 },
 
-                // FEATURE 1: PERIOD NAVIGATION ENGINE
+                // FEATURE 1: PERIOD NAVIGATION ENGINE (Supports Direction 0 for Dropdown Updates)
                 navigatePeriod(direction) {
                     let d = new Date(this.selectedYear, this.selectedMonth + direction, 1);
                     this.selectedMonth = d.getMonth();
@@ -1981,6 +2045,29 @@
                 updatePeriodLabel() {
                     const months = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'];
                     this.activeMonthLabel = months[this.selectedMonth] + ' ' + this.selectedYear;
+                },
+
+                // WIPE ALL DEMO DATA TO START FROM ZERO
+                resetToZero() {
+                    if (confirm("Apakah Anda yakin ingin menghapus seluruh data demo dan mulai mencatat keuangan asli keluarga Anda dari NOL?")) {
+                        this.transactions = [];
+                        this.goals = [];
+                        this.envelopes = [];
+                        this.bills = [];
+                        this.accounts = this.accounts.map(acc => ({
+                            ...acc,
+                            balance: 0
+                        }));
+                        
+                        this.saveDataToStorage();
+                        this.calculateDashboardStats();
+                        alert("Seluruh data telah dikosongkan. Selamat mencatat keuangan keluarga baru Anda!");
+                        
+                        if (this.activeTab === 'dashboard') {
+                            this.renderCharts();
+                        }
+                        this.updateIcons();
+                    }
                 },
 
                 // FEATURE 2: NLP COMMAND PARSER
@@ -2444,7 +2531,7 @@
                     switch(m.color) {
                         case 'teal': return 'bg-teal-500/10 text-teal-700 dark:text-teal-500 border border-teal-500/20';
                         case 'gold': return 'bg-gold-500/10 text-gold-700 dark:text-gold-500 border border-gold-500/20';
-                        case 'clay': return 'bg-amber-700/10 text-amber-700 dark:text-amber-555 border border-amber-700/20';
+                        case 'clay': return 'bg-amber-700/10 text-amber-700 dark:text-amber-500 border border-amber-700/20';
                         case 'blue': return 'bg-blue-500/10 text-blue-700 dark:text-blue-500 border border-blue-500/20';
                         case 'rose': return 'bg-rose-500/10 text-rose-700 dark:text-rose-500 border border-rose-500/20';
                         default: return 'bg-stone-850 text-stone-355 border border-stone-800';
@@ -3062,7 +3149,7 @@
                         ],
                         chart: {
                             type: 'area',
-                            height: 300,
+                            height: window.innerWidth < 768 ? 220 : 300,
                             toolbar: { show: false },
                             background: 'transparent',
                             fontFamily: 'Plus Jakarta Sans'
@@ -3081,13 +3168,13 @@
                         stroke: { curve: 'smooth', width: 2 },
                         xaxis: {
                             categories: monthLabels,
-                            labels: { style: { colors: textColor, fontSize: '10px', fontWeight: 'bold' } },
+                            labels: { style: { colors: textColor, fontSize: '9px', fontWeight: 'bold' } },
                             axisBorder: { show: false },
                             axisTicks: { show: false }
                         },
                         yaxis: {
                             labels: {
-                                style: { colors: textColor, fontSize: '10px', fontWeight: 'bold' },
+                                style: { colors: textColor, fontSize: '9px', fontWeight: 'bold' },
                                 formatter: (val) => {
                                     if (val >= 1000000) return (val / 1000000) + ' M';
                                     if (val >= 1000) return (val / 1000) + ' K';
@@ -3138,7 +3225,7 @@
                         series: expAmounts,
                         chart: {
                             type: 'donut',
-                            height: 300,
+                            height: window.innerWidth < 768 ? 220 : 300,
                             background: 'transparent',
                             fontFamily: 'Plus Jakarta Sans'
                         },
@@ -3165,7 +3252,7 @@
                                         },
                                         value: {
                                             show: true,
-                                            fontSize: '16px',
+                                            fontSize: '15px',
                                             fontWeight: 'bold',
                                             color: isDark ? '#f5f5f4' : '#1C1917',
                                             formatter: (val) => {
@@ -3219,7 +3306,7 @@
                         }],
                         chart: {
                             type: 'bar',
-                            height: 280,
+                            height: window.innerWidth < 768 ? 200 : 280,
                             toolbar: { show: false },
                             background: 'transparent',
                             fontFamily: 'Plus Jakarta Sans'
@@ -3227,12 +3314,12 @@
                         colors: [isDark ? '#d4af37' : '#854D0E'], // Premium dark gold or bronze-amber
                         plotOptions: {
                             bar: {
-                                borderRadius: 6,
+                                borderRadius: 5,
                                 horizontal: true,
-                                barHeight: '40%',
+                                barHeight: '35%',
                                 colors: {
                                     backgroundBarColors: [isDark ? 'rgba(255,255,255,0.01)' : 'rgba(0,0,0,0.02)'],
-                                    backgroundBarRadius: 6
+                                    backgroundBarRadius: 5
                                 }
                             }
                         },
@@ -3251,7 +3338,7 @@
                             axisTicks: { show: false }
                         },
                         yaxis: {
-                            labels: { style: { colors: textColor, fontSize: '10px', fontWeight: 'bold' } }
+                            labels: { style: { colors: textColor, fontSize: '9px', fontWeight: 'bold' } }
                         },
                         grid: { 
                             borderColor: gridColor,
