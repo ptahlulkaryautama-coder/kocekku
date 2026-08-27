@@ -337,7 +337,7 @@
                                 <div class="space-y-2.5 text-xs">
                                     <div class="flex items-center space-x-2">
                                         <span class="px-2.5 py-0.5 rounded-full text-[9px] font-extrabold uppercase"
-                                            :class="quickParseResult.type === 'income' ? 'bg-emerald-500/15 text-emerald-700 dark:text-emerald-500' : 'bg-rose-500/15 text-rose-700 dark:text-rose-500'"
+                                            :class="quickParseResult.type === 'income' ? 'bg-emerald-500/15 text-emerald-700 dark:text-emerald-555' : 'bg-rose-500/15 text-rose-700 dark:text-rose-555'"
                                             x-text="quickParseResult.type === 'income' ? 'Pemasukan' : 'Pengeluaran'"
                                         ></span>
                                         <span class="font-bold text-stone-850 dark:text-stone-200 text-sm" x-text="quickParseResult.note"></span>
@@ -503,7 +503,7 @@
                         </div>
 
                         <!-- Spender Analysis (Bar/Radial) - Indigo border trim -->
-                        <div class="glass-panel p-6 lg:p-8 rounded-3xl border-l-4 border-l-indigo-600 border-stone-200/80 dark:border-stone-900/50">
+                        <div class="glass-panel p-6 lg:p-8 rounded-3xl border-l-4 border-l-indigo-650 border-stone-200/80 dark:border-stone-900/50">
                             <div class="flex items-center justify-between mb-6">
                                 <h3 class="font-serif text-xl font-medium tracking-wide text-stone-900 dark:text-gold-500">Beban per Anggota</h3>
                                 <i data-lucide="users" class="w-4.5 h-4.5 text-stone-400 dark:text-stone-500"></i>
@@ -902,7 +902,7 @@
                             <p class="font-sans text-2xl lg:text-3xl font-bold text-emerald-700 dark:text-emerald-500 mt-1.5" x-text="formatRupiah(calculatePaidBills())"></p>
                         </div>
                         <div class="glass-panel p-6 lg:p-8 rounded-3xl border-stone-200/80 dark:border-stone-900/50">
-                            <p class="text-[9px] uppercase tracking-widest font-extrabold text-stone-500">Sisa Belum Dibayar</p>
+                            <p class="text-[9px] uppercase tracking-widest font-extrabold text-stone-550">Sisa Belum Dibayar</p>
                             <p class="font-sans text-2xl lg:text-3xl font-bold text-rose-700 dark:text-rose-500 mt-1.5" x-text="formatRupiah(calculateUnpaidBills())"></p>
                         </div>
                     </div>
@@ -944,7 +944,7 @@
                                                 <template x-if="!bill.paidThisMonth">
                                                     <button 
                                                         @click="payBill(bill)"
-                                                        class="px-4 py-1.5 rounded-xl bg-rose-500/10 hover:bg-rose-500/15 text-rose-700 dark:text-rose-500 text-[10px] font-extrabold uppercase tracking-widest border border-rose-500/20 transition cursor-pointer"
+                                                        class="px-4 py-1.5 rounded-xl bg-rose-500/10 hover:bg-rose-500/15 text-rose-700 dark:text-rose-555 text-[10px] font-extrabold uppercase tracking-widest border border-rose-500/20 transition cursor-pointer"
                                                     >
                                                         Bayar
                                                     </button>
@@ -960,7 +960,7 @@
                                     </template>
                                     <template x-if="bills.length === 0">
                                         <tr>
-                                            <td colspan="5" class="p-16 text-center text-stone-500 dark:text-stone-400">
+                                            <td colspan="5" class="p-16 text-center text-stone-550 dark:text-stone-400">
                                                 <i data-lucide="bell-off" class="w-10 h-10 mx-auto mb-3 opacity-40"></i>
                                                 <span class="text-xs font-semibold">Tidak ada tagihan bulanan.</span>
                                             </td>
@@ -995,7 +995,7 @@
                             <div class="pt-4 flex items-center justify-between border-t border-stone-200 dark:border-stone-900/40">
                                 <span class="text-[9px] font-extrabold uppercase tracking-wider text-stone-550">Batas Keamanan:</span>
                                 <span class="px-2.5 py-0.5 rounded-full text-[9px] font-extrabold uppercase"
-                                    :class="calculateEmergencyFundRatio().score === 'aman' ? 'bg-emerald-500/10 text-emerald-700 dark:text-emerald-500' : (calculateEmergencyFundRatio().score === 'waspada' ? 'bg-amber-500/10 text-amber-700 dark:text-amber-500' : 'bg-rose-500/10 text-rose-700 dark:text-rose-500')"
+                                    :class="calculateEmergencyFundRatio().score === 'aman' ? 'bg-emerald-500/10 text-emerald-700 dark:text-emerald-500' : (calculateEmergencyFundRatio().score === 'waspada' ? 'bg-amber-500/10 text-amber-700 dark:text-amber-500' : 'bg-rose-500/10 text-rose-700 dark:text-rose-555')"
                                     x-text="calculateEmergencyFundRatio().score"
                                 ></span>
                             </div>
@@ -1015,7 +1015,7 @@
                             <div class="pt-4 flex items-center justify-between border-t border-stone-200 dark:border-stone-900/40">
                                 <span class="text-[9px] font-extrabold uppercase tracking-wider text-stone-550">Status Alokasi:</span>
                                 <span class="px-2.5 py-0.5 rounded-full text-[9px] font-extrabold uppercase"
-                                    :class="calculateSavingRate() >= 20 ? 'bg-emerald-500/10 text-emerald-700 dark:text-emerald-500' : (calculateSavingRate() >= 10 ? 'bg-amber-500/10 text-amber-700 dark:text-amber-500' : 'bg-rose-500/10 text-rose-700 dark:text-rose-550')"
+                                    :class="calculateSavingRate() >= 20 ? 'bg-emerald-500/10 text-emerald-700 dark:text-emerald-500' : (calculateSavingRate() >= 10 ? 'bg-amber-500/10 text-amber-700 dark:text-amber-500' : 'bg-rose-500/10 text-rose-700 dark:text-rose-555')"
                                     x-text="calculateSavingRate() >= 20 ? 'SEHAT' : (calculateSavingRate() >= 10 ? 'CUKUP' : 'KRITIS')"
                                 ></span>
                             </div>
@@ -1035,7 +1035,7 @@
                             <div class="pt-4 flex items-center justify-between border-t border-stone-200 dark:border-stone-900/40">
                                 <span class="text-[9px] font-extrabold uppercase tracking-wider text-stone-550">Tingkat Risiko:</span>
                                 <span class="px-2.5 py-0.5 rounded-full text-[9px] font-extrabold uppercase"
-                                    :class="calculateDebtRatio().score === 'aman' ? 'bg-emerald-500/10 text-emerald-700 dark:text-emerald-500' : (calculateDebtRatio().score === 'waspada' ? 'bg-amber-500/10 text-amber-700 dark:text-amber-500' : 'bg-rose-500/10 text-rose-700 dark:text-rose-550')"
+                                    :class="calculateDebtRatio().score === 'aman' ? 'bg-emerald-500/10 text-emerald-700 dark:text-emerald-500' : (calculateDebtRatio().score === 'waspada' ? 'bg-amber-500/10 text-amber-700 dark:text-amber-500' : 'bg-rose-500/10 text-rose-700 dark:text-rose-555')"
                                     x-text="calculateDebtRatio().score"
                                 ></span>
                             </div>
@@ -1217,7 +1217,7 @@
                             @click="txForm.type = 'expense'; updateFormCategories()"
                             class="py-3 rounded-xl font-bold uppercase tracking-wider transition-all border cursor-pointer text-center text-xs"
                             :class="txForm.type === 'expense' 
-                                ? 'bg-rose-500/10 border-rose-500/30 text-rose-700 dark:text-rose-500 shadow-md shadow-rose-500/5' 
+                                ? 'bg-rose-500/10 border-rose-500/30 text-rose-700 dark:text-rose-555 shadow-md shadow-rose-500/5' 
                                 : 'border-stone-250 bg-white text-stone-500 dark:border-stone-850 dark:bg-stone-900/20 dark:text-stone-550'"
                         >
                             Pengeluaran
@@ -1363,7 +1363,7 @@
                 </div>
 
                 <div>
-                    <label class="block text-[11px] uppercase font-bold text-stone-500 dark:text-stone-450 tracking-wider mb-2">Batas Pengeluaran Bulanan (Limit)</label>
+                    <label class="block text-[11px] uppercase font-bold text-stone-500 dark:text-stone-455 tracking-wider mb-2">Batas Pengeluaran Bulanan (Limit)</label>
                     <input 
                         type="number" 
                         x-model.number="envForm.limit"
@@ -1392,7 +1392,7 @@
         <div @click.away="modals.goal = false" class="glass-panel w-full max-w-sm p-6 lg:p-8 rounded-3xl space-y-5 border-stone-200/80 dark:border-gold-500/15">
             <div class="flex items-center justify-between pb-3 border-b border-stone-200 dark:border-stone-900/60">
                 <h3 class="font-serif text-xl font-bold text-stone-900 dark:text-gold-500" x-text="editingGoalId ? 'Ubah Rencana Tabungan' : 'Target Rencana Baru'"></h3>
-                <button @click="modals.goal = false" class="text-stone-400 hover:text-stone-800 dark:text-stone-500 dark:hover:text-stone-200 cursor-pointer">
+                <button @click="modals.goal = false" class="text-stone-400 hover:text-stone-850 dark:text-stone-500 dark:hover:text-stone-200 cursor-pointer">
                     <i data-lucide="x" class="w-5 h-5"></i>
                 </button>
             </div>
@@ -1478,7 +1478,7 @@
         <div @click.away="modals.adjustGoal = false" class="glass-panel w-full max-w-sm p-6 lg:p-8 rounded-3xl space-y-5 border-stone-200/80 dark:border-gold-500/15">
             <div class="flex items-center justify-between pb-3 border-b border-stone-200 dark:border-stone-900/60">
                 <h3 class="font-serif text-xl font-bold text-stone-900 dark:text-gold-500" x-text="adjustGoalMode === 'add' ? 'Setor Tabungan' : 'Tarik Dana Tabungan'"></h3>
-                <button @click="modals.adjustGoal = false" class="text-stone-400 hover:text-stone-800 dark:text-stone-500 dark:hover:text-stone-200 cursor-pointer">
+                <button @click="modals.adjustGoal = false" class="text-stone-400 hover:text-stone-850 dark:text-stone-500 dark:hover:text-stone-200 cursor-pointer">
                     <i data-lucide="x" class="w-5 h-5"></i>
                 </button>
             </div>
@@ -1529,7 +1529,7 @@
         <div @click.away="modals.bill = false" class="glass-panel w-full max-w-sm p-6 lg:p-8 rounded-3xl space-y-5 border-stone-200/80 dark:border-gold-500/15">
             <div class="flex items-center justify-between pb-3 border-b border-stone-200 dark:border-stone-900/60">
                 <h3 class="font-serif text-xl font-bold text-stone-900 dark:text-gold-500" x-text="editingBillId ? 'Ubah Rincian Tagihan' : 'Tambah Tagihan Rutin'"></h3>
-                <button @click="modals.bill = false" class="text-stone-400 hover:text-stone-855 dark:text-stone-555 dark:hover:text-stone-200 cursor-pointer">
+                <button @click="modals.bill = false" class="text-stone-400 hover:text-stone-855 dark:text-stone-500 dark:hover:text-stone-200 cursor-pointer">
                     <i data-lucide="x" class="w-5 h-5"></i>
                 </button>
             </div>
@@ -1603,7 +1603,7 @@
         <div @click.away="modals.wallet = false" class="glass-panel w-full max-w-sm p-6 lg:p-8 rounded-3xl space-y-5 border-stone-200/80 dark:border-gold-500/15">
             <div class="flex items-center justify-between pb-3 border-b border-stone-200 dark:border-stone-900/60">
                 <h3 class="font-serif text-xl font-bold text-stone-900 dark:text-gold-500">Tambah Dompet / Rekening</h3>
-                <button @click="modals.wallet = false" class="text-stone-400 hover:text-stone-800 dark:text-stone-500 dark:hover:text-stone-200 cursor-pointer">
+                <button @click="modals.wallet = false" class="text-stone-400 hover:text-stone-855 dark:text-stone-500 dark:hover:text-stone-200 cursor-pointer">
                     <i data-lucide="x" class="w-5 h-5"></i>
                 </button>
             </div>
@@ -1668,7 +1668,7 @@
         <div @click.away="modals.member = false" class="glass-panel w-full max-w-sm p-6 lg:p-8 rounded-3xl space-y-5 border-stone-200/80 dark:border-gold-500/15">
             <div class="flex items-center justify-between pb-3 border-b border-stone-200 dark:border-stone-900/60">
                 <h3 class="font-serif text-xl font-bold text-stone-900 dark:text-gold-500">Tambah Anggota Keluarga</h3>
-                <button @click="modals.member = false" class="text-stone-400 hover:text-stone-855 dark:text-stone-500 dark:hover:text-stone-200 cursor-pointer">
+                <button @click="modals.member = false" class="text-stone-400 hover:text-stone-855 dark:text-stone-555 dark:hover:text-stone-200 cursor-pointer">
                     <i data-lucide="x" class="w-5 h-5"></i>
                 </button>
             </div>
@@ -2444,7 +2444,7 @@
                     switch(m.color) {
                         case 'teal': return 'bg-teal-500/10 text-teal-700 dark:text-teal-500 border border-teal-500/20';
                         case 'gold': return 'bg-gold-500/10 text-gold-700 dark:text-gold-500 border border-gold-500/20';
-                        case 'clay': return 'bg-amber-700/10 text-amber-700 dark:text-amber-500 border border-amber-700/20';
+                        case 'clay': return 'bg-amber-700/10 text-amber-700 dark:text-amber-555 border border-amber-700/20';
                         case 'blue': return 'bg-blue-500/10 text-blue-700 dark:text-blue-500 border border-blue-500/20';
                         case 'rose': return 'bg-rose-500/10 text-rose-700 dark:text-rose-500 border border-rose-500/20';
                         default: return 'bg-stone-850 text-stone-355 border border-stone-800';
