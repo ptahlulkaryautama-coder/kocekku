@@ -32,7 +32,7 @@
                         stone: {
                             850: '#1C1917',
                             900: '#141210',
-                            950: '#0C0A09',
+                            955: '#0C0A09',
                         },
                         gold: {
                             50: '#FDFBF7',
@@ -278,7 +278,7 @@
                             <!-- Start from Zero (Reset) button next to text -->
                             <button 
                                 @click="resetToZero()"
-                                class="px-3 py-1.5 border border-gold-500/25 hover:border-gold-500/50 hover:bg-gold-500/5 text-gold-750 dark:text-gold-500 text-[9px] font-bold uppercase tracking-widest rounded-xl transition cursor-pointer flex items-center space-x-1 mt-1.5 cursor-pointer"
+                                class="px-3 py-1.5 border border-gold-500/25 hover:border-gold-500/50 hover:bg-gold-500/5 text-gold-755 dark:text-gold-500 text-[9px] font-bold uppercase tracking-widest rounded-xl transition cursor-pointer flex items-center space-x-1 mt-1.5"
                             >
                                 <i data-lucide="refresh-cw" class="w-3 h-3"></i>
                                 <span>Mulai dari Nol (Reset)</span>
@@ -384,9 +384,9 @@
                                             :class="quickParseResult.type === 'income' ? 'bg-emerald-500/15 text-emerald-700 dark:text-emerald-500' : 'bg-rose-500/15 text-rose-700 dark:text-rose-555'"
                                             x-text="quickParseResult.type === 'income' ? 'Pemasukan' : 'Pengeluaran'"
                                         ></span>
-                                        <span class="font-bold text-stone-850 dark:text-stone-200 text-xs" x-text="quickParseResult.note"></span>
+                                        <span class="font-bold text-stone-855 dark:text-stone-200 text-xs" x-text="quickParseResult.note"></span>
                                     </div>
-                                    <div class="grid grid-cols-2 md:grid-cols-4 gap-x-4 gap-y-1 font-bold text-[9px] text-stone-650 dark:text-stone-400">
+                                    <div class="grid grid-cols-2 md:grid-cols-4 gap-x-4 gap-y-1 font-bold text-[9px] text-stone-655 dark:text-stone-400">
                                         <div class="flex items-center space-x-1">
                                             <i data-lucide="wallet" class="w-3 h-3 text-gold-700 dark:text-gold-500/70"></i>
                                             <span x-text="`Dompet: ${getWalletName(quickParseResult.accountId)}`"></span>
@@ -499,91 +499,116 @@
                         </div>
                     </div>
 
-                    <!-- Dynamic Widgets: Wallets Grid & Quick Log & Spender Chart -->
+                    <!-- Dynamic Widgets: Wallets Grid & Spender Chart & Quick Log (3 Columns Grid) -->
                     <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 lg:gap-8">
                         
-                        <!-- Wallets Quick View - Amber border trim - Scrollable lists to keep page short -->
-                        <div class="glass-panel p-5 sm:p-6 lg:p-8 rounded-3xl space-y-4 border-l-4 border-l-amber-600 border-stone-200/80 dark:border-stone-900/50">
-                            <div class="flex items-center justify-between pb-3 border-b border-stone-200 dark:border-stone-900/60">
-                                <h3 class="font-serif text-lg font-medium tracking-wide text-stone-900 dark:text-gold-500">Daftar Dompet</h3>
-                                <button @click="activeTab = 'settings'; updateIcons()" class="text-[9px] tracking-widest font-extrabold uppercase text-gold-700 dark:text-gold-500 hover:text-gold-600 dark:hover:text-gold-400 flex items-center space-x-0.5 cursor-pointer">
-                                    <span>Kelola</span>
-                                    <i data-lucide="chevron-right" class="w-3.5 h-3.5"></i>
-                                </button>
-                            </div>
-                            <!-- Fixed height with internal scroll to reduce page length -->
-                            <div class="space-y-2.5 max-h-[180px] overflow-y-auto custom-scrollbar pr-1">
-                                <template x-for="acc in accounts" :key="acc.id">
-                                    <div class="flex items-center justify-between p-3 rounded-2xl bg-stone-50 border border-stone-200 hover:border-gold-500/35 transition-all duration-300 dark:bg-stone-900/20 dark:border-stone-850/40 dark:hover:border-gold-500/25">
-                                        <div class="flex items-center space-x-3">
-                                            <div class="w-8 h-8 rounded-xl flex items-center justify-center shrink-0 border border-stone-200 dark:border-stone-850/40"
-                                                :class="{
-                                                    'bg-teal-500/10 text-teal-700 dark:text-teal-500': acc.type === 'cash' || acc.type === 'piutang',
-                                                    'bg-blue-500/10 text-blue-700 dark:text-blue-500': acc.type === 'bank' || acc.type === 'bank-digital',
-                                                    'bg-amber-500/10 text-amber-700 dark:text-amber-500': acc.type === 'ewallet' || acc.type === 'investasi',
-                                                    'bg-rose-500/10 text-rose-700 dark:text-rose-500': acc.type === 'utang'
-                                                }"
-                                            >
-                                                <i :data-lucide="
-                                                    acc.type === 'cash' ? 'coins' : 
-                                                    acc.type === 'bank' ? 'landmark' : 
-                                                    acc.type === 'ewallet' ? 'smartphone' : 
-                                                    acc.type === 'investasi' ? 'line-chart' : 
-                                                    acc.type === 'utang' ? 'credit-card' : 'hand-coins'" 
-                                                    class="w-4.5 h-4.5"
-                                                ></i>
-                                            </div>
-                                            <div>
-                                                <p class="text-[11px] font-bold text-stone-855 dark:text-stone-200" x-text="acc.name"></p>
-                                                <p class="text-[8px] font-bold text-stone-500 uppercase tracking-wider mt-0.5" x-text="acc.type"></p>
-                                            </div>
-                                        </div>
-                                        <div class="font-sans text-xs font-bold tracking-tight" 
-                                            :class="acc.type === 'utang' ? 'text-rose-700 dark:text-rose-500' : 'text-stone-855 dark:text-stone-200'"
-                                            x-text="formatRupiah(acc.balance)"
-                                        ></div>
+                        <!-- 1. DAFTAR DOMPET - Taller scroll height on desktop to fill empty space -->
+                        <div class="glass-panel p-5 sm:p-6 lg:p-8 rounded-3xl flex flex-col justify-between border-l-4 border-l-amber-600 border-stone-200/80 dark:border-stone-900/50">
+                            <div class="space-y-4">
+                                <!-- Standardized Header (Aligned with straight line) -->
+                                <div class="flex items-center justify-between pb-3 border-b border-stone-200 dark:border-stone-900/60 min-h-[52px]">
+                                    <div>
+                                        <h3 class="font-serif text-base font-bold text-stone-900 dark:text-gold-500 leading-none">Daftar Dompet</h3>
+                                        <p class="text-[8px] text-stone-500 uppercase tracking-widest mt-1">Akun Finansial</p>
                                     </div>
-                                </template>
-                            </div>
-                        </div>
-
-                        <!-- Spender Analysis (Bar/Radial) - Indigo border trim -->
-                        <div class="glass-panel p-5 sm:p-6 lg:p-8 rounded-3xl border-l-4 border-l-indigo-650 border-stone-200/80 dark:border-stone-900/50">
-                            <div class="flex items-center justify-between mb-4">
-                                <h3 class="font-serif text-lg font-medium tracking-wide text-stone-900 dark:text-gold-500">Beban per Anggota</h3>
-                                <i data-lucide="users" class="w-4.5 h-4.5 text-stone-400 dark:text-stone-500"></i>
-                            </div>
-                            <div id="spenderBreakdownChart" class="w-full min-h-[200px]"></div>
-                        </div>
-
-                        <!-- Quick Action Card - Gold border trim -->
-                        <div class="glass-panel p-5 sm:p-6 lg:p-8 rounded-3xl space-y-4 relative overflow-hidden flex flex-col justify-between border-l-4 border-l-gold-550 border-stone-200/80 dark:border-stone-900/50">
-                            <div class="absolute -right-10 -top-10 w-28 h-28 bg-gold-500/5 rounded-full blur-xl"></div>
-                            
-                            <div class="pb-3 border-b border-stone-200 dark:border-stone-900/60">
-                                <h3 class="font-serif text-lg font-medium tracking-wide text-stone-900 dark:text-gold-500">Pencatatan Kilat</h3>
-                                <p class="text-xs text-stone-500 dark:text-stone-400 mt-1">Simpan pengeluaran harian dalam sekali ketuk.</p>
-                            </div>
-                            
-                            <div class="grid grid-cols-2 gap-2.5 my-2">
-                                <template x-for="cat in categories.filter(c => c.kind === 'expense').slice(0,4)" :key="cat.id">
-                                    <button 
-                                        @click="openQuickTransactionModal(cat)"
-                                        class="p-3 rounded-2xl border bg-stone-50 border-stone-200 hover:border-gold-500/50 hover:bg-gold-500/5 transition-all duration-300 group flex flex-col items-center space-y-1.5 cursor-pointer dark:border-stone-855 dark:bg-stone-900/10 dark:hover:border-gold-500/25"
-                                    >
-                                        <div class="w-8 h-8 rounded-full bg-white text-gold-700 border border-stone-200 flex items-center justify-center group-hover:scale-110 group-hover:text-gold-600 transition-all duration-300 dark:bg-stone-955 dark:text-gold-500 dark:border-stone-900">
-                                            <i :data-lucide="cat.icon" class="w-4 h-4"></i>
-                                        </div>
-                                        <span class="text-[9px] font-extrabold tracking-wider text-stone-600 dark:text-stone-300 truncate w-full uppercase" x-text="cat.name"></span>
+                                    <button @click="activeTab = 'settings'; updateIcons()" class="text-[9px] tracking-widest font-extrabold uppercase text-gold-700 dark:text-gold-500 hover:text-gold-600 dark:hover:text-gold-400 flex items-center space-x-0.5 cursor-pointer shrink-0">
+                                        <span>Kelola</span>
+                                        <i data-lucide="chevron-right" class="w-3.5 h-3.5"></i>
                                     </button>
-                                </template>
+                                </div>
+                                
+                                <!-- Increased height max-h-[290px] on desktop to utilize empty space -->
+                                <div class="space-y-2.5 max-h-[180px] md:max-h-[290px] overflow-y-auto custom-scrollbar pr-1">
+                                    <template x-for="acc in accounts" :key="acc.id">
+                                        <div class="flex items-center justify-between p-3 rounded-2xl bg-stone-50 border border-stone-200 hover:border-gold-500/35 transition-all duration-300 dark:bg-stone-900/20 dark:border-stone-850/40 dark:hover:border-gold-500/25">
+                                            <div class="flex items-center space-x-3">
+                                                <div class="w-8 h-8 rounded-xl flex items-center justify-center shrink-0 border border-stone-200 dark:border-stone-850/40"
+                                                    :class="{
+                                                        'bg-teal-500/10 text-teal-700 dark:text-teal-500': acc.type === 'cash' || acc.type === 'piutang',
+                                                        'bg-blue-500/10 text-blue-700 dark:text-blue-500': acc.type === 'bank' || acc.type === 'bank-digital',
+                                                        'bg-amber-500/10 text-amber-700 dark:text-amber-500': acc.type === 'ewallet' || acc.type === 'investasi',
+                                                        'bg-rose-500/10 text-rose-700 dark:text-rose-500': acc.type === 'utang'
+                                                    }"
+                                                >
+                                                    <i :data-lucide="
+                                                        acc.type === 'cash' ? 'coins' : 
+                                                        acc.type === 'bank' ? 'landmark' : 
+                                                        acc.type === 'ewallet' ? 'smartphone' : 
+                                                        acc.type === 'investasi' ? 'line-chart' : 
+                                                        acc.type === 'utang' ? 'credit-card' : 'hand-coins'" 
+                                                        class="w-4.5 h-4.5"
+                                                    ></i>
+                                                </div>
+                                                <div>
+                                                    <p class="text-[11px] font-bold text-stone-855 dark:text-stone-200" x-text="acc.name"></p>
+                                                    <p class="text-[8px] font-bold text-stone-500 uppercase tracking-wider mt-0.5" x-text="acc.type"></p>
+                                                </div>
+                                            </div>
+                                            <div class="font-sans text-xs font-bold tracking-tight" 
+                                                :class="acc.type === 'utang' ? 'text-rose-700 dark:text-rose-500' : 'text-stone-855 dark:text-stone-200'"
+                                                x-text="formatRupiah(acc.balance)"
+                                            ></div>
+                                        </div>
+                                    </template>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 2. BEBAN PER ANGGOTA - Taller chart for desktop, minimized padding, thicker bars -->
+                        <div class="glass-panel p-5 sm:p-6 lg:p-8 rounded-3xl flex flex-col justify-between border-l-4 border-l-indigo-650 border-stone-200/80 dark:border-stone-900/50">
+                            <div class="space-y-4 w-full">
+                                <!-- Standardized Header (Aligned with straight line) -->
+                                <div class="flex items-center justify-between pb-3 border-b border-stone-200 dark:border-stone-900/60 min-h-[52px]">
+                                    <div>
+                                        <h3 class="font-serif text-base font-bold text-stone-900 dark:text-gold-500 leading-none">Beban per Anggota</h3>
+                                        <p class="text-[8px] text-stone-500 uppercase tracking-widest mt-1">Kontribusi Belanja</p>
+                                    </div>
+                                    <div class="w-7 h-7 rounded-lg bg-gold-500/10 flex items-center justify-center text-gold-700 dark:text-gold-500 shrink-0">
+                                        <i data-lucide="users" class="w-4 h-4"></i>
+                                    </div>
+                                </div>
+                                
+                                <!-- Chart container: Height set to min-h-[220px] on mobile / 310px on desktop to prevent empty space -->
+                                <div id="spenderBreakdownChart" class="w-full min-h-[220px] md:min-h-[290px] pt-1"></div>
+                            </div>
+                        </div>
+
+                        <!-- 3. PENCATATAN KILAT - Aligned headers, larger grid boxes & text sizes inside -->
+                        <div class="glass-panel p-5 sm:p-6 lg:p-8 rounded-3xl flex flex-col justify-between border-l-4 border-l-gold-550 border-stone-200/80 dark:border-stone-900/50">
+                            <div class="space-y-4">
+                                <!-- Standardized Header (Aligned with straight line) -->
+                                <div class="flex items-center justify-between pb-3 border-b border-stone-200 dark:border-stone-900/60 min-h-[52px]">
+                                    <div>
+                                        <h3 class="font-serif text-base font-bold text-stone-900 dark:text-gold-500 leading-none">Pencatatan Kilat</h3>
+                                        <p class="text-[8px] text-stone-500 uppercase tracking-widest mt-1">Log Harian Cepat</p>
+                                    </div>
+                                    <div class="w-7 h-7 rounded-lg bg-gold-500/10 flex items-center justify-center text-gold-700 dark:text-gold-500 shrink-0">
+                                        <i data-lucide="sparkles" class="w-4 h-4"></i>
+                                    </div>
+                                </div>
+                                
+                                <!-- Increased layout grid items with larger text and icons -->
+                                <div class="grid grid-cols-2 gap-3.5 my-1 pt-1.5">
+                                    <template x-for="cat in categories.filter(c => c.kind === 'expense').slice(0,4)" :key="cat.id">
+                                        <button 
+                                            @click="openQuickTransactionModal(cat)"
+                                            class="p-4 rounded-2xl border bg-stone-50 border-stone-200 hover:border-gold-500/55 hover:bg-gold-500/5 transition-all duration-300 group flex flex-col items-center justify-center space-y-2.5 cursor-pointer dark:border-stone-850 dark:bg-stone-900/15 dark:hover:border-gold-500/30"
+                                        >
+                                            <div class="w-10 h-10 rounded-full bg-white text-gold-700 border border-stone-200 flex items-center justify-center group-hover:scale-110 group-hover:text-gold-600 transition-all duration-300 dark:bg-stone-955 dark:text-gold-500 dark:border-stone-900">
+                                                <i :data-lucide="cat.icon" class="w-5 h-5"></i>
+                                            </div>
+                                            <!-- Slightly larger and higher contrast category names -->
+                                            <span class="text-[10px] font-extrabold tracking-widest text-stone-750 dark:text-stone-300 truncate w-full uppercase text-center" x-text="cat.name"></span>
+                                        </button>
+                                    </template>
+                                </div>
                             </div>
                             
                             <button 
                                 @click="openTransactionModal()"
-                                class="w-full py-3 rounded-xl bg-gradient-to-r from-gold-600 to-gold-400 hover:from-gold-500 hover:to-gold-300 text-white dark:text-stone-955 font-bold text-xs tracking-widest flex items-center justify-center space-x-2 shadow-lg shadow-gold-500/5 cursor-pointer"
+                                class="w-full py-3.5 rounded-xl bg-gradient-to-r from-gold-600 to-gold-400 hover:from-gold-500 hover:to-gold-300 text-white dark:text-stone-955 font-bold text-xs tracking-widest flex items-center justify-center space-x-2 shadow-lg shadow-gold-500/5 cursor-pointer mt-3"
                             >
-                                <i data-lucide="plus-circle" class="w-4 h-4 stroke-[2.5]"></i>
+                                <i data-lucide="plus-circle" class="w-4.5 h-4.5 stroke-[2.5]"></i>
                                 <span>MANUAL LOG</span>
                             </button>
                         </div>
@@ -696,7 +721,7 @@
                                             <!-- Category and note -->
                                             <td class="p-4 flex items-center space-x-3.5">
                                                 <div class="w-8.5 h-8.5 rounded-xl flex items-center justify-center shrink-0 border border-stone-200 dark:border-stone-900/40"
-                                                    :class="tx.type === 'income' ? 'bg-emerald-500/10 text-emerald-700 dark:text-emerald-500' : 'bg-rose-500/10 text-rose-700 dark:text-rose-500'"
+                                                    :class="tx.type === 'income' ? 'bg-emerald-500/10 text-emerald-700 dark:text-emerald-500' : 'bg-rose-500/10 text-rose-700 dark:text-rose-555'"
                                                 >
                                                     <i :data-lucide="getCategoryIcon(tx.categoryId)" class="w-4 h-4"></i>
                                                 </div>
@@ -722,7 +747,7 @@
                                             
                                             <!-- Amount -->
                                             <td class="p-4 text-right font-bold font-sans tracking-tight"
-                                                :class="tx.type === 'income' ? 'text-emerald-700 dark:text-emerald-500' : 'text-rose-700 dark:text-rose-500'"
+                                                :class="tx.type === 'income' ? 'text-emerald-700 dark:text-emerald-500' : 'text-rose-700 dark:text-rose-555'"
                                                 x-text="(tx.type === 'income' ? '+ ' : '- ') + formatRupiah(tx.amount)"
                                             ></td>
                                             
@@ -821,7 +846,7 @@
                                         </div>
                                         <div class="flex items-center justify-between text-[9px] font-bold font-sans">
                                             <span class="text-stone-850 dark:text-stone-200" x-text="formatRupiah(getCategorySpend(env.categoryId))"></span>
-                                            <span class="text-stone-500" x-text="`Limit: ${formatRupiah(env.limit)}`"></span>
+                                            <span class="text-stone-550" x-text="`Limit: ${formatRupiah(env.limit)}`"></span>
                                         </div>
                                     </div>
                                 </div>
@@ -885,7 +910,7 @@
                                             <div class="bg-gold-600 dark:bg-gold-500 h-full rounded-full transition-all duration-500" :style="`width: ${Math.min(100, (g.current / g.target) * 100)}%`"></div>
                                         </div>
                                         <div class="flex items-center justify-between text-[9px] font-bold font-sans">
-                                            <span class="text-stone-850 dark:text-stone-200" x-text="formatRupiah(g.current)"></span>
+                                            <span class="text-stone-855 dark:text-stone-200" x-text="formatRupiah(g.current)"></span>
                                             <span class="text-stone-550" x-text="`Target: ${formatRupiah(g.target)}`"></span>
                                         </div>
                                     </div>
@@ -943,11 +968,11 @@
                             <p class="font-sans text-xl lg:text-2xl font-bold text-stone-900 dark:text-stone-200 mt-1" x-text="formatRupiah(calculateTotalBills())"></p>
                         </div>
                         <div class="glass-panel p-5 sm:p-6 lg:p-8 rounded-3xl border-stone-200/80 dark:border-stone-900/50">
-                            <p class="text-[8px] uppercase tracking-widest font-extrabold text-stone-500">Lunas Bulan Ini</p>
+                            <p class="text-[8px] uppercase tracking-widest font-extrabold text-stone-550">Lunas Bulan Ini</p>
                             <p class="font-sans text-xl lg:text-2xl font-bold text-emerald-700 dark:text-emerald-500 mt-1" x-text="formatRupiah(calculatePaidBills())"></p>
                         </div>
                         <div class="glass-panel p-5 sm:p-6 lg:p-8 rounded-3xl border-stone-200/80 dark:border-stone-900/50">
-                            <p class="text-[8px] uppercase tracking-widest font-extrabold text-stone-500">Sisa Belum Dibayar</p>
+                            <p class="text-[8px] uppercase tracking-widest font-extrabold text-stone-550">Sisa Belum Dibayar</p>
                             <p class="font-sans text-xl lg:text-2xl font-bold text-rose-700 dark:text-rose-555 mt-1" x-text="formatRupiah(calculateUnpaidBills())"></p>
                         </div>
                     </div>
@@ -1005,7 +1030,7 @@
                                     </template>
                                     <template x-if="bills.length === 0">
                                         <tr>
-                                            <td colspan="5" class="p-12 text-center text-stone-550 dark:text-stone-400">
+                                            <td colspan="5" class="p-12 text-center text-stone-555 dark:text-stone-400">
                                                 <i data-lucide="bell-off" class="w-8 h-8 mx-auto mb-2 opacity-40"></i>
                                                 <span class="text-xs font-semibold">Tidak ada tagihan bulanan.</span>
                                             </td>
@@ -1036,7 +1061,7 @@
                                 <span class="text-3xl font-sans font-extrabold text-amber-800 dark:text-gold-500" x-text="`${calculateEmergencyFundRatio().months}x`"></span>
                                 <span class="text-[9px] text-stone-500 font-extrabold uppercase tracking-wider">Bulan Biaya Hidup</span>
                             </div>
-                            <p class="text-xs text-stone-650 dark:text-stone-400 leading-relaxed" x-text="calculateEmergencyFundRatio().text"></p>
+                            <p class="text-xs text-stone-655 dark:text-stone-400 leading-relaxed" x-text="calculateEmergencyFundRatio().text"></p>
                             <div class="pt-3 flex items-center justify-between border-t border-stone-200 dark:border-stone-900/40">
                                 <span class="text-[8px] font-extrabold uppercase tracking-wider text-stone-550">Batas Keamanan:</span>
                                 <span class="px-2 py-0.5 rounded-full text-[8px] font-extrabold uppercase"
@@ -1056,7 +1081,7 @@
                                 <span class="text-3xl font-sans font-extrabold text-amber-800 dark:text-gold-500" x-text="`${calculateSavingRate()}%`"></span>
                                 <span class="text-[9px] text-stone-500 font-extrabold uppercase tracking-wider">Dari Pemasukan</span>
                             </div>
-                            <p class="text-xs text-stone-650 dark:text-stone-400 leading-relaxed" x-text="calculateSavingRateText()"></p>
+                            <p class="text-xs text-stone-655 dark:text-stone-400 leading-relaxed" x-text="calculateSavingRateText()"></p>
                             <div class="pt-3 flex items-center justify-between border-t border-stone-200 dark:border-stone-900/40">
                                 <span class="text-[8px] font-extrabold uppercase tracking-wider text-stone-550">Status Alokasi:</span>
                                 <span class="px-2 py-0.5 rounded-full text-[8px] font-extrabold uppercase"
@@ -1218,7 +1243,7 @@
                             <!-- Reset to Zero & Danger Zone Group -->
                             <div class="pt-5 border-t border-stone-200 dark:border-stone-900/60 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                                 <div class="space-y-1">
-                                    <h4 class="text-xs font-bold text-rose-700 dark:text-rose-500 uppercase tracking-wider">Zona Penyetelan Ulang</h4>
+                                    <h4 class="text-xs font-bold text-rose-700 dark:text-rose-555 uppercase tracking-wider">Zona Penyetelan Ulang</h4>
                                     <p class="text-[9px] text-stone-500 leading-normal">
                                         Gunakan **Mulai dari Nol** untuk mengosongkan data transaksi demo dan mulai mencatat keuangan asli Anda. Gunakan **Hapus Semua Data** untuk reset total *factory settings*.
                                     </p>
@@ -1234,7 +1259,7 @@
                                     <!-- TOTAL RESET BUTTON -->
                                     <button 
                                         @click="resetToFactory()" 
-                                        class="px-4.5 py-2.5 bg-rose-50 hover:bg-rose-100 border border-rose-250 text-rose-700 text-[9px] font-extrabold uppercase tracking-widest rounded-xl transition cursor-pointer dark:bg-rose-955/15 dark:border-rose-900/35 dark:text-rose-500"
+                                        class="px-4.5 py-2.5 bg-rose-50 hover:bg-rose-100 border border-rose-250 text-rose-700 text-[9px] font-extrabold uppercase tracking-widest rounded-xl transition cursor-pointer dark:bg-rose-955/15 dark:border-rose-900/35 dark:text-rose-555"
                                     >
                                         Hapus Semua Data
                                     </button>
@@ -1854,7 +1879,7 @@
             const defaultGoals = [
                 {id:"g1",name:"Dana Darurat",icon:"ShieldCheck",target:30000000,current:14500000,targetDate:dateOffset(-300).slice(0,7)},
                 {id:"g2",name:"DP Rumah",icon:"Home",target:80000000,current:21000000,targetDate:dateOffset(-800).slice(0,7)},
-                {id:"g3",name:"Lunasi Cicilan Motor",icon:"Bike",target:6200000,current:3100000,targetDate:dateOffset(-120).slice(0,7)},
+                {id:"g3",name:"Lunasi Cicilan Motor",icon:"Bike",target:6200005,current:3100000,targetDate:dateOffset(-120).slice(0,7)},
                 {id:"g4",name:"Liburan Keluarga",icon:"Plane",target:15000000,current:6800000,targetDate:dateOffset(-200).slice(0,7)}
             ];
 
@@ -2533,8 +2558,8 @@
                         case 'gold': return 'bg-gold-500/10 text-gold-700 dark:text-gold-500 border border-gold-500/20';
                         case 'clay': return 'bg-amber-700/10 text-amber-700 dark:text-amber-500 border border-amber-700/20';
                         case 'blue': return 'bg-blue-500/10 text-blue-700 dark:text-blue-500 border border-blue-500/20';
-                        case 'rose': return 'bg-rose-500/10 text-rose-700 dark:text-rose-500 border border-rose-500/20';
-                        default: return 'bg-stone-850 text-stone-355 border border-stone-800';
+                        case 'rose': return 'bg-rose-500/10 text-rose-700 dark:text-rose-555 border border-rose-500/20';
+                        default: return 'bg-stone-855 text-stone-355 border border-stone-800';
                     }
                 },
 
@@ -3306,7 +3331,7 @@
                         }],
                         chart: {
                             type: 'bar',
-                            height: window.innerWidth < 768 ? 200 : 280,
+                            height: window.innerWidth < 768 ? 220 : 310,
                             toolbar: { show: false },
                             background: 'transparent',
                             fontFamily: 'Plus Jakarta Sans'
@@ -3316,7 +3341,7 @@
                             bar: {
                                 borderRadius: 5,
                                 horizontal: true,
-                                barHeight: '35%',
+                                barHeight: '45%',
                                 colors: {
                                     backgroundBarColors: [isDark ? 'rgba(255,255,255,0.01)' : 'rgba(0,0,0,0.02)'],
                                     backgroundBarRadius: 5
