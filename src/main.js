@@ -9,7 +9,8 @@ import { appState } from './app/state.js';
 import { initializeApp, saveData } from './app/bootstrap.js';
 import { NAV_ITEMS, MOBILE_NAV_ITEMS, isNavActive, shouldExpandNavItem } from './app/navigation.js';
 import { t } from './i18n/index.js';
-import { formatCurrency } from './formatting/currency.js';
+import { formatCurrency, detectDominantCurrency } from './formatting/currency.js';
+import { initExchangeRates } from './data/exchange-rates.js';
 import { formatDate, formatMonth } from './formatting/dates.js';
 import { toast } from './ui/components/toast.js';
 
@@ -113,12 +114,23 @@ class KocekkuApp {
     this.currentTab = 'home';
     this._charts = [];  // track chart instances for cleanup
     this._period = { year: currentYear(), month: currentMonth() };
+    this._sourceCurrency = 'IDR';  // dominant source currency for conversion
+  }
+
+  /**
+   * Format currency with automatic source→display conversion.
+   * Uses the detected source currency from the current data.
+   */
+  fmt(amount, displayCur) {
+    const dc = displayCur || getUserCurrency();
+    return formatCurrency(amount, dc, { fromCurrency: this._sourceCurrency });
   }
 
   /* ---- lifecycle ------------------------------------------------ */
 
   async init() {
     await initializeApp();
+    initExchangeRates(); // fetch live rates in background
     this.buildShell();
     this.setupEventListeners();
     this.renderContent();
@@ -395,9 +407,17 @@ class KocekkuApp {
     const goals         = appState.get('goals') || [];
     const bills         = appState.get('bills') || [];
     const members       = appState.get('familyMembers') || [];
-    const currency      = getUserCurrency();
+    const displayCurrency = getUserCurrency();
     const year          = this._period.year;
     const month         = this._period.month;
+
+    // Detect the dominant source currency from accounts for conversion
+    this._sourceCurrency = detectDominantCurrency(
+      accounts.map(a => ({ amount: Math.abs(parseFloat(a.saldo) || 0), currency: a.mataUang || 'IDR' }))
+    );
+    const sourceCurrency = this._sourceCurrency;
+    // Helper: format with auto-conversion from source to display currency
+    const fc = (amount, displayCur) => formatCurrency(amount, displayCur || displayCurrency, { fromCurrency: sourceCurrency });
 
     const monthIncome   = calculateMonthlyIncome(transactions, year, month);
     const monthExpenses = calculateMonthlyExpenses(transactions, year, month);
@@ -558,15 +578,15 @@ class KocekkuApp {
     const el = card();
     el.innerHTML = `
       <p class="text-sm font-medium text-gray-500 dark:text-gray-400 mb-1">Net Worth</p>
-      <p class="text-3xl font-bold text-gray-900 dark:text-white mb-4">${formatCurrency(data.total, currency)}</p>
+      <p class="text-3xl font-bold text-gray-900 dark:text-white mb-4">${this.fmt(data.total)}</p>
       <div class="flex gap-8">
         <div>
           <p class="text-xs text-gray-500 dark:text-gray-400">Assets</p>
-          <p class="text-lg font-semibold text-success-600">${formatCurrency(data.assets, currency)}</p>
+          <p class="text-lg font-semibold text-success-600">${this.fmt(data.assets)}</p>
         </div>
         <div>
           <p class="text-xs text-gray-500 dark:text-gray-400">Liabilities</p>
-          <p class="text-lg font-semibold text-danger-600">${formatCurrency(data.liabilities, currency)}</p>
+          <p class="text-lg font-semibold text-danger-600">${this.fmt(data.liabilities)}</p>
         </div>
       </div>`;
     return el;
@@ -579,10 +599,10 @@ class KocekkuApp {
     grid.className = 'grid grid-cols-2 lg:grid-cols-4 gap-4';
 
     const metrics = [
-      { label: 'Income',        value: formatCurrency(income, currency),   icon: 'arrow-down-left', color: 'bg-success-100 dark:bg-success-900/30 text-success-600' },
-      { label: 'Expenses',      value: formatCurrency(expenses, currency), icon: 'arrow-up-right',   color: 'bg-danger-100 dark:bg-danger-900/30 text-danger-600' },
+      { label: 'Income',        value: this.fmt(income),   icon: 'arrow-down-left', color: 'bg-success-100 dark:bg-success-900/30 text-success-600' },
+      { label: 'Expenses',      value: this.fmt(expenses), icon: 'arrow-up-right',   color: 'bg-danger-100 dark:bg-danger-900/30 text-danger-600' },
       { label: 'Savings Rate',  value: `${savingsRate}%`,                  icon: 'piggy-bank',      color: 'bg-info-100 dark:bg-info-900/30 text-info-600' },
-      { label: 'Available Cash',value: formatCurrency(cash, currency),     icon: 'wallet',           color: 'bg-primary-100 dark:bg-primary-900/30 text-primary-600' },
+      { label: 'Available Cash',value: this.fmt(cash),     icon: 'wallet',           color: 'bg-primary-100 dark:bg-primary-900/30 text-primary-600' },
     ];
 
     metrics.forEach(m => {
@@ -644,14 +664,14 @@ class KocekkuApp {
       yaxis: {
         labels: {
           style: { colors: textColor, fontSize: '12px' },
-          formatter: (v) => formatCurrency(v, currency),
+          formatter: (v) => this.fmt(v),
         },
       },
       colors: ['#10b981', '#f43f5e'],
       plotOptions: { bar: { borderRadius: 6, columnWidth: '60%', borderRadiusApplication: 'end' } },
       grid: { borderColor: gridColor, strokeDashArray: 4 },
       legend: { show: true, position: 'top', horizontalAlign: 'right', labels: { colors: textColor } },
-      tooltip: { y: { formatter: (v) => formatCurrency(v, currency) } },
+      tooltip: { y: { formatter: (v) => this.fmt(v) } },
       dataLabels: { enabled: false },
       stroke: { show: false },
     });
@@ -700,9 +720,9 @@ class KocekkuApp {
       series: values,
       labels,
       colors,
-      plotOptions: { pie: { donut: { size: '70%', labels: { show: true, name: { show: false }, value: { show: true, fontSize: '18px', fontWeight: 700, formatter: (v) => formatCurrency(v, currency) }, total: { show: true, label: 'Total', formatter: () => formatCurrency(totalExpenses, currency) } } } } },
+      plotOptions: { pie: { donut: { size: '70%', labels: { show: true, name: { show: false }, value: { show: true, fontSize: '18px', fontWeight: 700, formatter: (v) => this.fmt(v) }, total: { show: true, label: 'Total', formatter: () => this.fmt(totalExpenses) } } } } },
       legend: { position: 'right', fontSize: '12px', labels: { colors: textColor }, itemMargin: { vertical: 4 } },
-      tooltip: { y: { formatter: (v) => formatCurrency(v, currency) } },
+      tooltip: { y: { formatter: (v) => this.fmt(v) } },
       dataLabels: { enabled: false },
       stroke: { width: 0 },
     });
@@ -744,7 +764,7 @@ class KocekkuApp {
                 <p class="text-xs ${urgency}">${dueStr}${days <= 7 ? ` · ${days}d` : ''}</p>
               </div>
             </div>
-            <p class="font-semibold text-gray-900 dark:text-white text-sm">${formatCurrency(bill.jumlah, currency)}</p>
+            <p class="font-semibold text-gray-900 dark:text-white text-sm">${this.fmt(bill.jumlah)}</p>
           </div>`;
       });
       html += '</div>';
@@ -752,7 +772,7 @@ class KocekkuApp {
       if (summary.monthlyCommitments > 0) {
         html += `<div class="mt-4 pt-3 border-t border-gray-200 dark:border-gray-700 flex justify-between items-center">
           <span class="text-sm text-gray-500 dark:text-gray-400">Monthly Commitments</span>
-          <span class="font-semibold text-gray-900 dark:text-white">${formatCurrency(summary.monthlyCommitments, currency)}</span>
+          <span class="font-semibold text-gray-900 dark:text-white">${this.fmt(summary.monthlyCommitments)}</span>
         </div>`;
       }
     }
@@ -794,7 +814,7 @@ class KocekkuApp {
             <div class="w-full h-2 bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden">
               <div class="h-full ${color} rounded-full transition-all" style="width: ${g.percentage}%"></div>
             </div>
-            <p class="mt-1 text-xs text-gray-500 dark:text-gray-400">${formatCurrency(g.current, currency)} / ${formatCurrency(g.target, currency)}</p>
+            <p class="mt-1 text-xs text-gray-500 dark:text-gray-400">${this.fmt(g.current)} / ${this.fmt(g.target)}</p>
           </div>`;
       });
       html += '</div>';
@@ -923,7 +943,7 @@ class KocekkuApp {
               <p class="text-xs text-gray-500 dark:text-gray-400">${dateStr}${accountName ? ' · ' + accountName : ''}</p>
             </div>
           </div>
-          <p class="text-sm font-semibold ${amountColor} whitespace-nowrap ml-3">${sign}${formatCurrency(t.jumlah, currency)}</p>
+          <p class="text-sm font-semibold ${amountColor} whitespace-nowrap ml-3">${sign}${this.fmt(t.jumlah)}</p>
         </div>`;
     });
 
@@ -1090,8 +1110,8 @@ class KocekkuApp {
       summary.innerHTML = `
         <span class="text-gray-500 dark:text-gray-400">${filtered.length} result${filtered.length !== 1 ? 's' : ''}</span>
         <div class="flex gap-4">
-          <span class="text-success-600 font-medium">+${formatCurrency(totalIncome, currency)}</span>
-          <span class="text-danger-600 font-medium">-${formatCurrency(totalExpense, currency)}</span>
+          <span class="text-success-600 font-medium">+${this.fmt(totalIncome)}</span>
+          <span class="text-danger-600 font-medium">-${this.fmt(totalExpense)}</span>
         </div>`;
       tableWrap.appendChild(summary);
 
@@ -1165,7 +1185,7 @@ class KocekkuApp {
           </td>
           <td class="px-4 py-3 text-gray-700 dark:text-gray-300">${account?.nama || t.dompet || '—'}</td>
           <td class="px-4 py-3 text-gray-700 dark:text-gray-300">${t.kategori || '—'}</td>
-          <td class="px-4 py-3 font-semibold ${amountColor} whitespace-nowrap">${sign}${formatCurrency(t.jumlah, currency)}</td>
+          <td class="px-4 py-3 font-semibold ${amountColor} whitespace-nowrap">${sign}${this.fmt(t.jumlah)}</td>
           <td class="px-4 py-3">${typeBadge}</td>
           <td class="px-4 py-3 text-right">
             <div class="flex items-center justify-end gap-1">
@@ -1469,7 +1489,7 @@ class KocekkuApp {
     ].forEach(m => {
       const card = document.createElement('div');
       card.className = `${m.bg} rounded-xl p-4 border border-gray-100 dark:border-gray-800`;
-      card.innerHTML = `<p class="text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wide">${m.label}</p><p class="text-xl font-bold ${m.color} mt-1">${formatCurrency(m.value, currency)}</p>`;
+      card.innerHTML = `<p class="text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wide">${m.label}</p><p class="text-xl font-bold ${m.color} mt-1">${this.fmt(m.value)}</p>`;
       summaryGrid.appendChild(card);
     });
     el.appendChild(summaryGrid);
@@ -1547,7 +1567,7 @@ class KocekkuApp {
         </div>
         <span class="text-[10px] font-semibold px-2 py-0.5 rounded-full ${classificationColor} flex-shrink-0">${classificationLabel}</span>
       </div>
-      <p class="text-lg font-bold ${isLiability ? 'text-rose-600 dark:text-rose-400' : 'text-gray-900 dark:text-white'}">${formatCurrency(balance, currency)}</p>
+      <p class="text-lg font-bold ${isLiability ? 'text-rose-600 dark:text-rose-400' : 'text-gray-900 dark:text-white'}">${this.fmt(balance)}</p>
       <div class="flex items-center gap-2 mt-3 pt-3 border-t border-gray-100 dark:border-gray-700">
         <button class="flex-1 text-xs font-medium text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 transition-colors py-1" data-action="edit" data-id="${acc.id}">Edit</button>
         <span class="text-gray-200 dark:text-gray-700">|</span>
@@ -1755,9 +1775,9 @@ class KocekkuApp {
       summaryGrid.className = 'grid grid-cols-2 lg:grid-cols-4 gap-4';
 
       const summaryMetrics = [
-        { label: t('budgets.totalLimit'), value: formatCurrency(summary.totalLimit, currency), color: 'text-gray-900 dark:text-white' },
-        { label: t('budgets.totalSpent'), value: formatCurrency(summary.totalUsed, currency), color: summary.overBudgetCount > 0 ? 'text-danger-600' : 'text-gray-900 dark:text-white' },
-        { label: t('budgets.remaining'), value: formatCurrency(summary.totalRemaining, currency), color: summary.totalRemaining < 0 ? 'text-danger-600' : 'text-success-600' },
+        { label: t('budgets.totalLimit'), value: this.fmt(summary.totalLimit), color: 'text-gray-900 dark:text-white' },
+        { label: t('budgets.totalSpent'), value: this.fmt(summary.totalUsed), color: summary.overBudgetCount > 0 ? 'text-danger-600' : 'text-gray-900 dark:text-white' },
+        { label: t('budgets.remaining'), value: this.fmt(summary.totalRemaining), color: summary.totalRemaining < 0 ? 'text-danger-600' : 'text-success-600' },
         { label: 'Progress', value: summary.overallPercentage + '%', color: 'text-gray-900 dark:text-white' },
       ];
 
@@ -1836,12 +1856,12 @@ class KocekkuApp {
             </div>
           </div>
           <div class="flex justify-between items-baseline mb-2">
-            <span class="text-lg font-bold text-gray-900 dark:text-white">${formatCurrency(usage.used, currency)}</span>
-            <span class="text-sm text-gray-500 dark:text-gray-400">of ${formatCurrency(usage.limit, currency)}</span>
+            <span class="text-lg font-bold text-gray-900 dark:text-white">${this.fmt(usage.used)}</span>
+            <span class="text-sm text-gray-500 dark:text-gray-400">of ${this.fmt(usage.limit)}</span>
           </div>
           <div class="flex justify-between items-center">
             <span class="text-xs ${usage.remaining < 0 ? 'text-danger-600' : 'text-success-600'} font-medium">
-              ${usage.remaining >= 0 ? formatCurrency(usage.remaining, currency) + ' remaining' : formatCurrency(Math.abs(usage.remaining), currency) + ' over'}
+              ${usage.remaining >= 0 ? this.fmt(usage.remaining) + ' remaining' : this.fmt(Math.abs(usage.remaining)) + ' over'}
             </span>
             <span class="text-xs text-gray-400">${usage.percentage}%</span>
           </div>
@@ -2061,8 +2081,8 @@ class KocekkuApp {
 
       const metrics = [
         { label: 'Total Goals', value: summary.totalCount, color: 'text-gray-900 dark:text-white' },
-        { label: 'Total Target', value: formatCurrency(summary.totalTarget, currency), color: 'text-gray-900 dark:text-white' },
-        { label: 'Total Saved', value: formatCurrency(summary.totalCurrent, currency), color: 'text-success-600' },
+        { label: 'Total Target', value: this.fmt(summary.totalTarget), color: 'text-gray-900 dark:text-white' },
+        { label: 'Total Saved', value: this.fmt(summary.totalCurrent), color: 'text-success-600' },
         { label: 'Completed', value: summary.completedCount + ' of ' + summary.totalCount, color: summary.completedCount > 0 ? 'text-success-600' : 'text-gray-900 dark:text-white' },
       ];
 
@@ -2188,13 +2208,13 @@ class KocekkuApp {
         </div>
       </div>
       <div class="flex justify-between items-baseline mb-1">
-        <span class="text-lg font-bold text-gray-900 dark:text-white">${formatCurrency(progress.current, currency)}</span>
-        <span class="text-sm text-gray-500 dark:text-gray-400">of ${formatCurrency(progress.target, currency)}</span>
+        <span class="text-lg font-bold text-gray-900 dark:text-white">${this.fmt(progress.current)}</span>
+        <span class="text-sm text-gray-500 dark:text-gray-400">of ${this.fmt(progress.target)}</span>
       </div>
       <div class="flex justify-between items-center mb-2">
         <span class="text-xs text-gray-500 dark:text-gray-400">${progress.percentage}%</span>
         <span class="text-xs ${progress.remaining > 0 ? 'text-gray-500 dark:text-gray-400' : 'text-success-600'} font-medium">
-          ${progress.remaining > 0 ? formatCurrency(progress.remaining, currency) + ' remaining' : 'Goal reached!'}
+          ${progress.remaining > 0 ? this.fmt(progress.remaining) + ' remaining' : 'Goal reached!'}
         </span>
       </div>
       ${targetDateHtml}
@@ -2402,7 +2422,7 @@ class KocekkuApp {
           <div>
             <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">${isDeposit ? t('goalAdjust.fromAccount') : t('goalAdjust.toAccount')}</label>
             <select id="contrib-account" class="w-full px-3 py-2.5 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-900 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary-500">
-              ${liquidAccounts.map(a => `<option value="${a.id}">${a.nama} (${formatCurrency(a.saldo, getUserCurrency())})</option>`).join('')}
+              ${liquidAccounts.map(a => `<option value="${a.id}">${a.nama} (${this.fmt(a.saldo)})</option>`).join('')}
             </select>
           </div>
         </div>
@@ -2539,19 +2559,19 @@ class KocekkuApp {
       <div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
         <div class="bg-white dark:bg-gray-900 rounded-xl p-4 border border-gray-200 dark:border-gray-800">
           <p class="text-xs font-medium text-gray-500 dark:text-gray-400 mb-1">${t('bills.totalDue')}</p>
-          <p class="text-xl font-bold text-gray-900 dark:text-white">${formatCurrency(summary.totalDue, currency)}</p>
+          <p class="text-xl font-bold text-gray-900 dark:text-white">${this.fmt(summary.totalDue)}</p>
         </div>
         <div class="bg-white dark:bg-gray-900 rounded-xl p-4 border border-gray-200 dark:border-gray-800">
           <p class="text-xs font-medium text-gray-500 dark:text-gray-400 mb-1">${t('bills.dueThisWeek')}</p>
-          <p class="text-xl font-bold text-warning-600">${formatCurrency(summary.totalDueThisWeek, currency)}</p>
+          <p class="text-xl font-bold text-warning-600">${this.fmt(summary.totalDueThisWeek)}</p>
         </div>
         <div class="bg-white dark:bg-gray-900 rounded-xl p-4 border border-gray-200 dark:border-gray-800">
           <p class="text-xs font-medium text-gray-500 dark:text-gray-400 mb-1">${t('bills.overdue')}</p>
-          <p class="text-xl font-bold ${summary.totalOverdue > 0 ? 'text-danger-600' : 'text-gray-900 dark:text-white'}">${formatCurrency(summary.totalOverdue, currency)}</p>
+          <p class="text-xl font-bold ${summary.totalOverdue > 0 ? 'text-danger-600' : 'text-gray-900 dark:text-white'}">${this.fmt(summary.totalOverdue)}</p>
         </div>
         <div class="bg-white dark:bg-gray-900 rounded-xl p-4 border border-gray-200 dark:border-gray-800">
           <p class="text-xs font-medium text-gray-500 dark:text-gray-400 mb-1">${t('bills.paidThisMonth')}</p>
-          <p class="text-xl font-bold text-success-600">${formatCurrency(summary.totalPaid, currency)}</p>
+          <p class="text-xl font-bold text-success-600">${this.fmt(summary.totalPaid)}</p>
         </div>
       </div>`;
     el.innerHTML += summaryHtml;
@@ -2646,7 +2666,7 @@ class KocekkuApp {
               </div>
             </div>
             <div class="flex items-center gap-3">
-              <p class="font-semibold text-gray-900 dark:text-white text-sm">${formatCurrency(bill.jumlah, currency)}</p>
+              <p class="font-semibold text-gray-900 dark:text-white text-sm">${this.fmt(bill.jumlah)}</p>
               <div class="flex items-center gap-1">
                 ${!isPaid ? `<button class="bill-pay-btn px-3 py-1.5 text-xs font-medium bg-primary-600 text-white rounded-lg hover:bg-primary-700 transition-colors" data-bill-id="${bill.id}">${t('bills.pay')}</button>` : ''}
                 <button class="bill-edit-btn p-1.5 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors" data-bill-id="${bill.id}" title="${t('common.edit')}">
@@ -2672,7 +2692,7 @@ class KocekkuApp {
         <div class="bg-white dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-800 p-4">
           <div class="flex items-center justify-between mb-2">
             <span class="text-sm font-medium text-gray-700 dark:text-gray-300">${t('bills.monthlyCommitments')}</span>
-            <span class="text-sm font-semibold text-gray-900 dark:text-white">${formatCurrency(summary.monthlyCommitments, currency)}</span>
+            <span class="text-sm font-semibold text-gray-900 dark:text-white">${this.fmt(summary.monthlyCommitments)}</span>
           </div>
           <div class="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
             <div class="bg-primary-600 h-2 rounded-full transition-all" style="width: ${Math.min(commitmentPct, 100)}%"></div>
@@ -2851,23 +2871,23 @@ class KocekkuApp {
         <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4">
           <div>
             <p class="text-xs text-gray-500 dark:text-gray-400">${t('health.liquidAssets')}</p>
-            <p class="text-lg font-bold text-gray-900 dark:text-white">${formatCurrency(liquidAssets, currency)}</p>
+            <p class="text-lg font-bold text-gray-900 dark:text-white">${this.fmt(liquidAssets)}</p>
           </div>
           <div>
             <p class="text-xs text-gray-500 dark:text-gray-400">${t('health.monthlyExpenses')}</p>
-            <p class="text-lg font-bold text-gray-900 dark:text-white">${formatCurrency(monthExpenses, currency)}</p>
+            <p class="text-lg font-bold text-gray-900 dark:text-white">${this.fmt(monthExpenses)}</p>
           </div>
           <div>
             <p class="text-xs text-gray-500 dark:text-gray-400">${t('health.monthlyIncome')}</p>
-            <p class="text-lg font-bold text-gray-900 dark:text-white">${formatCurrency(monthIncome, currency)}</p>
+            <p class="text-lg font-bold text-gray-900 dark:text-white">${this.fmt(monthIncome)}</p>
           </div>
           <div>
             <p class="text-xs text-gray-500 dark:text-gray-400">${t('health.debtPayments')}</p>
-            <p class="text-lg font-bold text-gray-900 dark:text-white">${formatCurrency(debt.ratio > 0 ? monthIncome * (debt.ratio / 100) : 0, currency)}</p>
+            <p class="text-lg font-bold text-gray-900 dark:text-white">${this.fmt(debt.ratio > 0 ? monthIncome * (debt.ratio / 100) : 0)}</p>
           </div>
           <div>
             <p class="text-xs text-gray-500 dark:text-gray-400">${t('health.netWorth')}</p>
-            <p class="text-lg font-bold ${netWorth.total >= 0 ? 'text-success-600' : 'text-danger-600'}">${formatCurrency(netWorth.total, currency)}</p>
+            <p class="text-lg font-bold ${netWorth.total >= 0 ? 'text-success-600' : 'text-danger-600'}">${this.fmt(netWorth.total)}</p>
           </div>
         </div>
       </div>
@@ -2957,15 +2977,15 @@ class KocekkuApp {
       <div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
         <div class="bg-white dark:bg-gray-800 rounded-2xl p-5 border border-gray-100 dark:border-gray-700">
           <p class="text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wide">${familyT.totalSpending}</p>
-          <p class="text-xl font-bold text-gray-900 dark:text-white mt-1">${formatCurrency(summary.totalFamilySpending, currency)}</p>
+          <p class="text-xl font-bold text-gray-900 dark:text-white mt-1">${this.fmt(summary.totalFamilySpending)}</p>
         </div>
         <div class="bg-white dark:bg-gray-800 rounded-2xl p-5 border border-gray-100 dark:border-gray-700">
           <p class="text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wide">${familyT.householdIncome}</p>
-          <p class="text-xl font-bold text-success-600 dark:text-success-400 mt-1">${formatCurrency(householdIncome, currency)}</p>
+          <p class="text-xl font-bold text-success-600 dark:text-success-400 mt-1">${this.fmt(householdIncome)}</p>
         </div>
         <div class="bg-white dark:bg-gray-800 rounded-2xl p-5 border border-gray-100 dark:border-gray-700">
           <p class="text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wide">${familyT.householdExpenses}</p>
-          <p class="text-xl font-bold text-danger-600 dark:text-danger-400 mt-1">${formatCurrency(householdExpenses, currency)}</p>
+          <p class="text-xl font-bold text-danger-600 dark:text-danger-400 mt-1">${this.fmt(householdExpenses)}</p>
         </div>
         <div class="bg-white dark:bg-gray-800 rounded-2xl p-5 border border-gray-100 dark:border-gray-700">
           <p class="text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wide">${familyT.activeSpenders}</p>
@@ -3011,7 +3031,7 @@ class KocekkuApp {
                       <p class="text-xs text-gray-500 dark:text-gray-400">${role}</p>
                     </div>
                     <div class="text-right">
-                      <p class="text-sm font-bold text-gray-900 dark:text-white">${formatCurrency(spent, currency)}</p>
+                      <p class="text-sm font-bold text-gray-900 dark:text-white">${this.fmt(spent)}</p>
                       <p class="text-xs text-gray-500 dark:text-gray-400">${pct}%</p>
                     </div>
                   </div>
@@ -3064,7 +3084,7 @@ class KocekkuApp {
                           <p class="text-sm font-semibold text-gray-900 dark:text-white">${ms.name}</p>
                         </div>
                         <div class="text-right">
-                          <p class="text-sm font-bold text-gray-900 dark:text-white">${formatCurrency(ms.totalSpent, currency)}</p>
+                          <p class="text-sm font-bold text-gray-900 dark:text-white">${this.fmt(ms.totalSpent)}</p>
                           <p class="text-xs text-gray-500 dark:text-gray-400">${pct}% ${familyT.ofTotal.replace('{pct}', pct)}</p>
                         </div>
                       </div>
@@ -3075,7 +3095,7 @@ class KocekkuApp {
                         <div class="flex flex-wrap gap-2 mt-2">
                           ${topCats.map(([cat, amt]) => `
                             <span class="text-xs px-2 py-1 rounded-lg bg-gray-50 dark:bg-gray-700 text-gray-600 dark:text-gray-300">
-                              ${cat}: ${formatCurrency(amt, currency)}
+                              ${cat}: ${this.fmt(amt)}
                             </span>
                           `).join('')}
                         </div>
@@ -3103,7 +3123,7 @@ class KocekkuApp {
                       <div class="h-full bg-primary-500 rounded-full" style="width:${pct}%"></div>
                     </div>
                     <div class="text-right w-28">
-                      <p class="text-sm font-semibold text-gray-900 dark:text-white">${formatCurrency(amt, currency)}</p>
+                      <p class="text-sm font-semibold text-gray-900 dark:text-white">${this.fmt(amt)}</p>
                       <p class="text-xs text-gray-500 dark:text-gray-400">${pct}%</p>
                     </div>
                   </div>
@@ -3303,7 +3323,7 @@ class KocekkuApp {
       <div class="bg-gray-50 dark:bg-gray-800 rounded-xl p-4 space-y-3">
         <div class="flex justify-between">
           <span class="text-sm text-gray-500 dark:text-gray-400">${t('bills.amount')}</span>
-          <span class="text-sm font-semibold text-gray-900 dark:text-white">${formatCurrency(bill.jumlah, currency)}</span>
+          <span class="text-sm font-semibold text-gray-900 dark:text-white">${this.fmt(bill.jumlah)}</span>
         </div>
         <div class="flex justify-between">
           <span class="text-sm text-gray-500 dark:text-gray-400">${t('bills.paymentAccount')}</span>

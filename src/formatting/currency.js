@@ -3,7 +3,10 @@
  * 
  * Centralized currency formatting using Intl.NumberFormat.
  * Supports 10 currencies. Never hardcodes "Rp" or any currency symbol.
+ * Supports live currency conversion between currencies.
  */
+
+import { convertCurrency } from '../data/exchange-rates.js';
 
 /**
  * Supported currencies
@@ -31,14 +34,23 @@ export function getCurrency(code) {
 /**
  * Format a monetary amount with the appropriate currency.
  * 
- * @param {number} amount - The amount (in smallest unit, e.g. cents for USD, whole IDR)
- * @param {string} currencyCode - ISO 4217 currency code
+ * Supports optional currency conversion: pass `fromCurrency` in options
+ * to automatically convert the amount before formatting.
+ * 
+ * @param {number} amount - The amount in source currency
+ * @param {string} currencyCode - Target/display currency code (e.g., 'USD')
  * @param {object} options - Optional overrides
+ * @param {string} options.fromCurrency - Source currency if different from display
  * @returns {string} Formatted currency string
  */
 export function formatCurrency(amount, currencyCode = 'USD', options = {}) {
   if (amount === undefined || amount === null || isNaN(amount)) {
     amount = 0;
+  }
+
+  // Convert if source currency differs from display currency
+  if (options.fromCurrency && options.fromCurrency !== currencyCode) {
+    amount = convertCurrency(amount, options.fromCurrency, currencyCode);
   }
 
   const currency = getCurrency(currencyCode);
@@ -114,6 +126,27 @@ export function formatCompact(amount, currencyCode = 'USD') {
  * Parse a currency string back to a number.
  * Handles common formats like "$1,234.56", "Rp1.234.567", "€1.234,56"
  */
+/**
+ * Detect the dominant currency from a set of amounts with currencies.
+ * Returns the currency of the largest total.
+ * 
+ * @param {Array<{amount: number, currency: string}>} items
+ * @returns {string} Dominant currency code
+ */
+export function detectDominantCurrency(items) {
+  const totals = {};
+  for (const item of items) {
+    const cur = item.currency || 'IDR';
+    totals[cur] = (totals[cur] || 0) + Math.abs(item.amount || 0);
+  }
+  let max = 0;
+  let dominant = 'IDR';
+  for (const [cur, total] of Object.entries(totals)) {
+    if (total > max) { max = total; dominant = cur; }
+  }
+  return dominant;
+}
+
 export function parseCurrency(formatted, currencyCode = 'USD') {
   if (typeof formatted !== 'string') return 0;
 

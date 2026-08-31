@@ -4,7 +4,7 @@
  */
 
 import { t } from '../i18n/index.js';
-import { formatCurrency } from '../formatting/currency.js';
+import { formatCurrency, detectDominantCurrency } from '../formatting/currency.js';
 import { formatDate } from '../formatting/dates.js';
 import { appState } from '../app/state.js';
 
@@ -61,6 +61,9 @@ export function showSmartAddModal(app) {
   const accounts  = appState.get('accounts') || [];
   const members   = appState.get('familyMembers') || [];
   const currency  = appState.get('currency') || 'IDR';
+  const sourceCurrency = detectDominantCurrency(
+    accounts.map(a => ({ amount: a.saldo || 0, currency: a.mataUang || currency }))
+  );
   const quickAmts = QUICK_AMOUNTS[currency] || QUICK_AMOUNTS.default;
 
   let currentType = 'keluar'; // keluar=expense, masuk=income, transfer
@@ -86,6 +89,7 @@ export function showSmartAddModal(app) {
     const cats = currentType === 'masuk' ? INCOME_CATEGORIES : EXPENSE_CATEGORIES;
     const isTransfer = currentType === 'transfer';
     const liquidAccounts = accounts.filter(a => a.aktif !== false);
+    const fc = (amt) => formatCurrency(amt, currency, { fromCurrency: sourceCurrency });
 
     modal.innerHTML = `
       <div class="p-5 sm:p-6 space-y-5">
@@ -125,7 +129,7 @@ export function showSmartAddModal(app) {
         <div class="flex flex-wrap justify-center gap-2">
           ${quickAmts.map(amt => `
             <button data-quick="${amt}" class="sa-quick px-3 py-1.5 rounded-lg border border-gray-200 dark:border-gray-700 text-xs font-medium text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
-              ${formatCurrency(amt, currency)}
+              ${fc(amt)}
             </button>
           `).join('')}
         </div>
@@ -143,7 +147,7 @@ export function showSmartAddModal(app) {
           <div>
             <label class="block text-xs font-medium text-gray-500 dark:text-gray-400 mb-1.5 uppercase tracking-wide">${t('smartAdd.fromAccount')}</label>
             <select id="sa-from" class="w-full px-3 py-2.5 rounded-xl border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800 text-gray-900 dark:text-white text-sm focus:outline-none focus:ring-2 focus:ring-primary-500">
-              ${liquidAccounts.map(a => `<option value="${a.id}" ${selectedAccount === a.id ? 'selected' : ''}>${a.nama} — ${formatCurrency(a.saldo, currency)}</option>`).join('')}
+              ${liquidAccounts.map(a => `<option value="${a.id}" ${selectedAccount === a.id ? 'selected' : ''}>${a.nama} — ${fc(a.saldo)}</option>`).join('')}
             </select>
           </div>
           <div class="flex justify-center">
@@ -155,7 +159,7 @@ export function showSmartAddModal(app) {
             <label class="block text-xs font-medium text-gray-500 dark:text-gray-400 mb-1.5 uppercase tracking-wide">${t('smartAdd.toAccount')}</label>
             <select id="sa-to" class="w-full px-3 py-2.5 rounded-xl border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800 text-gray-900 dark:text-white text-sm focus:outline-none focus:ring-2 focus:ring-primary-500">
               <option value="">${t('smartAdd.noAccount')}</option>
-              ${liquidAccounts.map(a => `<option value="${a.id}" ${selectedToAccount === a.id ? 'selected' : ''}>${a.nama} — ${formatCurrency(a.saldo, currency)}</option>`).join('')}
+              ${liquidAccounts.map(a => `<option value="${a.id}" ${selectedToAccount === a.id ? 'selected' : ''}>${a.nama} — ${fc(a.saldo)}</option>`).join('')}
             </select>
           </div>
         </div>
@@ -182,7 +186,7 @@ export function showSmartAddModal(app) {
         <div>
           <label class="block text-xs font-medium text-gray-500 dark:text-gray-400 mb-1.5 uppercase tracking-wide">${t('smartAdd.account')}</label>
           <select id="sa-account" class="w-full px-3 py-2.5 rounded-xl border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800 text-gray-900 dark:text-white text-sm focus:outline-none focus:ring-2 focus:ring-primary-500">
-            ${liquidAccounts.map(a => `<option value="${a.id}" ${selectedAccount === a.id ? 'selected' : ''}>${a.nama} — ${formatCurrency(a.saldo, currency)}</option>`).join('')}
+            ${liquidAccounts.map(a => `<option value="${a.id}" ${selectedAccount === a.id ? 'selected' : ''}>${a.nama} — ${fc(a.saldo)}</option>`).join('')}
           </select>
         </div>
         `}
@@ -355,7 +359,7 @@ export function showSmartAddModal(app) {
 
       appState.set('transactions', txns);
       appState.set('accounts', accts);
-      appState.showToast({ type: 'success', message: `Transferred ${formatCurrency(amount, currency)} successfully` });
+      appState.showToast({ type: 'success', message: `Transferred ${fc(amount)} successfully` });
     } else {
       const acct = accts.find(a => a.id === selectedAccount);
       if (!acct) { errDiv.textContent = 'Select an account'; errDiv.classList.remove('hidden'); return; }
@@ -385,7 +389,7 @@ export function showSmartAddModal(app) {
       appState.set('accounts', accts);
 
       const label = currentType === 'masuk' ? 'Income' : 'Expense';
-      appState.showToast({ type: 'success', message: `${label} of ${formatCurrency(amount, currency)} saved` });
+      appState.showToast({ type: 'success', message: `${label} of ${fc(amount)} saved` });
     }
 
     overlay.remove();

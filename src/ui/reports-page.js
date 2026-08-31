@@ -14,7 +14,7 @@ import {
 } from '../domain/transactions.js';
 
 import { t } from '../i18n/index.js';
-import { formatCurrency } from '../formatting/currency.js';
+import { formatCurrency, detectDominantCurrency } from '../formatting/currency.js';
 import { appState } from '../app/state.js';
 
 function getUserCurrency() {
@@ -66,6 +66,10 @@ export function renderReportsPage(year, month) {
   const accounts  = appState.get('accounts') || [];
   const budgets   = appState.get('budgets') || [];
   const currency  = getUserCurrency();
+  const sourceCurrency = detectDominantCurrency(
+    accounts.map(a => ({ amount: a.saldo || 0, currency: a.mataUang || currency }))
+  );
+  const fc = (amt) => formatCurrency(amt, currency, { fromCurrency: sourceCurrency });
 
   const periodTxns = getTransactionsForPeriod(txns, year, month);
 
@@ -112,15 +116,15 @@ export function renderReportsPage(year, month) {
     <div class="grid grid-cols-2 lg:grid-cols-5 gap-4">
       <div class="bg-white dark:bg-gray-800 rounded-2xl p-5 border border-gray-100 dark:border-gray-700">
         <p class="text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wide">${t('reports.totalIncome')}</p>
-        <p class="text-xl font-bold text-success-600 dark:text-success-400 mt-1">${formatCurrency(monthIncome, currency)}</p>
+        <p class="text-xl font-bold text-success-600 dark:text-success-400 mt-1">${fc(monthIncome)}</p>
       </div>
       <div class="bg-white dark:bg-gray-800 rounded-2xl p-5 border border-gray-100 dark:border-gray-700">
         <p class="text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wide">${t('reports.totalExpenses')}</p>
-        <p class="text-xl font-bold text-danger-600 dark:text-danger-400 mt-1">${formatCurrency(monthExpenses, currency)}</p>
+        <p class="text-xl font-bold text-danger-600 dark:text-danger-400 mt-1">${fc(monthExpenses)}</p>
       </div>
       <div class="bg-white dark:bg-gray-800 rounded-2xl p-5 border border-gray-100 dark:border-gray-700">
         <p class="text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wide">${t('reports.netCashFlow')}</p>
-        <p class="text-xl font-bold ${cashFlow >= 0 ? 'text-success-600 dark:text-success-400' : 'text-danger-600 dark:text-danger-400'} mt-1">${formatCurrency(cashFlow, currency)}</p>
+        <p class="text-xl font-bold ${cashFlow >= 0 ? 'text-success-600 dark:text-success-400' : 'text-danger-600 dark:text-danger-400'} mt-1">${fc(cashFlow)}</p>
       </div>
       <div class="bg-white dark:bg-gray-800 rounded-2xl p-5 border border-gray-100 dark:border-gray-700">
         <p class="text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wide">${t('reports.savingsRate')}</p>
@@ -153,7 +157,7 @@ export function renderReportsPage(year, month) {
                   <div class="flex-1 min-w-0">
                     <div class="flex items-center justify-between mb-1">
                       <span class="text-sm font-medium text-gray-900 dark:text-white">${source}</span>
-                      <span class="text-sm font-semibold text-gray-900 dark:text-white">${formatCurrency(amount, currency)}</span>
+                      <span class="text-sm font-semibold text-gray-900 dark:text-white">${fc(amount)}</span>
                     </div>
                     <div class="h-2 bg-gray-100 dark:bg-gray-700 rounded-full overflow-hidden">
                       <div class="h-full bg-success-500 rounded-full" style="width:${pct}%"></div>
@@ -186,7 +190,7 @@ export function renderReportsPage(year, month) {
                   <div class="flex-1 min-w-0">
                     <div class="flex items-center justify-between mb-1">
                       <span class="text-sm font-medium text-gray-900 dark:text-white">${cat}</span>
-                      <span class="text-sm font-semibold text-gray-900 dark:text-white">${formatCurrency(amount, currency)}</span>
+                      <span class="text-sm font-semibold text-gray-900 dark:text-white">${fc(amount)}</span>
                     </div>
                     <div class="h-2 bg-gray-100 dark:bg-gray-700 rounded-full overflow-hidden">
                       <div class="h-full bg-danger-500 rounded-full" style="width:${pct}%"></div>
@@ -232,7 +236,7 @@ export function renderReportsPage(year, month) {
                     <td class="px-5 py-3 text-sm text-gray-600 dark:text-gray-400">${tx.tanggal}</td>
                     <td class="px-5 py-3 text-sm font-medium text-gray-900 dark:text-white">${tx.keterangan || '—'}</td>
                     <td class="px-5 py-3 text-sm text-gray-600 dark:text-gray-400">${tx.kategori || '—'}</td>
-                    <td class="px-5 py-3 text-sm font-semibold text-right ${amountColor}">${prefix}${formatCurrency(tx.jumlah, currency)}</td>
+                    <td class="px-5 py-3 text-sm font-semibold text-right ${amountColor}">${prefix}${fc(tx.jumlah)}</td>
                   </tr>
                 `;
               }).join('')}
