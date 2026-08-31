@@ -119,6 +119,31 @@ export default {
     addFirst: 'Add Your First Transaction'
   },
 
+  // Transfers
+  transfers: {
+    title: 'Transfers',
+    subtitle: 'Track money movement between your accounts.',
+    newTransfer: 'New Transfer',
+    search: 'Search',
+    searchPlaceholder: 'Search transfers...',
+    allAccounts: 'All Accounts',
+    from: 'From',
+    to: 'To',
+    amount: 'Amount',
+    date: 'Date',
+    description: 'Description',
+    notes: 'Notes',
+    totalOut: 'Total Transferred Out',
+    totalIn: 'Total Transferred In',
+    netFlow: 'Net Flow',
+    count: '{count} transfers',
+    empty: 'No transfers yet.',
+    emptyDescription: 'Transfers between your accounts will appear here.',
+    addFirst: 'Make Your First Transfer',
+    summary: 'Transfer Summary',
+    thisMonth: 'This Month'
+  },
+
   // Transaction Form
   transactionForm: {
     title: 'Record Transaction',

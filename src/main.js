@@ -380,7 +380,7 @@ class KocekkuApp {
       case 'home':       return this.renderHome();
       case 'accounts':   return this.renderAccounts();
       case 'transactions': return this.renderTransactionsPage();
-      case 'transfers':  return this.renderTransactionsPage();
+      case 'transfers':  return this.renderTransfers();
       case 'budgets':    return this.renderBudgets();
       case 'goals':      return this.renderGoals();
       case 'bills':      return this.renderBills();
@@ -1705,6 +1705,198 @@ class KocekkuApp {
       this.renderContent();
     });
   }
+
+  /* ================================================================ */
+  /*  TRANSFERS PAGE                                                  */
+  /* ================================================================ */
+
+  _totalTransfersIn(transfers, accounts) {
+    // Sum amounts where this account was the destination
+    let total = 0;
+    transfers.forEach(t => {
+      if (t.dompetTujuan) {
+        total += parseFloat(t.jumlah) || 0;
+      }
+    });
+    return total;
+  }
+
+  renderTransfers() {
+    const container = document.createElement('div');
+    container.className = 'space-y-6';
+
+    const allTxns     = appState.get('transactions') || [];
+    const accounts    = appState.get('accounts') || [];
+    const currency    = getUserCurrency();
+    const year        = this._period.year;
+    const month       = this._period.month;
+
+    const transfers = allTxns.filter(t => t.tipe === 'transfer');
+
+    // This month transfers
+    const monthTransfers = transfers.filter(t => {
+      const d = new Date(t.tanggal);
+      return d.getFullYear() === year && d.getMonth() === month;
+    });
+
+    const totalOut  = monthTransfers.reduce((s, t) => s + (parseFloat(t.jumlah) || 0), 0);
+    const totalIn   = this._totalTransfersIn(monthTransfers, accounts);
+    const netFlow   = totalIn - totalOut;
+
+    /* ---- HEADER ---- */
+    const header = document.createElement('div');
+    header.className = 'flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4';
+    header.innerHTML = `
+      <div>
+        <h1 class="text-2xl font-bold text-gray-900 dark:text-white">${t('transfers.title')}</h1>
+        <p class="text-sm text-gray-500 dark:text-gray-400 mt-1">${t('transfers.subtitle')}</p>
+      </div>
+      <button id="add-transfer-btn" class="inline-flex items-center gap-2 px-4 py-2.5 bg-primary-600 text-white text-sm font-medium rounded-xl hover:bg-primary-700 transition-colors">
+        <i data-lucide="arrow-left-right" class="w-4 h-4"></i>
+        ${t('transfers.newTransfer')}
+      </button>`;
+    container.appendChild(header);
+
+    /* ---- SUMMARY CARDS ---- */
+    const summaryGrid = document.createElement('div');
+    summaryGrid.className = 'grid grid-cols-1 sm:grid-cols-3 gap-4';
+    const summaryCards = [
+      { label: t('transfers.totalOut'), value: this.fmt(totalOut), color: 'text-danger-600', bg: 'bg-danger-50 dark:bg-danger-900/20', icon: 'arrow-up-right' },
+      { label: t('transfers.totalIn'), value: this.fmt(totalIn), color: 'text-success-600', bg: 'bg-success-50 dark:bg-success-900/20', icon: 'arrow-down-left' },
+      { label: t('transfers.netFlow'), value: this.fmt(netFlow), color: netFlow >= 0 ? 'text-success-600' : 'text-danger-600', bg: netFlow >= 0 ? 'bg-success-50 dark:bg-success-900/20' : 'bg-danger-50 dark:bg-danger-900/20', icon: 'trending-up' },
+    ];
+    summaryCards.forEach(c => {
+      const el = document.createElement('div');
+      el.className = `flex items-center gap-3 p-4 rounded-xl ${c.bg}`;
+      el.innerHTML = `
+        <div class="w-10 h-10 rounded-lg ${c.bg} flex items-center justify-center">
+          <i data-lucide="${c.icon}" class="w-5 h-5 ${c.color}"></i>
+        </div>
+        <div>
+          <p class="text-xs text-gray-500 dark:text-gray-400">${c.label}</p>
+          <p class="text-lg font-bold ${c.color}">${c.value}</p>
+        </div>`;
+      summaryGrid.appendChild(el);
+    });
+    container.appendChild(summaryGrid);
+
+    /* ---- FILTERS ---- */
+    const filterBar = document.createElement('div');
+    filterBar.className = 'flex flex-col sm:flex-row gap-3';
+    filterBar.innerHTML = `
+      <div class="relative flex-1">
+        <i data-lucide="search" class="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400"></i>
+        <input type="text" id="tf-search" placeholder="${t('transfers.searchPlaceholder')}" class="w-full pl-10 pr-4 py-2.5 text-sm border border-gray-200 dark:border-gray-600 rounded-xl bg-white dark:bg-gray-800 text-gray-900 dark:text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary-500">
+      </div>
+      <select id="tf-account" class="px-4 py-2.5 text-sm border border-gray-200 dark:border-gray-600 rounded-xl bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary-500">
+        <option value="">${t('transfers.allAccounts')}</option>
+        ${accounts.map(a => `<option value="${a.id}">${a.nama}</option>`).join('')}
+      </select>`;
+    container.appendChild(filterBar);
+
+    /* ---- TRANSFER LIST ---- */
+    const listEl = document.createElement('div');
+    listEl.className = 'space-y-2';
+    container.appendChild(listEl);
+
+    const renderList = (searchTerm = '', accountFilter = '') => {
+      listEl.innerHTML = '';
+      let filtered = transfers;
+
+      if (searchTerm) {
+        const q = searchTerm.toLowerCase();
+        filtered = filtered.filter(t =>
+          (t.keterangan || '').toLowerCase().includes(q) ||
+          (t.catatan || '').toLowerCase().includes(q)
+        );
+      }
+      if (accountFilter) {
+        filtered = filtered.filter(t => t.dompet === accountFilter || t.dompetTujuan === accountFilter);
+      }
+
+      // Sort newest first
+      filtered.sort((a, b) => new Date(b.tanggal) - new Date(a.tanggal));
+
+      if (filtered.length === 0) {
+        listEl.innerHTML = `
+          <div class="flex flex-col items-center py-16 text-center">
+            <div class="w-16 h-16 rounded-full bg-gray-100 dark:bg-gray-800 flex items-center justify-center mb-4">
+              <i data-lucide="arrow-left-right" class="w-8 h-8 text-gray-300 dark:text-gray-600"></i>
+            </div>
+            <p class="text-gray-500 dark:text-gray-400 font-medium">${t('transfers.empty')}</p>
+            <p class="text-sm text-gray-400 dark:text-gray-500 mt-1">${t('transfers.emptyDescription')}</p>
+          </div>`;
+        if (typeof lucide !== 'undefined') lucide.createIcons();
+        return;
+      }
+
+      // Group by month
+      const groups = {};
+      filtered.forEach(t => {
+        const key = t.tanggal.slice(0, 7); // YYYY-MM
+        if (!groups[key]) groups[key] = [];
+        groups[key].push(t);
+      });
+
+      Object.entries(groups).forEach(([monthKey, txns]) => {
+        const [y, m] = monthKey.split('-');
+        const monthLabel = new Date(y, parseInt(m) - 1).toLocaleDateString('en-US', { month: 'long', year: 'numeric' });
+
+        const groupHeader = document.createElement('div');
+        groupHeader.className = 'pt-4 pb-1 px-1';
+        groupHeader.innerHTML = `<p class="text-xs font-semibold text-gray-400 dark:text-gray-500 uppercase tracking-wider">${monthLabel}</p>`;
+        listEl.appendChild(groupHeader);
+
+        txns.forEach(txn => {
+          const fromAcc = accounts.find(a => a.id === txn.dompet);
+          const toAcc   = accounts.find(a => a.id === txn.dompetTujuan);
+          const fromName = fromAcc ? fromAcc.nama : 'Unknown';
+          const toName   = toAcc   ? toAcc.nama : 'Unknown';
+          const amount   = parseFloat(txn.jumlah) || 0;
+          const dateStr  = formatDate(txn.tanggal, 'short');
+
+          const row = document.createElement('div');
+          row.className = 'flex items-center gap-4 p-4 bg-white dark:bg-gray-800 rounded-xl border border-gray-100 dark:border-gray-700 hover:border-gray-200 dark:hover:border-gray-600 transition-colors';
+          row.innerHTML = `
+            <div class="w-10 h-10 rounded-full bg-info-50 dark:bg-info-900/20 flex items-center justify-center flex-shrink-0">
+              <i data-lucide="arrow-left-right" class="w-5 h-5 text-info-600"></i>
+            </div>
+            <div class="flex-1 min-w-0">
+              <p class="text-sm font-medium text-gray-900 dark:text-white truncate">${txn.keterangan || t('transfers.title')}</p>
+              <p class="text-xs text-gray-500 dark:text-gray-400 mt-0.5">
+                <span class="font-medium text-gray-700 dark:text-gray-300">${fromName}</span>
+                <span class="mx-1">→</span>
+                <span class="font-medium text-gray-700 dark:text-gray-300">${toName}</span>
+              </p>
+            </div>
+            <div class="text-right flex-shrink-0">
+              <p class="text-sm font-semibold text-info-600">${this.fmt(amount)}</p>
+              <p class="text-xs text-gray-400 dark:text-gray-500">${dateStr}</p>
+            </div>`;
+          listEl.appendChild(row);
+        });
+      });
+
+      if (typeof lucide !== 'undefined') lucide.createIcons();
+    };
+
+    renderList();
+
+    // Wire filters
+    const searchInput = container.querySelector('#tf-search');
+    const accountSelect = container.querySelector('#tf-account');
+    const applyFilters = () => renderList(searchInput.value, accountSelect.value);
+    searchInput?.addEventListener('input', applyFilters);
+    accountSelect?.addEventListener('change', applyFilters);
+
+    // Wire Add Transfer button → opens Smart Add in transfer mode
+    container.querySelector('#add-transfer-btn')?.addEventListener('click', () => this.showSmartAddModal('transfer'));
+
+    requestAnimationFrame(() => { if (typeof lucide !== 'undefined') lucide.createIcons(); });
+
+    return container;
+  }
+
   renderBudgets() {
     const container = document.createElement('div');
     container.className = 'space-y-6';
@@ -3567,8 +3759,8 @@ class KocekkuApp {
   /*  MODALS                                                          */
   /* ================================================================ */
 
-  showSmartAddModal() {
-    showSmartAddModal(this);
+  showSmartAddModal(initialType) {
+    showSmartAddModal(this, initialType);
   }
 
   showMobileMoreMenu() {

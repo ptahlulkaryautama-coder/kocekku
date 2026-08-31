@@ -226,6 +226,11 @@
           }, 300);
         }
       }, 500);
+
+      // Register Service Worker for PWA / offline support
+      if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('./sw.js').catch(() => {});
+      }
     });
   </script>
 </body>

@@ -1,7 +1,7 @@
 # Kocekku 2.0 — Project Status
 
 > **Last Updated:** August 31, 2026
-> **Current Phase:** Phase 14 Complete (Smart Add)
+> **Current Phase:** Phase 14 + Transfers + PWA Complete
 > **Status:** FUNCTIONAL — Deployed on Vercel
 
 ---
@@ -14,7 +14,7 @@
 | **Repository** | https://github.com/ptahlulkaryautama-coder/kocekku-2.0 |
 | **Framework** | Vanilla JS + Vite + Tailwind CSS CDN |
 | **Hosting** | Vercel (auto-deploy on push to `main`) |
-| **PWA** | manifest.json + service worker present |
+| **PWA** | manifest + SW registered + offline caching active |
 
 ---
 
@@ -163,6 +163,23 @@
 - `formatCurrency(amount, displayCurrency, { fromCurrency })` converts on-the-fly
 - All pages use conversion consistently
 
+### ✅ Transfers Page
+- Dedicated transfers page (separate from Transactions)
+- Transfer summary cards (Total Out / Total In / Net Flow)
+- Transfer history grouped by month
+- From → To account display with amount and date
+- Search and account filter
+- Add Transfer button opens Smart Add in transfer mode
+- Empty state with clear messaging
+
+### ✅ PWA / Offline Support
+- Service worker registered in index.html
+- Cache-first strategy with stale-while-revalidate
+- Network-first for exchange rate API
+- Offline fallback for cached assets
+- Old caches cleaned on activation
+- Manifest with app name, icons, standalone display
+
 ---
 
 ## Financial Domain Model
@@ -288,7 +305,8 @@ src/
 
 ## What's NOT Built Yet
 
-- [ ] Standalone Transfers page (transfers work via Smart Add, no dedicated page)
+- [x] Standalone Transfers page
+- [x] PWA offline mode (service worker registered, caching active)
 - [ ] NLP-style Smart Add parser ("coffee 5 dollars from cash")
 - [ ] Bank integration
 - [ ] AI financial advisor
@@ -297,7 +315,6 @@ src/
 - [ ] Tax system
 - [ ] Advanced reports / custom date ranges
 - [ ] Multi-currency per-account display
-- [ ] PWA offline mode (SW exists but not fully wired)
 - [ ] App icon / favicon redesign (still default)
 
 ---
@@ -320,14 +337,15 @@ src/
 
 ## Next Steps (Recommended Order)
 
-1. **Full live QA** — test every module end-to-end on Vercel with real demo data
-2. **Production polish** — bundle optimization, error boundaries, loading states
-3. **Transfers page** — dedicated transfer flow (currently only via Smart Add)
-4. **Branding** — rename to "Sakku" when ready (apply to title, manifest, meta, about)
-5. **PWA hardening** — offline support, install prompt, cache strategy
+1. ~~Full live QA~~ ✅
+2. ~~Transfers page~~ ✅
+3. ~~PWA offline support~~ ✅
+4. **Production polish** — bundle optimization, error boundaries, loading states
+5. **Branding** — rename to "Sakku" when ready (apply to title, manifest, meta, about)
 6. **Performance** — lazy loading, chart optimization, virtual scrolling for large datasets
 7. **Accessibility audit** — keyboard navigation, screen reader, ARIA labels
 8. **Visual QA** — pixel-level verification at all breakpoints
+9. **Install prompt** — beforeinstallprompt event, install banner UI
 
 ---
 

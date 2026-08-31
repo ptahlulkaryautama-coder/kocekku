@@ -57,7 +57,7 @@ const COLOR_MAP = {
  * Show the Smart Add modal
  * @param {Object} app - the KocekkuApp instance
  */
-export function showSmartAddModal(app) {
+export function showSmartAddModal(app, initialType) {
   const accounts  = appState.get('accounts') || [];
   const members   = appState.get('familyMembers') || [];
   const currency  = appState.get('currency') || 'IDR';
@@ -66,7 +66,7 @@ export function showSmartAddModal(app) {
   );
   const quickAmts = QUICK_AMOUNTS[currency] || QUICK_AMOUNTS.default;
 
-  let currentType = 'keluar'; // keluar=expense, masuk=income, transfer
+  let currentType = initialType || 'keluar'; // keluar=expense, masuk=income, transfer
   let selectedCategory = '';
   let selectedAccount = accounts.find(a => a.aktif !== false)?.id || '';
   let selectedToAccount = '';
