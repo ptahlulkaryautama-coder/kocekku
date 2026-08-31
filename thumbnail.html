@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kocekku 2.0 Thumbnail</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  
+  body {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    background: #0A0A0A;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    padding: 16px;
+  }
+
+  .card {
+    width: 100%;
+    max-width: 680px;
+    border-radius: 24px;
+    overflow: hidden;
+    position: relative;
+    background: linear-gradient(160deg, #1C1815 0%, #19160F 50%, #131110 100%);
+    box-shadow: 0 40px 80px rgba(0,0,0,0.6), 0 0 0 1px rgba(255,255,255,0.04);
+  }
+
+  /* Background accents */
+  .card::before {
+    content: '';
+    position: absolute;
+    top: -100px;
+    right: -60px;
+    width: 300px;
+    height: 300px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(200,168,110,0.08) 0%, transparent 65%);
+    pointer-events: none;
+  }
+  .card::after {
+    content: '';
+    position: absolute;
+    bottom: -80px;
+    left: -40px;
+    width: 250px;
+    height: 250px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(93,216,158,0.04) 0%, transparent 60%);
+    pointer-events: none;
+  }
+
+  .grid-bg {
+    position: absolute;
+    inset: 0;
+    background-image: 
+      linear-gradient(rgba(255,255,255,0.012) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.012) 1px, transparent 1px);
+    background-size: 48px 48px;
+    pointer-events: none;
+  }
+
+  /* TOP: Brand section */
+  .brand-section {
+    position: relative;
+    z-index: 2;
+    padding: 40px 36px 28px;
+    text-align: center;
+  }
+
+  .logo-mark {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 14px;
+    margin-bottom: 16px;
+  }
+
+  .logo-icon {
+    width: 56px;
+    height: 56px;
+    border-radius: 16px;
+    background: linear-gradient(135deg, #C8A86E 0%, #A8884E 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 8px 28px rgba(200,168,110,0.35);
+    flex-shrink: 0;
+  }
+
+  .logo-icon svg {
+    width: 30px;
+    height: 30px;
+  }
+
+  .brand-name {
+    font-size: 48px;
+    font-weight: 800;
+    color: #FFFFFF;
+    letter-spacing: -2px;
+    line-height: 1;
+  }
+
+  .brand-name .accent { color: #C8A86E; }
+
+  .tagline {
+    font-size: 16px;
+    font-weight: 500;
+    color: rgba(255,255,255,0.4);
+    letter-spacing: 0.3px;
+    margin-bottom: 16px;
+  }
+
+  .version-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(200,168,110,0.1);
+    border: 1px solid rgba(200,168,110,0.18);
+    border-radius: 24px;
+    padding: 7px 18px;
+    font-size: 11px;
+    font-weight: 600;
+    color: #C8A86E;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+
+  .version-badge .dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #5DD89E;
+    box-shadow: 0 0 8px rgba(93,216,158,0.5);
+  }
+
+  /* Divider */
+  .divider {
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(200,168,110,0.15), transparent);
+    margin: 0 36px;
+    position: relative;
+    z-index: 2;
+  }
+
+  /* BOTTOM: Dashboard preview */
+  .dashboard-section {
+    position: relative;
+    z-index: 2;
+    padding: 28px 36px 36px;
+  }
+
+  .dash-label {
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: rgba(255,255,255,0.2);
+    font-weight: 600;
+    text-align: center;
+    margin-bottom: 16px;
+  }
+
+  .dash-card {
+    background: rgba(255,255,255,0.025);
+    border: 1px solid rgba(255,255,255,0.06);
+    border-radius: 16px;
+    padding: 22px;
+  }
+
+  .dash-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+  }
+
+  .dash-greeting {
+    font-size: 12px;
+    color: rgba(255,255,255,0.35);
+    font-weight: 500;
+  }
+
+  .dash-period {
+    font-size: 11px;
+    color: rgba(200,168,110,0.6);
+    background: rgba(200,168,110,0.08);
+    padding: 3px 10px;
+    border-radius: 6px;
+    font-weight: 600;
+  }
+
+  .networth {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+
+  .networth-label {
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: rgba(255,255,255,0.25);
+    font-weight: 600;
+    margin-bottom: 4px;
+  }
+
+  .networth-value {
+    font-size: 34px;
+    font-weight: 800;
+    color: #FFFFFF;
+    letter-spacing: -1px;
+    line-height: 1.1;
+  }
+
+  .networth-change {
+    font-size: 12px;
+    font-weight: 600;
+    color: #5DD89E;
+    margin-top: 2px;
+  }
+
+  .metrics-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 8px;
+    margin-bottom: 18px;
+  }
+
+  .metric {
+    background: rgba(255,255,255,0.02);
+    border: 1px solid rgba(255,255,255,0.04);
+    border-radius: 10px;
+    padding: 10px;
+    text-align: center;
+  }
+
+  .metric-lbl {
+    font-size: 9px;
+    color: rgba(255,255,255,0.28);
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 4px;
+  }
+
+  .metric-val {
+    font-size: 16px;
+    font-weight: 700;
+    letter-spacing: -0.3px;
+  }
+
+  .c-green { color: #5DD89E; }
+  .c-red { color: #E87C6A; }
+  .c-gold { color: #C8A86E; }
+  .c-blue { color: #7EB8E8; }
+
+  /* Mini chart */
+  .chart {
+    display: flex;
+    align-items: flex-end;
+    gap: 2px;
+    height: 44px;
+    margin-bottom: 16px;
+    padding: 0 4px;
+  }
+
+  .bar {
+    flex: 1;
+    border-radius: 2px 2px 0 0;
+  }
+
+  .bar.i { background: rgba(93,216,158,0.3); }
+  .bar.e { background: rgba(232,124,106,0.25); }
+
+  /* Status */
+  .status-row {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    padding-top: 14px;
+    border-top: 1px solid rgba(255,255,255,0.05);
+  }
+
+  .st {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 10px;
+    color: rgba(255,255,255,0.3);
+    font-weight: 500;
+  }
+
+  .st-dot {
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+  }
+
+  .st-dot.g { background: #5DD89E; }
+  .st-dot.a { background: #D4A84E; }
+  .st-dot.b { background: #7EB8E8; }
+
+  /* Feature pills row */
+  .features {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 6px;
+    margin-top: 20px;
+    padding: 0 36px;
+    position: relative;
+    z-index: 2;
+    padding-bottom: 32px;
+  }
+
+  .pill {
+    font-size: 10px;
+    font-weight: 600;
+    color: rgba(255,255,255,0.3);
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,255,255,0.05);
+    padding: 4px 10px;
+    border-radius: 6px;
+    letter-spacing: 0.3px;
+  }
+</style>
+</head>
+<body>
+  <div class="card">
+    <div class="grid-bg"></div>
+
+    <!-- Brand -->
+    <div class="brand-section">
+      <div class="logo-mark">
+        <div class="logo-icon">
+          <svg viewBox="0 0 32 32" fill="none">
+            <path d="M16 5C11 5 7 9.5 7 14C7 17.5 9 20.5 11 22.5C13 24.5 15 27 16 27C17 27 19 24.5 21 22.5C23 20.5 25 17.5 25 14C25 9.5 21 5 16 5Z" 
+                  fill="rgba(255,255,255,0.9)"/>
+            <circle cx="16" cy="14" r="3.5" fill="#A8884E" opacity="0.5"/>
+            <circle cx="16" cy="14" r="1.8" fill="white"/>
+          </svg>
+        </div>
+        <div class="brand-name">Koce<span class="accent">kku</span></div>
+      </div>
+      <div class="tagline">Your Money. One Clear Picture.</div>
+      <div class="version-badge">
+        <span class="dot"></span>
+        Version 2.0 — Now Available
+      </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <!-- Dashboard Preview -->
+    <div class="dashboard-section">
+      <div class="dash-label">Home Dashboard Preview</div>
+      <div class="dash-card">
+        <div class="dash-top">
+          <div class="dash-greeting">Good morning, Aubrey</div>
+          <div class="dash-period">Aug 2026</div>
+        </div>
+
+        <div class="networth">
+          <div class="networth-label">Net Worth</div>
+          <div class="networth-value">Rp 54.2M</div>
+          <div class="networth-change">↑ 8.4% vs last month</div>
+        </div>
+
+        <div class="metrics-grid">
+          <div class="metric">
+            <div class="metric-lbl">Income</div>
+            <div class="metric-val c-green">Rp 20M</div>
+          </div>
+          <div class="metric">
+            <div class="metric-lbl">Expenses</div>
+            <div class="metric-val c-red">Rp 4.6M</div>
+          </div>
+          <div class="metric">
+            <div class="metric-lbl">Savings</div>
+            <div class="metric-val c-gold">77%</div>
+          </div>
+          <div class="metric">
+            <div class="metric-lbl">Cash</div>
+            <div class="metric-val c-blue">Rp 47.5M</div>
+          </div>
+        </div>
+
+        <div class="chart">
+          <div class="bar i" style="height:35%"></div>
+          <div class="bar e" style="height:18%"></div>
+          <div class="bar i" style="height:50%"></div>
+          <div class="bar e" style="height:28%"></div>
+          <div class="bar i" style="height:42%"></div>
+          <div class="bar e" style="height:22%"></div>
+          <div class="bar i" style="height:60%"></div>
+          <div class="bar e" style="height:30%"></div>
+          <div class="bar i" style="height:55%"></div>
+          <div class="bar e" style="height:20%"></div>
+          <div class="bar i" style="height:48%"></div>
+          <div class="bar e" style="height:25%"></div>
+          <div class="bar i" style="height:65%"></div>
+          <div class="bar e" style="height:32%"></div>
+          <div class="bar i" style="height:58%"></div>
+          <div class="bar e" style="height:15%"></div>
+        </div>
+
+        <div class="status-row">
+          <div class="st"><div class="st-dot g"></div>Health: Excellent</div>
+          <div class="st"><div class="st-dot a"></div>3 Bills Due</div>
+          <div class="st"><div class="st-dot b"></div>2 Goals Active</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Feature pills -->
+    <div class="features">
+      <span class="pill">Dashboard</span>
+      <span class="pill">Transactions</span>
+      <span class="pill">Accounts</span>
+      <span class="pill">Budgets</span>
+      <span class="pill">Goals</span>
+      <span class="pill">Bills</span>
+      <span class="pill">Family</span>
+      <span class="pill">Reports</span>
+      <span class="pill">Financial Health</span>
+    </div>
+  </div>
+</body>
+</html>

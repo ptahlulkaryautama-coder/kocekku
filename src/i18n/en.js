@@ -1,0 +1,597 @@
+/**
+ * Kocekku 2.0 — English Translations
+ * 
+ * All UI text in one place. Product terminology, not literal translation.
+ */
+
+export default {
+  // App
+  app: {
+    name: 'Kocekku',
+    tagline: 'Your Money. One Clear Picture.',
+    version: 'v2.0',
+    premium: 'Premium'
+  },
+
+  // Navigation
+  nav: {
+    home: 'Home',
+    money: 'Money',
+    accounts: 'Accounts',
+    transactions: 'Transactions',
+    transfers: 'Transfers',
+    plan: 'Plan',
+    budgets: 'Budgets',
+    goals: 'Goals',
+    bills: 'Bills & Subscriptions',
+    insights: 'Insights',
+    cashFlow: 'Cash Flow',
+    spending: 'Spending',
+    netWorth: 'Net Worth',
+    health: 'Financial Health',
+    family: 'Family',
+    members: 'Members',
+    contributions: 'Contributions',
+    reports: 'Reports',
+    settings: 'Settings',
+    more: 'More',
+    add: 'Add'
+  },
+
+  // Dashboard
+  dashboard: {
+    greeting: 'Good {timeOfDay}, {name}',
+    morning: 'morning',
+    afternoon: 'afternoon',
+    evening: 'evening',
+    netWorth: 'Net Worth',
+    totalAssets: 'Total Assets',
+    totalLiabilities: 'Total Liabilities',
+    income: 'Income',
+    expenses: 'Expenses',
+    savingsRate: 'Savings Rate',
+    cashFlow: 'Cash Flow',
+    spendingBreakdown: 'Spending Breakdown',
+    upcomingBills: 'Upcoming Bills',
+    savingsGoals: 'Savings Goals',
+    familySpending: 'Family Spending',
+    nextBestActions: 'Next Best Actions',
+    resetDemoData: 'Reset Demo Data',
+    financialStatus: 'Finances on Track'
+  },
+
+  // Smart Add
+  smartAdd: {
+    title: 'Smart Add',
+    subtitle: 'Type a natural sentence to record a transaction automatically.',
+    placeholder: "e.g., 'coffee 5 dollars from cash' or 'salary 4200 chase'",
+    preview: 'Preview',
+    correct: 'Edit',
+    save: 'Save',
+    amount: 'Amount',
+    account: 'Account',
+    category: 'Category',
+    member: 'Member',
+    type: 'Type',
+    income: 'Income',
+    expense: 'Expense'
+  },
+
+  // Transactions
+  transactions: {
+    title: 'Transactions',
+    subtitle: 'All your income, expense, and transfer records.',
+    newTransaction: 'New Transaction',
+    editTransaction: 'Edit Transaction',
+    search: 'Search',
+    searchPlaceholder: 'Search transactions...',
+    allCategories: 'All Categories',
+    allAccounts: 'All Accounts',
+    allMembers: 'All Members',
+    allPeriods: 'Show All Periods',
+    date: 'Date',
+    description: 'Description',
+    amount: 'Amount',
+    account: 'Account',
+    member: 'Member',
+    category: 'Category',
+    notes: 'Notes',
+    type: 'Type',
+    actions: 'Actions',
+    empty: 'No transactions found.',
+    emptyDescription: 'Your financial activity will appear here once you add your first transaction.',
+    addFirst: 'Add Your First Transaction'
+  },
+
+  // Transaction Form
+  transactionForm: {
+    title: 'Record Transaction',
+    editTitle: 'Edit Transaction',
+    type: 'Transaction Type',
+    expense: 'Expense',
+    income: 'Income',
+    description: 'Description',
+    descriptionPlaceholder: 'Brief description...',
+    amount: 'Amount',
+    amountPlaceholder: 'Enter amount...',
+    category: 'Category',
+    account: 'Account',
+    member: 'Recorded By',
+    date: 'Date',
+    cancel: 'Cancel',
+    save: 'Save Transaction'
+  },
+
+  // Accounts
+  accounts: {
+    title: 'Accounts',
+    subtitle: 'Where your money lives.',
+    addAccount: 'Add Account',
+    totalBalance: 'Total Balance',
+    accountTypes: {
+      cash: 'Cash',
+      checking: 'Checking',
+      savings: 'Savings',
+      ewallet: 'E-Wallet',
+      credit: 'Credit Card',
+      investment: 'Investment',
+      loan: 'Loan',
+      receivable: 'Receivable',
+      other: 'Other'
+    }
+  },
+
+  // Account Form
+  accountForm: {
+    title: 'Add Account',
+    name: 'Account Name',
+    namePlaceholder: 'e.g., Chase Checking',
+    balance: 'Opening Balance',
+    type: 'Account Type',
+    cancel: 'Cancel',
+    save: 'Save Account'
+  },
+
+  // Budgets
+  budgets: {
+    title: 'Budgets',
+    subtitle: 'Set and track monthly spending limits for each category.',
+    addBudget: 'Set Budget Limit',
+    totalSpent: 'Total Spent',
+    totalLimit: 'Total Limit',
+    remaining: 'Remaining',
+    used: 'Used',
+    overBudget: 'Over Budget',
+    onTrack: 'On Track',
+    monthlySpending: 'Monthly Spending',
+    budgetLimit: 'Budget Limit',
+    editLimit: 'Edit Limit',
+    delete: 'Remove',
+    empty: 'No budgets set yet.',
+    emptyDescription: 'Create your first budget to start tracking spending limits.',
+    createFirst: 'Create Your First Budget'
+  },
+
+  // Budget Form
+  budgetForm: {
+    title: 'Set Budget Limit',
+    editTitle: 'Edit Budget Limit',
+    category: 'Expense Category',
+    limit: 'Monthly Spending Limit',
+    limitPlaceholder: 'e.g., 800',
+    cancel: 'Cancel',
+    save: 'Save Limit'
+  },
+
+  // Goals
+  goals: {
+    title: 'Financial Goals',
+    subtitle: 'Allocate funds for your future plans and family dreams.',
+    addGoal: 'New Goal',
+    deposit: 'Deposit',
+    withdraw: 'Withdraw',
+    target: 'Target',
+    current: 'Current',
+    remaining: 'Remaining',
+    targetDate: 'Target Date',
+    noDeadline: 'No deadline',
+    monthlySavingsNeeded: 'Monthly savings needed',
+    completed: 'Completed',
+    onTrack: 'On track',
+    behind: 'Behind schedule',
+    empty: 'No goals set yet.',
+    emptyDescription: 'Create your first savings goal to start planning for the future.',
+    createFirst: 'Create Your First Goal'
+  },
+
+  // Goal Form
+  goalForm: {
+    title: 'New Goal',
+    editTitle: 'Edit Goal',
+    name: 'Goal Name',
+    namePlaceholder: 'e.g., Emergency Fund, Vacation',
+    target: 'Target Amount',
+    current: 'Starting Balance',
+    targetMonth: 'Target Month',
+    icon: 'Icon',
+    cancel: 'Cancel',
+    save: 'Save Goal'
+  },
+
+  // Goal Adjustment
+  goalAdjust: {
+    deposit: 'Deposit to Goal',
+    withdraw: 'Withdraw from Goal',
+    fromAccount: 'From Account',
+    toAccount: 'To Account',
+    amount: 'Amount',
+    amountPlaceholder: 'e.g., 500',
+    confirm: 'Confirm',
+    cancel: 'Cancel'
+  },
+
+  // Bills
+  bills: {
+    title: 'Bills & Subscriptions',
+    subtitle: 'Track upcoming payments and recurring financial obligations.',
+    addBill: 'Add Bill',
+    monthlyCommitments: 'Monthly Commitments',
+    paid: 'Paid',
+    remaining: 'Remaining',
+    dueDate: 'Due Date',
+    amount: 'Amount',
+    status: 'Status',
+    actions: 'Actions',
+    paidThisMonth: 'Paid This Month',
+    unpaid: 'Unpaid',
+    pay: 'Pay Bill',
+    empty: 'No bills yet.',
+    emptyDescription: 'Add your first bill to start tracking recurring payments.',
+    createFirst: 'Add Your First Bill',
+    totalDue: 'Total Due',
+    dueThisWeek: 'Due This Week',
+    overdue: 'Overdue',
+    upcoming: 'Upcoming',
+    dueSoon: 'Due Soon',
+    paidBills: 'Paid',
+    inactive: 'Inactive',
+    recurrence: 'Repeat',
+    none: 'Does not repeat',
+    weekly: 'Weekly',
+    monthly: 'Monthly',
+    yearly: 'Yearly',
+    paymentAccount: 'Payment Account',
+    notes: 'Notes',
+    confirmPay: 'Pay {name}?',
+    confirmPayMessage: 'This will create an expense transaction and deduct from your account.',
+    deleteBill: 'Delete Bill',
+    deleteConfirm: 'Are you sure you want to delete this bill?',
+    deleteWarning: 'This bill has payment history. Deleting it will not remove past transactions.',
+    daysUntilDue: '{days}d',
+    overdueBy: '{days}d overdue',
+    dueToday: 'Due today',
+    nextOccurrence: 'Next: {date}',
+    noUpcoming: 'No upcoming bills',
+    noUpcomingDesc: "You don't have any upcoming recurring payments."
+  },
+
+  // Bill Form
+  billForm: {
+    title: 'Add Bill',
+    editTitle: 'Edit Bill',
+    name: 'Bill Name',
+    namePlaceholder: 'e.g., Netflix, Internet, Rent',
+    amount: 'Amount',
+    amountPlaceholder: 'Enter amount...',
+    dueDate: 'Due Day (1-31)',
+    category: 'Category',
+    recurrence: 'Repeat',
+    account: 'Payment Account',
+    notes: 'Notes',
+    notesPlaceholder: 'Optional notes...',
+    cancel: 'Cancel',
+    save: 'Save Bill'
+  },
+
+  // Financial Health
+  health: {
+    title: 'Financial Health',
+    subtitle: 'Automated assessment of your financial resilience.',
+    score: 'Health Score',
+    scoreLabel: 'out of 100',
+    excellent: 'Excellent', good: 'Good', fair: 'Fair', poor: 'Poor',
+    emergencyFund: 'Emergency Fund Coverage',
+    savingsRate: 'Savings Rate',
+    debtBurden: 'Debt Burden',
+    monthsOfCoverage: 'months of coverage',
+    ofIncome: 'of income',
+    cashFlowImpact: 'Cash flow impact',
+    safetyThreshold: 'Safety threshold',
+    allocationStatus: 'Allocation status',
+    riskLevel: 'Risk level',
+    target6Months: 'Target: 6 months',
+    target20Pct: 'Target: 20% of income',
+    targetBelow35Pct: 'Target: below 35%',
+    nextBestActions: 'Next Best Actions',
+    noActionsNeeded: 'You\'re on track. Nothing needs your attention right now.',
+    detailBreakdown: 'Metric Breakdown',
+    liquidAssets: 'Liquid Assets',
+    monthlyExpenses: 'Monthly Expenses',
+    monthlyIncome: 'Monthly Income',
+    debtPayments: 'Debt Payments',
+    netWorth: 'Net Worth',
+    status: {
+      safe: 'SAFE',
+      caution: 'CAUTION',
+      danger: 'DANGER',
+      healthy: 'HEALTHY',
+      adequate: 'ADEQUATE',
+      critical: 'CRITICAL'
+    }
+  },
+
+  // Family
+  family: {
+    title: 'Family',
+    subtitle: 'Manage your household members and track spending contributions.',
+    members: 'Members',
+    contributions: 'Spending by Member',
+    addMember: 'Add Member',
+    totalSpending: 'Total Family Spending',
+    householdIncome: 'Household Income',
+    householdExpenses: 'Household Expenses',
+    activeSpenders: 'Active Spenders',
+    topSpender: 'Top Spender',
+    spendingBreakdown: 'Spending Breakdown',
+    perMember: 'Per Member',
+    perCategory: 'By Category',
+    noMembers: 'No family members yet.',
+    noMembersDesc: 'Add family members to track spending contributions across your household.',
+    createFirst: 'Add Your First Member',
+    noSpending: 'No spending recorded for this period.',
+    noSpendingDesc: 'Expense transactions attributed to family members will appear here.',
+    unassigned: 'Unassigned',
+    memberSpending: '{name}\'s Spending',
+    totalMemberSpending: 'Total: {amount}',
+    ofTotal: '{pct}% of total',
+    deleteMember: 'Delete Member',
+    deleteConfirm: 'Are you sure you want to remove {name}?',
+    deleteWarning: 'Existing transactions linked to this member will become unassigned.',
+    editMember: 'Edit Member',
+    roles: {
+      Admin: 'Admin',
+      Member: 'Member',
+      Partner: 'Partner',
+      Child: 'Child',
+      Father: 'Father',
+      Mother: 'Mother',
+      Husband: 'Husband',
+      Wife: 'Wife',
+      Sibling: 'Sibling'
+    },
+    relationship: 'Relationship',
+    relationshipPlaceholder: 'e.g., Father, Partner',
+  },
+
+  // Member Form
+  memberForm: {
+    title: 'Add Family Member',
+    editTitle: 'Edit Family Member',
+    name: 'Name',
+    namePlaceholder: 'e.g., Alex',
+    role: 'Relationship',
+    color: 'Color',
+    cancel: 'Cancel',
+    save: 'Save Member'
+  },
+
+  // Reports
+  reports: {
+    title: 'Reports',
+    subtitle: 'Financial summaries and exports.',
+    monthlyReport: 'Monthly Summary',
+    incomeReport: 'Income Report',
+    expenseReport: 'Expense Report',
+    cashFlowReport: 'Cash Flow',
+    budgetReport: 'Budget Performance',
+    exportCSV: 'Export CSV',
+    exportJSON: 'Export JSON',
+    importJSON: 'Import JSON',
+    downloadCSV: 'Download CSV',
+    downloadJSON: 'Download JSON',
+    totalIncome: 'Total Income',
+    totalExpenses: 'Total Expenses',
+    netCashFlow: 'Net Cash Flow',
+    savingsRate: 'Savings Rate',
+    transactionCount: 'Transactions',
+    topCategory: 'Top Category',
+    topIncomeSource: 'Top Source',
+    byCategory: 'By Category',
+    bySource: 'By Source',
+    amount: 'Amount',
+    percentage: 'Percentage',
+    category: 'Category',
+    source: 'Source',
+    period: 'Period',
+    allTransactions: 'All Transactions',
+    thisMonth: 'This Month',
+    lastMonth: 'Last Month',
+    thisYear: 'This Year',
+    dateRange: 'Date Range',
+    startDate: 'Start Date',
+    endDate: 'End Date',
+    noData: 'No data for this period.',
+    noDataDesc: 'There are no transactions for the selected period.',
+    emptyReport: 'No transactions yet.',
+    emptyReportDesc: 'Start recording transactions to generate reports.',
+    addFirst: 'Add Your First Transaction',
+    income: 'Income',
+    expense: 'Expense',
+    transfer: 'Transfer',
+    budgetUsed: 'Budget Used',
+    budgetRemaining: 'Budget Remaining',
+    overBudget: 'Over Budget',
+    onTrack: 'On Track',
+    csvSuccess: 'CSV exported successfully',
+    jsonSuccess: 'JSON exported successfully',
+  },
+
+  // Settings
+  settings: {
+    title: 'Settings',
+    subtitle: 'Configure your preferences and manage data.',
+    general: 'General',
+    generalDesc: 'Application name and preferences.',
+    appName: 'Application Name',
+    userName: 'Your Name',
+    userNamePlaceholder: 'Enter your name',
+    currency: 'Currency',
+    currencyDesc: 'Default currency for all financial displays.',
+    locale: 'Locale',
+    localeDesc: 'Controls number and date formatting.',
+    language: 'Language',
+    languageDesc: 'Interface language.',
+    dateFormat: 'Date Format',
+    appearance: 'Appearance',
+    appearanceDesc: 'Theme and visual preferences.',
+    theme: 'Theme',
+    light: 'Light',
+    dark: 'Dark',
+    system: 'System',
+    dataManagement: 'Data Management',
+    dataManagementDesc: 'Export, import, and reset your data.',
+    backup: 'Backup (JSON)',
+    backupDescription: 'Download all your data as a JSON file.',
+    restore: 'Restore (JSON)',
+    restoreDescription: 'Import data from a JSON backup file.',
+    restoreWarning: 'This will replace all current data. Make sure you have a backup.',
+    resetDemo: 'Reset Demo Data',
+    resetDemoDescription: 'Clear all demo transactions, goals, budgets, and bills. Start fresh.',
+    resetDemoWarning: 'This will remove all demo data. This cannot be undone.',
+    deleteAll: 'Delete All Data',
+    deleteAllDescription: 'Permanently remove all data. This cannot be undone.',
+    deleteAllWarning: 'Type DELETE to confirm permanent data removal.',
+    exportCSV: 'Export Transactions (CSV)',
+    exportCSVDescription: 'Export transaction history for Excel or Google Sheets.',
+    pickFile: 'Choose File',
+    about: 'About',
+    aboutDesc: 'Application information.',
+    version: 'Version',
+    appNameFull: 'Kocekku 2.0',
+    tagline: 'Your Money. One Clear Picture.',
+    currencyChanged: 'Currency updated to {currency}',
+    languageChanged: 'Language updated',
+    themeChanged: 'Theme updated',
+    settingsSaved: 'Settings saved',
+    dataReset: 'Data reset to demo',
+    dataDeleted: 'All data deleted',
+    backupExported: 'Backup exported',
+    backupImported: 'Backup imported successfully',
+    invalidBackup: 'Invalid backup file',
+    confirmDelete: 'Are you sure you want to delete all data?',
+    confirmReset: 'Reset to demo data?',
+    confirmRestore: 'Replace current data with backup?',
+  },
+
+  // Months
+  months: {
+    short: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+    long: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
+  },
+
+  // Categories (English names for new users)
+  categories: {
+    'Food & Dining': { name: 'Food & Dining', icon: 'UtensilsCrossed' },
+    'Transportation': { name: 'Transportation', icon: 'Car' },
+    'Household': { name: 'Household', icon: 'ShoppingBasket' },
+    'Kids & Education': { name: 'Kids & Education', icon: 'Baby' },
+    'Bills & Utilities': { name: 'Bills & Utilities', icon: 'Receipt' },
+    'Health': { name: 'Health', icon: 'HeartPulse' },
+    'Entertainment': { name: 'Entertainment', icon: 'Popcorn' },
+    'Salary': { name: 'Salary', icon: 'Wallet' },
+    'Bonus': { name: 'Bonus', icon: 'Gift' },
+    'Business': { name: 'Business', icon: 'Store' },
+    'Commission': { name: 'Commission', icon: 'Briefcase' },
+    'Other Income': { name: 'Other Income', icon: 'CircleDollarSign' },
+    'Loan Received': { name: 'Loan Received', icon: 'HandCoins' },
+    'Debt Payment': { name: 'Debt Payment', icon: 'CircleMinus' },
+    'Loan Given': { name: 'Loan Given', icon: 'HandHeart' },
+    'Receivable Payment': { name: 'Receivable Payment', icon: 'PiggyBank' }
+  },
+
+  // Colors (for member avatars)
+  colors: {
+    teal: 'Teal',
+    gold: 'Gold',
+    clay: 'Terracotta',
+    blue: 'Blue',
+    rose: 'Rose'
+  },
+
+  // Account types for legacy mapping
+  accountTypesLegacy: {
+    cash: 'Cash',
+    bank: 'Bank Account',
+    'bank-digital': 'Digital Bank',
+    ewallet: 'E-Wallet',
+    investasi: 'Investment',
+    utang: 'Loan / Debt',
+    piutang: 'Receivable'
+  },
+
+  // Common
+  common: {
+    cancel: 'Cancel',
+    save: 'Save',
+    delete: 'Delete',
+    edit: 'Edit',
+    close: 'Close',
+    confirm: 'Confirm',
+    loading: 'Loading...',
+    noData: 'No data available',
+    of: 'of',
+    remaining: 'remaining',
+    limit: 'Limit',
+    total: 'Total',
+    today: 'Today',
+    thisMonth: 'This Month',
+    allTime: 'All Time'
+  },
+
+  // Confirmations
+  confirm: {
+    deleteTransaction: 'Are you sure you want to delete this transaction?',
+    deleteBudget: 'Are you sure you want to remove this budget limit?',
+    deleteGoal: 'Are you sure you want to delete this savings goal?',
+    deleteBill: 'Are you sure you want to delete this bill?',
+    deleteAccount: 'Are you sure you want to delete this account?',
+    deleteMember: 'Are you sure you want to remove this family member?',
+    resetDemo: 'Are you sure you want to clear all demo data and start fresh with real transactions?',
+    deleteAll: 'This will permanently delete ALL your data. This cannot be undone. Are you sure?',
+    insufficientFunds: 'Insufficient balance in this account.',
+    withdrawalExceeds: 'Withdrawal amount exceeds the saved balance.'
+  },
+
+  // Alerts
+  alerts: {
+    transactionSaved: 'Transaction saved successfully.',
+    transactionUpdated: 'Transaction updated.',
+    transactionDeleted: 'Transaction deleted.',
+    budgetSaved: 'Budget limit saved.',
+    goalSaved: 'Goal saved.',
+    goalContribution: 'Goal contribution saved.',
+    goalWithdrawal: 'Goal withdrawal processed.',
+    billSaved: 'Bill saved.',
+    accountSaved: 'Account saved.',
+    memberSaved: 'Member saved.',
+    backupExported: 'Backup exported successfully.',
+    dataRestored: 'Data restored successfully.',
+    resetComplete: 'All data has been cleared. Start fresh!',
+    restoreComplete: 'Data restored successfully!',
+    invalidFormat: 'Invalid JSON format.',
+    invalidData: 'Invalid data format.',
+    minAccounts: 'At least one account must remain.',
+    minMembers: 'At least one family member must remain.',
+    budgetExists: 'A budget for this category already exists.'
+  }
+};

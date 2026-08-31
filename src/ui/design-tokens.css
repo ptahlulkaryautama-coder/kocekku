@@ -1,0 +1,297 @@
+/**
+ * Kocekku 2.0 — Design Tokens
+ * 
+ * Centralized CSS custom properties for the design system.
+ * Both light and dark themes defined here.
+ * All components reference these tokens — never hardcode colors.
+ */
+
+:root {
+  /* === Typography === */
+  --font-sans: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+  --font-display: 'Plus Jakarta Sans', system-ui, sans-serif;
+
+  --text-display: 48px;
+  --text-h1: 30px;
+  --text-h2: 24px;
+  --text-h3: 18px;
+  --text-body: 14px;
+  --text-body-lg: 16px;
+  --text-caption: 12px;
+  --text-overline: 10px;
+  --text-micro: 8px;
+
+  --weight-regular: 400;
+  --weight-medium: 500;
+  --weight-semibold: 600;
+  --weight-bold: 700;
+  --weight-extrabold: 800;
+
+  --leading-tight: 1.15;
+  --leading-normal: 1.5;
+  --leading-relaxed: 1.65;
+
+  --tracking-tight: -0.025em;
+  --tracking-normal: 0;
+  --tracking-wide: 0.025em;
+  --tracking-wider: 0.05em;
+  --tracking-widest: 0.1em;
+
+  /* === Spacing === */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-8: 32px;
+  --space-10: 40px;
+  --space-12: 48px;
+  --space-16: 64px;
+
+  /* === Border Radius === */
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-xl: 24px;
+  --radius-2xl: 32px;
+  --radius-full: 9999px;
+
+  /* === Shadows === */
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.04);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.06);
+  --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.08);
+  --shadow-xl: 0 12px 36px rgba(0, 0, 0, 0.1);
+
+  /* === Transitions === */
+  --transition-fast: 150ms ease;
+  --transition-base: 250ms ease;
+  --transition-slow: 400ms cubic-bezier(0.16, 1, 0.3, 1);
+
+  /* === Z-Index Scale === */
+  --z-base: 1;
+  --z-dropdown: 10;
+  --z-sticky: 20;
+  --z-overlay: 30;
+  --z-modal: 40;
+  --z-toast: 50;
+}
+
+/* === LIGHT THEME (default) === */
+:root,
+[data-theme="light"] {
+  --color-primary: #855F1B;
+  --color-primary-hover: #75571A;
+  --color-primary-light: #B8942B;
+  --color-primary-ghost: rgba(133, 95, 27, 0.08);
+  --color-primary-border: rgba(133, 95, 27, 0.2);
+
+  --color-bg: #F5F3EC;
+  --color-bg-subtle: #F0EDE4;
+
+  --color-surface: #FFFFFF;
+  --color-surface-hover: #FAF9F5;
+  --color-surface-elevated: #FFFFFF;
+  --color-surface-muted: #F5F3EC;
+
+  --color-border: #E5E2DA;
+  --color-border-subtle: #EDE9E0;
+  --color-border-strong: #D5D0C5;
+
+  --color-text: #1C1917;
+  --color-text-secondary: #57534E;
+  --color-text-muted: #A8A29E;
+  --color-text-inverse: #FFFFFF;
+
+  --color-success: #0F766E;
+  --color-success-light: rgba(15, 118, 110, 0.1);
+  --color-success-text: #0D9488;
+
+  --color-danger: #BE123C;
+  --color-danger-light: rgba(190, 18, 60, 0.1);
+  --color-danger-text: #E11D48;
+
+  --color-warning: #B45309;
+  --color-warning-light: rgba(180, 83, 9, 0.1);
+  --color-warning-text: #D97706;
+
+  --color-info: #4338CA;
+  --color-info-light: rgba(67, 56, 202, 0.1);
+  --color-info-text: #6366F1;
+
+  --color-gold: #D4AF37;
+  --color-gold-light: rgba(212, 175, 55, 0.1);
+
+  --chart-grid: rgba(122, 82, 16, 0.06);
+  --chart-text: #57534E;
+
+  --glass-bg: #FFFFFF;
+  --glass-border: #E5E2DA;
+  --glass-shadow: 0 12px 36px rgba(28, 25, 23, 0.035);
+
+  --scrollbar-thumb: rgba(133, 95, 27, 0.2);
+  --scrollbar-track: transparent;
+}
+
+/* === DARK THEME === */
+[data-theme="dark"] {
+  --color-primary: #D4AF37;
+  --color-primary-hover: #E1BF79;
+  --color-primary-light: #ECD9AA;
+  --color-primary-ghost: rgba(212, 175, 55, 0.12);
+  --color-primary-border: rgba(212, 175, 55, 0.2);
+
+  --color-bg: #0C0A09;
+  --color-bg-subtle: #0F0D0B;
+
+  --color-surface: #141210;
+  --color-surface-hover: #1C1917;
+  --color-surface-elevated: #1C1917;
+  --color-surface-muted: #141210;
+
+  --color-border: rgba(212, 175, 55, 0.09);
+  --color-border-subtle: rgba(212, 175, 55, 0.05);
+  --color-border-strong: rgba(212, 175, 55, 0.15);
+
+  --color-text: #F5F5F4;
+  --color-text-secondary: #A8A29E;
+  --color-text-muted: #78716C;
+  --color-text-inverse: #1C1917;
+
+  --color-success: #10B981;
+  --color-success-light: rgba(16, 185, 129, 0.15);
+  --color-success-text: #34D399;
+
+  --color-danger: #F43F5E;
+  --color-danger-light: rgba(244, 63, 94, 0.15);
+  --color-danger-text: #FB7185;
+
+  --color-warning: #F59E0B;
+  --color-warning-light: rgba(245, 158, 11, 0.15);
+  --color-warning-text: #FBBF24;
+
+  --color-info: #818CF8;
+  --color-info-light: rgba(129, 140, 248, 0.15);
+  --color-info-text: #A5B4FC;
+
+  --color-gold: #D4AF37;
+  --color-gold-light: rgba(212, 175, 55, 0.1);
+
+  --chart-grid: rgba(212, 175, 55, 0.04);
+  --chart-text: #A8A29E;
+
+  --glass-bg: rgba(20, 18, 16, 0.8);
+  --glass-border: rgba(212, 175, 55, 0.09);
+  --glass-shadow: none;
+
+  --scrollbar-thumb: rgba(212, 175, 55, 0.15);
+  --scrollbar-track: transparent;
+
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.2);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.3);
+  --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.4);
+  --shadow-xl: 0 12px 36px rgba(0, 0, 0, 0.5);
+}
+
+/* === BASE STYLES === */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  font-family: var(--font-sans);
+  font-size: 16px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  background-color: var(--color-bg);
+  color: var(--color-text);
+  transition: background-color var(--transition-base), color var(--transition-base);
+}
+
+/* === SCROLLBAR STYLES === */
+.custom-scrollbar::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: var(--scrollbar-thumb);
+  border-radius: var(--radius-full);
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: var(--scrollbar-track);
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* === Touch Target & Responsive === */
+
+/* Minimum touch target size for interactive elements on touch devices */
+@media (pointer: coarse) {
+  button, a, select, input[type="checkbox"], input[type="radio"], [role="button"] {
+    min-height: 44px;
+  }
+}
+
+/* Ensure CTA buttons have adequate touch targets */
+button.inline-flex, button.flex {
+  min-height: 40px;
+}
+
+/* Override on mobile: all buttons must be at least 44px */
+@media (max-width: 768px) {
+  button {
+    min-height: 44px !important;
+  }
+  select {
+    min-height: 44px !important;
+  }
+}
+
+/* Modal safe area for notched devices */
+.modal-backdrop {
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+}
+
+/* Mobile table horizontal scroll */
+.table-scroll {
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: thin;
+}
+
+/* Ensure content doesn't hide behind mobile nav */
+@media (max-width: 1023px) {
+  #main-content {
+    padding-bottom: 80px !important;
+  }
+}
+
+/* Better mobile modal sizing */
+@media (max-width: 640px) {
+  .modal-panel {
+    max-width: calc(100vw - 32px) !important;
+    margin: 16px !important;
+  }
+}
+
+/* Mobile card density */
+@media (max-width: 640px) {
+  .metric-card {
+    padding: 16px !important;
+  }
+}
