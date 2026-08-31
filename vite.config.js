@@ -3,7 +3,7 @@ import { defineConfig } from 'vite';
 export default defineConfig({
   root: '.',
   publicDir: 'public',
-  base: '/kocekku-2.0/',
+  base: './',
   build: {
     outDir: 'dist',
     rollupOptions: {
