@@ -111,16 +111,35 @@ export function renderSettingsPage() {
           </button>
         </div>
         <!-- Restore -->
-        <div class="flex items-center justify-between p-4 bg-gray-50 dark:bg-gray-700/50 rounded-xl">
-          <div>
-            <p class="text-sm font-medium text-gray-900 dark:text-white">${t('settings.restore')}</p>
-            <p class="text-xs text-gray-500 dark:text-gray-400">${t('settings.restoreDescription')}</p>
+        <div class="p-4 bg-gray-50 dark:bg-gray-700/50 rounded-xl">
+          <div class="flex items-center justify-between">
+            <div>
+              <p class="text-sm font-medium text-gray-900 dark:text-white">${t('settings.restore')}</p>
+              <p class="text-xs text-gray-500 dark:text-gray-400">${t('settings.restoreDescription')}</p>
+            </div>
+            <div>
+              <input type="file" id="restore-file" accept=".json" class="hidden">
+              <button id="btn-restore" class="px-4 py-2 border border-gray-200 dark:border-gray-600 text-gray-700 dark:text-gray-300 text-sm rounded-xl font-medium hover:bg-gray-100 dark:hover:bg-gray-600 transition-colors">
+                ${t('settings.pickFile')}
+              </button>
+            </div>
           </div>
-          <div>
-            <input type="file" id="restore-file" accept=".json" class="hidden">
-            <button id="btn-restore" class="px-4 py-2 border border-gray-200 dark:border-gray-600 text-gray-700 dark:text-gray-300 text-sm rounded-xl font-medium hover:bg-gray-100 dark:hover:bg-gray-600 transition-colors">
-              ${t('settings.pickFile')}
-            </button>
+          <!-- Restore preview (hidden until file selected) -->
+          <div id="restore-preview" class="hidden mt-3 p-3 bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-600">
+            <div class="flex items-center justify-between">
+              <div class="flex items-center gap-2">
+                <i data-lucide="upload" class="w-5 h-5 text-success-600"></i>
+                <span id="restore-filename" class="text-sm font-medium text-gray-900 dark:text-white"></span>
+              </div>
+              <div class="flex gap-2">
+                <button id="btn-restore-cancel" class="px-3 py-1.5 text-xs text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition-colors">
+                  Cancel
+                </button>
+                <button id="btn-restore-confirm" class="px-3 py-1.5 bg-success-600 text-white text-xs font-medium rounded-lg hover:bg-success-700 transition-colors">
+                  Restore Data
+                </button>
+              </div>
+            </div>
           </div>
         </div>
         <!-- Export CSV -->
@@ -257,27 +276,44 @@ export function renderSettingsPage() {
       });
     }
 
-    // Restore
+    // Restore — two-step: Pick file → confirm & restore
     const restoreBtn = el.querySelector('#btn-restore');
     const restoreFile = el.querySelector('#restore-file');
+    const restorePreview = el.querySelector('#restore-preview');
+    const restoreFilename = el.querySelector('#restore-filename');
+    const restoreConfirm = el.querySelector('#btn-restore-confirm');
+    const restoreCancel = el.querySelector('#btn-restore-cancel');
+    let pendingRestoreFile = null;
+
     if (restoreBtn && restoreFile) {
       restoreBtn.addEventListener('click', () => restoreFile.click());
+
       restoreFile.addEventListener('change', async (e) => {
         const file = e.target.files[0];
         if (!file) return;
-        const confirmed = await appState.confirm({
-          title: t('settings.confirmRestore'),
-          message: t('settings.restoreWarning'),
-          type: 'warning',
-        });
-        if (!confirmed) return;
+        pendingRestoreFile = file;
+        restoreFilename.textContent = file.name;
+        restorePreview.classList.remove('hidden');
+      });
+    }
+
+    if (restoreCancel) {
+      restoreCancel.addEventListener('click', () => {
+        pendingRestoreFile = null;
+        restoreFile.value = '';
+        restorePreview.classList.add('hidden');
+      });
+    }
+
+    if (restoreConfirm) {
+      restoreConfirm.addEventListener('click', async () => {
+        if (!pendingRestoreFile) return;
         try {
-          const text = await file.text();
+          const text = await pendingRestoreFile.text();
           const data = JSON.parse(text);
           const result = importData(data);
           if (result.success) {
             appState.showToast({ type: 'success', message: t('settings.backupImported') });
-            // Reload page to reflect imported data
             window.location.reload();
           } else {
             appState.showToast({ type: 'error', message: result.message || t('settings.invalidBackup') });
@@ -285,7 +321,9 @@ export function renderSettingsPage() {
         } catch (err) {
           appState.showToast({ type: 'error', message: t('settings.invalidBackup') });
         }
+        pendingRestoreFile = null;
         restoreFile.value = '';
+        restorePreview.classList.add('hidden');
       });
     }
 
