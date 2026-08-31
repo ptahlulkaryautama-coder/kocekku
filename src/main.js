@@ -370,8 +370,21 @@ class KocekkuApp {
     this.destroyCharts();
     this.mainContent.innerHTML = '';
 
-    const content = this.getTabContent(this.currentTab);
-    this.mainContent.appendChild(content);
+    try {
+      const content = this.getTabContent(this.currentTab);
+      this.mainContent.appendChild(content);
+    } catch (err) {
+      console.error('[Kocekku] Page render error:', err);
+      this.mainContent.innerHTML = `
+        <div class="flex flex-col items-center justify-center py-24 text-center px-4">
+          <div class="w-16 h-16 rounded-full bg-danger-50 dark:bg-danger-900/20 flex items-center justify-center mb-4">
+            <i data-lucide="alert-triangle" class="w-8 h-8 text-danger-500"></i>
+          </div>
+          <h2 class="text-lg font-semibold text-gray-900 dark:text-white mb-2">Something went wrong</h2>
+          <p class="text-sm text-gray-500 dark:text-gray-400 max-w-md mb-6">${err.message || 'An unexpected error occurred while loading this page.'}</p>
+          <button onclick="window.location.reload()" class="px-4 py-2 bg-primary-600 text-white text-sm font-medium rounded-xl hover:bg-primary-700 transition-colors">Reload Page</button>
+        </div>`;
+    }
     if (window.lucide) window.lucide.createIcons();
   }
 
@@ -3821,6 +3834,16 @@ class KocekkuApp {
     });
   }
 }
+
+/* ---- Global Error Handlers ------------------------------------- */
+
+window.addEventListener('error', (e) => {
+  console.error('[Kocekku] Uncaught error:', e.message, e.filename, e.lineno);
+});
+
+window.addEventListener('unhandledrejection', (e) => {
+  console.error('[Kocekku] Unhandled promise rejection:', e.reason);
+});
 
 /* ---- Boot ------------------------------------------------------- */
 

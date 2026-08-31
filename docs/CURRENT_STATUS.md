@@ -307,6 +307,8 @@ src/
 
 - [x] Standalone Transfers page
 - [x] PWA offline mode (service worker registered, caching active)
+- [x] Error boundaries (global + page-level)
+- [x] Empty states (all pages handle zero data)
 - [ ] NLP-style Smart Add parser ("coffee 5 dollars from cash")
 - [ ] Bank integration
 - [ ] AI financial advisor
@@ -340,7 +342,7 @@ src/
 1. ~~Full live QA~~ ✅
 2. ~~Transfers page~~ ✅
 3. ~~PWA offline support~~ ✅
-4. **Production polish** — bundle optimization, error boundaries, loading states
+4. ~~Production polish — error boundaries, empty states~~ ✅
 5. **Branding** — rename to "Sakku" when ready (apply to title, manifest, meta, about)
 6. **Performance** — lazy loading, chart optimization, virtual scrolling for large datasets
 7. **Accessibility audit** — keyboard navigation, screen reader, ARIA labels
