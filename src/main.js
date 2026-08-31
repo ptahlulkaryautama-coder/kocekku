@@ -2567,6 +2567,7 @@ class KocekkuApp {
       { key: 'due', title: t('bills.dueSoon'), bills: groups.due, color: 'warning' },
       { key: 'upcoming', title: t('bills.upcoming'), bills: groups.upcoming, color: 'primary' },
       { key: 'paid', title: t('bills.paidBills'), bills: groups.paid, color: 'success' },
+      { key: 'inactive', title: t('bills.inactive'), bills: groups.inactive, color: 'gray' },
     ];
 
     // If all empty, show empty state
@@ -2600,6 +2601,7 @@ class KocekkuApp {
         warning: 'bg-warning-100 text-warning-700 dark:bg-warning-900/30 dark:text-warning-400',
         primary: 'bg-primary-100 text-primary-700 dark:bg-primary-900/30 dark:text-primary-400',
         success: 'bg-success-100 text-success-700 dark:bg-success-900/30 dark:text-success-400',
+        gray: 'bg-gray-100 text-gray-500 dark:bg-gray-800 dark:text-gray-400',
       };
       sectionEl.innerHTML = `
         <div class="flex items-center gap-2 mb-3">
@@ -3166,8 +3168,8 @@ class KocekkuApp {
     const currency = appState.get('currency') || 'IDR';
 
     const categories = [
-      'Food & Dining', 'Transportation', 'Household', 'Kids & Education',
-      'Bills & Utilities', 'Health', 'Entertainment', 'Other'
+      'Food & Dining', 'Transportation', 'Housing', 'Household', 'Kids & Education',
+      'Bills & Utilities', 'Health', 'Insurance', 'Entertainment', 'Other'
     ];
 
     const overlay = document.createElement('div');
