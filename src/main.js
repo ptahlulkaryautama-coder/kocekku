@@ -408,6 +408,7 @@ class KocekkuApp {
     const bills         = appState.get('bills') || [];
     const members       = appState.get('familyMembers') || [];
     const displayCurrency = getUserCurrency();
+    const currency = displayCurrency; // alias for builder function signatures
     const year          = this._period.year;
     const month         = this._period.month;
 
