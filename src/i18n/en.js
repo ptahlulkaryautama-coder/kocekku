@@ -62,19 +62,35 @@ export default {
 
   // Smart Add
   smartAdd: {
-    title: 'Smart Add',
-    subtitle: 'Type a natural sentence to record a transaction automatically.',
+    title: 'Add Transaction',
+    subtitle: 'Record a new financial transaction.',
     placeholder: "e.g., 'coffee 5 dollars from cash' or 'salary 4200 chase'",
     preview: 'Preview',
     correct: 'Edit',
     save: 'Save',
     amount: 'Amount',
     account: 'Account',
+    fromAccount: 'From Account',
+    toAccount: 'To Account',
     category: 'Category',
     member: 'Member',
     type: 'Type',
     income: 'Income',
-    expense: 'Expense'
+    expense: 'Expense',
+    transfer: 'Transfer',
+    description: 'Description',
+    descriptionPlaceholder: 'What was this for?',
+    date: 'Date',
+    notes: 'Notes (optional)',
+    notesPlaceholder: 'Add a note...',
+    quickAmounts: 'Quick Amounts',
+    recentCategories: 'Recent',
+    allCategories: 'All Categories',
+    noAccount: 'Select an account',
+    balance: 'Balance',
+    saveTransaction: 'Save Transaction',
+    today: 'Today',
+    yesterday: 'Yesterday'
   },
 
   // Transactions

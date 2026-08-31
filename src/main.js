@@ -60,6 +60,7 @@ import {
 import './ui/design-tokens.css';
 import { renderReportsPage } from './ui/reports-page.js';
 import { renderSettingsPage } from './ui/settings-page.js';
+import { showSmartAddModal } from './ui/smart-add.js';
 
 import {
   calculateFamilySpending,
@@ -875,26 +876,20 @@ class KocekkuApp {
   buildSmartAddCard() {
     const el = card();
     el.innerHTML = `
-      <h3 class="text-base font-semibold text-gray-900 dark:text-white mb-3">Smart Add</h3>
-      <div class="relative">
-        <i data-lucide="zap" class="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-primary-500"></i>
-        <input
-          type="text"
-          placeholder="e.g., coffee 5 dollars from cash"
-          class="w-full pl-12 pr-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
-          id="smart-add-input"
-        >
-      </div>
-      <p class="mt-2 text-xs text-gray-500 dark:text-gray-400">Type naturally and Kocekku will understand your transaction.</p>`;
+      <div class="flex items-center gap-3">
+        <div class="w-10 h-10 rounded-xl bg-primary-100 dark:bg-primary-900/30 flex items-center justify-center flex-shrink-0">
+          <i data-lucide="zap" class="w-5 h-5 text-primary-600"></i>
+        </div>
+        <div class="flex-1">
+          <p class="text-sm font-semibold text-gray-900 dark:text-white">Quick Add Transaction</p>
+          <p class="text-xs text-gray-500 dark:text-gray-400">Record income, expense, or transfer in seconds.</p>
+        </div>
+        <button id="sa-open" class="flex items-center gap-2 px-4 py-2.5 bg-primary-600 text-white rounded-xl hover:bg-primary-700 transition-colors text-sm font-medium">
+          <i data-lucide="plus" class="w-4 h-4"></i>Add
+        </button>
+      </div>`;
 
-    const input = el.querySelector('#smart-add-input');
-    input?.addEventListener('keydown', (e) => {
-      if (e.key === 'Enter' && input.value.trim()) {
-        toast.info('Smart Add: parsing "' + input.value.trim() + '"...');
-        input.value = '';
-      }
-    });
-
+    el.querySelector('#sa-open')?.addEventListener('click', () => this.showSmartAddModal());
     return el;
   }
 
@@ -3552,7 +3547,7 @@ class KocekkuApp {
   /* ================================================================ */
 
   showSmartAddModal() {
-    toast.info('Smart Add modal coming in Phase 4!');
+    showSmartAddModal(this);
   }
 
   showMobileMoreMenu() {
