@@ -106,10 +106,10 @@ export function saveData() {
     const data = {
       accounts: appState.get('accounts'),
       transactions: appState.get('transactions'),
-      budgets: appState.get('budgets'),
+      envelopes: appState.get('budgets'),       // storage layer uses 'envelopes'
       goals: appState.get('goals'),
       bills: appState.get('bills'),
-      familyMembers: appState.get('familyMembers'),
+      members: appState.get('familyMembers'),    // storage layer uses 'members'
       user: appState.get('user')
     };
     
