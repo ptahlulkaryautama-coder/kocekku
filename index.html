@@ -191,6 +191,9 @@
   </style>
 </head>
 <body class="bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-gray-100">
+  <!-- Skip to content (accessibility) -->
+  <a href="#main-content" class="sr-only focus:not-sr-only focus:fixed focus:top-2 focus:left-2 focus:z-[9999] focus:px-4 focus:py-2 focus:bg-primary-600 focus:text-white focus:rounded-lg focus:text-sm focus:font-medium">Skip to content</a>
+
   <!-- Loading Screen -->
   <div id="loading-screen" class="fixed inset-0 z-50 flex flex-col items-center justify-center bg-white dark:bg-gray-900">
     <div class="mb-4">
@@ -204,6 +207,24 @@
   <!-- App Root -->
   <div id="app" class="min-h-screen"></div>
   
+  <!-- Install Banner -->
+  <div id="install-banner" class="hidden fixed bottom-20 lg:bottom-6 left-4 right-4 lg:left-auto lg:right-6 lg:max-w-sm z-50 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-2xl shadow-xl p-4 flex items-center gap-3">
+    <img src="/sakku_logo_icon.png" alt="Sakku" class="w-10 h-10 rounded-xl flex-shrink-0" />
+    <div class="flex-1 min-w-0">
+      <p class="text-sm font-semibold text-gray-900 dark:text-white">Install Sakku</p>
+      <p class="text-xs text-gray-500 dark:text-gray-400">Add to your home screen for quick access</p>
+    </div>
+    <button id="install-btn" class="px-4 py-2 bg-primary-600 text-white text-sm font-medium rounded-xl hover:bg-primary-700 transition-colors flex-shrink-0">
+      Install
+    </button>
+    <button id="install-dismiss" class="p-1 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 transition-colors flex-shrink-0">
+      <i data-lucide="x" class="w-4 h-4"></i>
+    </button>
+  </div>
+
+  <!-- Screen reader live region -->
+  <div id="sr-announcer" class="sr-only" aria-live="polite" aria-atomic="true"></div>
+
   <!-- Toast Container -->
   <div id="toast-container" class="fixed top-4 right-4 z-50 flex flex-col gap-2 pointer-events-none"></div>
   
@@ -237,6 +258,49 @@
       if ('serviceWorker' in navigator) {
         navigator.serviceWorker.register('./sw.js').catch(() => {});
       }
+
+      // PWA Install Prompt
+      let deferredPrompt = null;
+      const installBanner = document.getElementById('install-banner');
+      const installBtn = document.getElementById('install-btn');
+      const installDismiss = document.getElementById('install-dismiss');
+
+      window.addEventListener('beforeinstallprompt', (e) => {
+        e.preventDefault();
+        deferredPrompt = e;
+        // Show banner after 3 seconds if not dismissed before
+        setTimeout(() => {
+          if (deferredPrompt && !localStorage.getItem('sakku-install-dismissed')) {
+            installBanner.classList.remove('hidden');
+          }
+        }, 3000);
+      });
+
+      if (installBtn) {
+        installBtn.addEventListener('click', async () => {
+          if (!deferredPrompt) return;
+          deferredPrompt.prompt();
+          const { outcome } = await deferredPrompt.userChoice;
+          deferredPrompt = null;
+          installBanner.classList.add('hidden');
+          if (outcome === 'accepted') {
+            console.log('[Sakku] PWA installed');
+          }
+        });
+      }
+
+      if (installDismiss) {
+        installDismiss.addEventListener('click', () => {
+          installBanner.classList.add('hidden');
+          localStorage.setItem('sakku-install-dismissed', 'true');
+        });
+      }
+
+      // Hide banner if already installed
+      window.addEventListener('appinstalled', () => {
+        installBanner.classList.add('hidden');
+        deferredPrompt = null;
+      });
     });
   </script>
 </body>

@@ -339,3 +339,20 @@ button.inline-flex, button.flex {
     padding: 16px !important;
   }
 }
+
+/* === PERFORMANCE HINTS === */
+
+/* GPU-accelerate transitions */
+button, a, [role="button"] {
+  will-change: auto;
+}
+
+/* Contain reflows for card content */
+.metric-card, .card {
+  contain: layout style;
+}
+
+/* Reduce paint for dark mode surfaces */
+.dark .bg-gray-800, .dark .bg-gray-900 {
+  will-change: auto;
+}

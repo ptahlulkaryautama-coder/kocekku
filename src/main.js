@@ -165,6 +165,8 @@ class SakkuApp {
   buildSidebar() {
     const sidebar = document.createElement('aside');
     sidebar.className = 'fixed inset-y-0 left-0 w-64 bg-white dark:bg-gray-900 border-r border-gray-200 dark:border-gray-800 z-40 hidden lg:flex flex-col';
+    sidebar.setAttribute('role', 'navigation');
+    sidebar.setAttribute('aria-label', 'Main navigation');
 
     // Logo
     const logoSection = document.createElement('div');
@@ -244,6 +246,7 @@ class SakkuApp {
   buildDesktopHeader() {
     const header = document.createElement('header');
     header.className = 'hidden lg:flex items-center justify-between px-6 py-4 border-b border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900';
+    header.setAttribute('role', 'banner');
 
     const search = document.createElement('div');
     search.className = 'flex-1 max-w-md';
@@ -275,6 +278,8 @@ class SakkuApp {
   buildMobileNav() {
     const nav = document.createElement('nav');
     nav.className = 'fixed bottom-0 left-0 right-0 bg-white dark:bg-gray-900 border-t border-gray-200 dark:border-gray-800 lg:hidden z-40';
+    nav.setAttribute('role', 'navigation');
+    nav.setAttribute('aria-label', 'Mobile navigation');
     nav.style.paddingBottom = 'env(safe-area-inset-bottom, 0px)';
     const container = document.createElement('div');
     container.className = 'flex items-center justify-around h-14 sm:h-16';
@@ -972,7 +977,7 @@ class SakkuApp {
     el.innerHTML = `
       <div class="flex flex-col items-center justify-center py-16 text-center">
         <div class="mb-6">
-          <img src="/sakku_logo_icon.png" alt="Sakku" class="w-20 h-20 rounded-2xl object-cover" />
+          <img src="/sakku_logo_icon.png" alt="Sakku" class="w-20 h-20 rounded-2xl object-cover" loading="lazy" />
         </div>
         <h2 class="text-2xl font-bold mb-2 text-gray-900 dark:text-white">Welcome to <img src="/sakku_wordmark.png" alt="Sakku" class="inline-block h-7 align-baseline" data-wordmark /></h2>
         <p class="text-gray-500 dark:text-gray-400 mb-6 max-w-md">Start by adding your first transaction or importing your financial data. Your financial overview will appear here.</p>
@@ -1042,7 +1047,7 @@ class SakkuApp {
     searchRow.innerHTML = `
       <div class="relative">
         <i data-lucide="search" class="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400"></i>
-        <input type="text" id="txn-search" placeholder="Search transactions..." class="w-full pl-10 pr-4 py-2.5 rounded-lg border border-gray-300 dark:border-gray-600 bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500 text-sm">
+        <input type="text" id="txn-search" placeholder="Search transactions..." aria-label="Search transactions" class="w-full pl-10 pr-4 py-2.5 rounded-lg border border-gray-300 dark:border-gray-600 bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500 text-sm">
       </div>`;
     filters.appendChild(searchRow);
 
@@ -1897,7 +1902,11 @@ class SakkuApp {
     const searchInput = container.querySelector('#tf-search');
     const accountSelect = container.querySelector('#tf-account');
     const applyFilters = () => renderList(searchInput.value, accountSelect.value);
-    searchInput?.addEventListener('input', applyFilters);
+    let tfSearchTimeout;
+    searchInput?.addEventListener('input', (e) => {
+      clearTimeout(tfSearchTimeout);
+      tfSearchTimeout = setTimeout(() => applyFilters(), 250);
+    });
     accountSelect?.addEventListener('change', applyFilters);
 
     // Wire Add Transfer button → opens Smart Add in transfer mode

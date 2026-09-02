@@ -116,6 +116,12 @@ export function Toast(options = {}) {
     setTimeout(() => removeToast(toast), duration);
   }
   
+  // Announce to screen readers
+  const announcer = document.getElementById('sr-announcer');
+  if (announcer) {
+    announcer.textContent = `${type}: ${message}`;
+  }
+  
   // Initialize Lucide icons
   if (window.lucide) {
     window.lucide.createIcons();
