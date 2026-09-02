@@ -10,7 +10,7 @@
 
 | Item | Value |
 |------|-------|
-| **Live URL** | https://kocek-2-0.vercel.app/ |
+| **Live URL** | https://sakku-2-0.vercel.app/ |
 | **Repository** | https://github.com/ptahlulkaryautama-coder/sakku_2.0 |
 | **Framework** | Vanilla JS + Vite + Tailwind CSS CDN |
 | **Hosting** | Vercel (auto-deploy on push to `main`) |
@@ -371,7 +371,7 @@ src/
 | App Name | Sakku |
 | Tagline | "Money Management, Simplified" |
 | Portfolio | ahlul-firdaus.com |
-| Domain | kocek-2-0.vercel.app | (update Vercel domain to match)
+| Domain | sakku-2-0.vercel.app |
 | Brand Guidelines | docs/SAKKU_BRAND_GUIDELINES.md |
 
 ---
