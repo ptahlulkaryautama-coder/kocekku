@@ -174,9 +174,9 @@ class SakkuApp {
     logoSection.className = 'p-6 border-b border-gray-200 dark:border-gray-800';
     logoSection.innerHTML = `
       <div class="flex items-center gap-3">
-        <img src="/sakku_logo_icon.png" alt="" class="w-10 h-10 rounded-xl object-cover flex-shrink-0" />
+        <img src="./sakku_logo_icon.png" alt="" class="w-10 h-10 rounded-xl object-cover flex-shrink-0" />
         <div>
-          <img src="/sakku_wordmark.png" alt="Sakku" class="h-5 w-auto" data-wordmark />
+          <img src="./sakku_wordmark.png" alt="Sakku" class="h-5 w-auto" data-wordmark />
           <p class="text-xs text-gray-500 dark:text-gray-400">Money Management, Simplified</p>
         </div>
       </div>`;
@@ -979,9 +979,9 @@ class SakkuApp {
     el.innerHTML = `
       <div class="flex flex-col items-center justify-center py-16 text-center">
         <div class="mb-6">
-          <img src="/sakku_logo_icon.png" alt="Sakku" class="w-20 h-20 rounded-2xl object-cover" loading="lazy" />
+          <img src="./sakku_logo_icon.png" alt="Sakku" class="w-20 h-20 rounded-2xl object-cover" loading="lazy" />
         </div>
-        <h2 class="text-2xl font-bold mb-2 text-gray-900 dark:text-white">Welcome to <img src="/sakku_wordmark.png" alt="Sakku" class="inline-block h-7 align-baseline" data-wordmark /></h2>
+        <h2 class="text-2xl font-bold mb-2 text-gray-900 dark:text-white">Welcome to <img src="./sakku_wordmark.png" alt="Sakku" class="inline-block h-7 align-baseline" data-wordmark /></h2>
         <p class="text-gray-500 dark:text-gray-400 mb-6 max-w-md">Start by adding your first transaction or importing your financial data. Your financial overview will appear here.</p>
         <button id="empty-add-btn" class="flex items-center gap-2 px-6 py-3 bg-primary-600 text-white rounded-lg hover:bg-primary-700 transition-colors font-medium">
           <i data-lucide="plus" class="w-5 h-5"></i>Add Your First Transaction

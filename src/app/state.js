@@ -220,7 +220,7 @@ class AppState {
    */
   updateWordmarks() {
     const isDark = this._state.isDarkMode;
-    const src = isDark ? '/sakku_wordmark-dark.png' : '/sakku_wordmark.png';
+    const src = isDark ? './sakku_wordmark-dark.png' : './sakku_wordmark.png';
     document.querySelectorAll('img[data-wordmark]').forEach(img => {
       img.src = src;
     });

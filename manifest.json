@@ -1,0 +1,37 @@
+{
+  "name": "Sakku — Money Management, Simplified",
+  "short_name": "Sakku",
+  "description": "Personal and family finance management. Track your money with clarity.",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#FAF8F5",
+  "theme_color": "#FF8A70",
+  "orientation": "portrait-primary",
+  "prefer_related_applications": false,
+  "icons": [
+    {
+      "src": "icon-192.png",
+      "type": "image/png",
+      "sizes": "192x192",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "icon-512.png",
+      "type": "image/png",
+      "sizes": "512x512",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "icon-192-dark.png",
+      "type": "image/png",
+      "sizes": "192x192",
+      "media": "(prefers-color-scheme: dark)"
+    },
+    {
+      "src": "icon-512-dark.png",
+      "type": "image/png",
+      "sizes": "512x512",
+      "media": "(prefers-color-scheme: dark)"
+    }
+  ]
+}
