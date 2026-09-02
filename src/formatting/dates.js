@@ -1,5 +1,5 @@
 /**
- * Kocekku 2.0 — Date Formatting
+ * Sakku — Date Formatting
  * 
  * Locale-aware date formatting. Never hardcodes DD/MM/YYYY.
  */

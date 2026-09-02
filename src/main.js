@@ -1,6 +1,6 @@
 /**
- * Kocekku 2.0 — Main Entry Point
- * "Your Money. One Clear Picture."
+ * Sakku — Main Entry Point
+ * "Money Management, Simplified."
  *
  * Phase 3: Home Dashboard with real application data
  */
@@ -171,12 +171,10 @@ class KocekkuApp {
     logoSection.className = 'p-6 border-b border-gray-200 dark:border-gray-800';
     logoSection.innerHTML = `
       <div class="flex items-center gap-3">
-        <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-primary-500 to-primary-600 flex items-center justify-center">
-          <i data-lucide="wallet" class="w-6 h-6 text-white"></i>
-        </div>
+        <img src="/sakku_logo_icon.png" alt="" class="w-10 h-10 rounded-xl object-cover flex-shrink-0" />
         <div>
-          <h1 class="text-xl font-bold text-gray-900 dark:text-white">Kocekku</h1>
-          <p class="text-xs text-gray-500 dark:text-gray-400">Your Money. One Clear Picture.</p>
+          <img src="/sakku_wordmark.png" alt="Sakku" class="h-5 w-auto" data-wordmark />
+          <p class="text-xs text-gray-500 dark:text-gray-400">Money Management, Simplified</p>
         </div>
       </div>`;
     sidebar.appendChild(logoSection);
@@ -374,7 +372,7 @@ class KocekkuApp {
       const content = this.getTabContent(this.currentTab);
       this.mainContent.appendChild(content);
     } catch (err) {
-      console.error('[Kocekku] Page render error:', err);
+      console.error('[Sakku] Page render error:', err);
       this.mainContent.innerHTML = `
         <div class="flex flex-col items-center justify-center py-24 text-center px-4">
           <div class="w-16 h-16 rounded-full bg-danger-50 dark:bg-danger-900/20 flex items-center justify-center mb-4">
@@ -973,10 +971,10 @@ class KocekkuApp {
     const el = card();
     el.innerHTML = `
       <div class="flex flex-col items-center justify-center py-16 text-center">
-        <div class="w-20 h-20 rounded-2xl bg-gradient-to-br from-primary-500 to-primary-600 flex items-center justify-center mb-6">
-          <i data-lucide="wallet" class="w-10 h-10 text-white"></i>
+        <div class="mb-6">
+          <img src="/sakku_logo_icon.png" alt="Sakku" class="w-20 h-20 rounded-2xl object-cover" />
         </div>
-        <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-2">Welcome to Kocekku</h2>
+        <h2 class="text-2xl font-bold mb-2 text-gray-900 dark:text-white">Welcome to <img src="/sakku_wordmark.png" alt="Sakku" class="inline-block h-7 align-baseline" data-wordmark /></h2>
         <p class="text-gray-500 dark:text-gray-400 mb-6 max-w-md">Start by adding your first transaction or importing your financial data. Your financial overview will appear here.</p>
         <button id="empty-add-btn" class="flex items-center gap-2 px-6 py-3 bg-primary-600 text-white rounded-lg hover:bg-primary-700 transition-colors font-medium">
           <i data-lucide="plus" class="w-5 h-5"></i>Add Your First Transaction
@@ -3838,17 +3836,17 @@ class KocekkuApp {
 /* ---- Global Error Handlers ------------------------------------- */
 
 window.addEventListener('error', (e) => {
-  console.error('[Kocekku] Uncaught error:', e.message, e.filename, e.lineno);
+  console.error('[Sakku] Uncaught error:', e.message, e.filename, e.lineno);
 });
 
 window.addEventListener('unhandledrejection', (e) => {
-  console.error('[Kocekku] Unhandled promise rejection:', e.reason);
+  console.error('[Sakku] Unhandled promise rejection:', e.reason);
 });
 
 /* ---- Boot ------------------------------------------------------- */
 
 document.addEventListener('DOMContentLoaded', () => {
-  const app = new KocekkuApp();
+  const app = new KocekkuApp(); // class name kept for backward compat
   window.__app = app;
   app.init();
 });

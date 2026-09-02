@@ -1,5 +1,5 @@
 /**
- * Kocekku 2.0 — Number Formatting
+ * Sakku — Number Formatting
  * 
  * Locale-aware number formatting.
  */

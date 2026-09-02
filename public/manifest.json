@@ -1,11 +1,11 @@
 {
-  "name": "Kocekku - Keuangan Keluarga",
-  "short_name": "Kocekku",
-  "description": "Rumah Keuangan Keluarga Premium & Mandiri",
+  "name": "Sakku — Money Management, Simplified",
+  "short_name": "Sakku",
+  "description": "Personal and family finance management. Track your money with clarity.",
   "start_url": "./index.html",
   "display": "standalone",
-  "background_color": "#F5F3EC",
-  "theme_color": "#855F1B",
+  "background_color": "#FAF8F5",
+  "theme_color": "#FF8A70",
   "orientation": "portrait-primary",
   "icons": [
     {
@@ -17,6 +17,18 @@
       "src": "icon-512.png",
       "type": "image/png",
       "sizes": "512x512"
+    },
+    {
+      "src": "icon-192-dark.png",
+      "type": "image/png",
+      "sizes": "192x192",
+      "media": "(prefers-color-scheme: dark)"
+    },
+    {
+      "src": "icon-512-dark.png",
+      "type": "image/png",
+      "sizes": "512x512",
+      "media": "(prefers-color-scheme: dark)"
     }
   ]
 }

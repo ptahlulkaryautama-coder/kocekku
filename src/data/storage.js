@@ -1,5 +1,5 @@
 /**
- * Kocekku 2.0 — Storage Architecture
+ * Sakku — Storage Architecture
  * 
  * Manages localStorage persistence with schema versioning.
  * Backward compatible with legacy "kocekku_" prefixed data.
@@ -100,7 +100,7 @@ export function loadAllData(defaults) {
 
   if (schemaVersion === null && !hasV2Data && hasKocekkuData) {
     // Legacy Kocekku data exists — read it using legacy adapter
-    console.log('[Storage] Found legacy Kocekku data, reading via legacy adapter...');
+    console.log('[Storage] Found legacy Sakku data, reading via legacy adapter...');
     const legacy = readLegacyData();
     
     // Map legacy fields to v2 format

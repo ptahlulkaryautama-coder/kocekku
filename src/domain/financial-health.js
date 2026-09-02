@@ -1,5 +1,5 @@
 /**
- * Kocekku 2.0 — Financial Domain Logic
+ * Sakku — Financial Domain Logic
  * 
  * Pure functions for all financial calculations.
  * These do NOT depend on DOM, Alpine.js, or any UI framework.

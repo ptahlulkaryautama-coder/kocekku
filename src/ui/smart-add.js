@@ -10,7 +10,7 @@ import { appState } from '../app/state.js';
 
 /* ─── Expense categories with icons ─────────────────────────────── */
 const EXPENSE_CATEGORIES = [
-  { key: 'Food & Dining',          icon: 'utensils',           color: 'amber'  },
+  { key: 'Food & Dining',          icon: 'utensils',           color: 'primary'},
   { key: 'Transportation',         icon: 'car',                color: 'blue'   },
   { key: 'Household',              icon: 'shopping-basket',    color: 'emerald'},
   { key: 'Kids & Education',       icon: 'baby',               color: 'pink'   },
@@ -39,7 +39,8 @@ const QUICK_AMOUNTS = {
 };
 
 const COLOR_MAP = {
-  amber:   { bg: 'bg-amber-100 dark:bg-amber-900/30',   text: 'text-amber-600 dark:text-amber-400',   ring: 'ring-amber-500'   },
+  primary: { bg: 'bg-primary-100 dark:bg-primary-900/30', text: 'text-primary-600 dark:text-primary-400', ring: 'ring-primary-500' },
+  coral:   { bg: 'bg-primary-100 dark:bg-primary-900/30', text: 'text-primary-600 dark:text-primary-400', ring: 'ring-primary-500' },
   blue:    { bg: 'bg-blue-100 dark:bg-blue-900/30',      text: 'text-blue-600 dark:text-blue-400',     ring: 'ring-blue-500'    },
   emerald: { bg: 'bg-emerald-100 dark:bg-emerald-900/30',text: 'text-emerald-600 dark:text-emerald-400',ring: 'ring-emerald-500' },
   pink:    { bg: 'bg-pink-100 dark:bg-pink-900/30',      text: 'text-pink-600 dark:text-pink-400',     ring: 'ring-pink-500'    },

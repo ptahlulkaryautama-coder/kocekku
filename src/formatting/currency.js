@@ -1,5 +1,5 @@
 /**
- * Kocekku 2.0 — Currency Formatting System
+ * Sakku — Currency Formatting System
  * 
  * Centralized currency formatting using Intl.NumberFormat.
  * Supports 10 currencies. Never hardcodes "Rp" or any currency symbol.

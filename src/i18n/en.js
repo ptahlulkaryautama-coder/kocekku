@@ -1,5 +1,5 @@
 /**
- * Kocekku 2.0 — English Translations
+ * Sakku — English Translations
  * 
  * All UI text in one place. Product terminology, not literal translation.
  */
@@ -7,8 +7,8 @@
 export default {
   // App
   app: {
-    name: 'Kocekku',
-    tagline: 'Your Money. One Clear Picture.',
+    name: 'Sakku',
+    tagline: 'Money Management, Simplified',
     version: 'v2.0',
     premium: 'Premium'
   },
@@ -518,8 +518,8 @@ export default {
     about: 'About',
     aboutDesc: 'Application information.',
     version: 'Version',
-    appNameFull: 'Kocekku 2.0',
-    tagline: 'Your Money. One Clear Picture.',
+    appNameFull: 'Sakku',
+    tagline: 'Money Management, Simplified',
     currencyChanged: 'Currency updated to {currency}',
     languageChanged: 'Language updated',
     themeChanged: 'Theme updated',

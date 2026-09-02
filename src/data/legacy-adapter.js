@@ -1,6 +1,6 @@
 /**
  * Legacy Data Adapter
- * Handles reading and writing legacy Kocekku data format
+ * Handles reading and writing legacy Sakku data format
  */
 
 /**
@@ -19,7 +19,7 @@ export const LEGACY_KEYS = {
 };
 
 /**
- * New storage keys for Kocekku 2.0
+ * New storage keys for Sakku
  */
 export const NEW_KEYS = {
   SCHEMA_VERSION: 'kocekku_schema_version',

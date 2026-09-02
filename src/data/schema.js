@@ -1,5 +1,5 @@
 /**
- * Kocekku 2.0 — Data Schema Definition
+ * Sakku — Data Schema Definition
  * 
  * Defines the canonical data structures for all entities.
  * Used for validation and migration.

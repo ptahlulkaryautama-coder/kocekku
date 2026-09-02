@@ -1,5 +1,5 @@
 /**
- * Kocekku 2.0 — i18n System
+ * Sakku — i18n System
  * 
  * Minimal internationalization layer.
  * English is the initial language. Architecture supports future languages.

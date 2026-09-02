@@ -3,13 +3,11 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Kocekku 2.0 - Your Money. One Clear Picture. Personal and family finance management.">
-  <meta name="theme-color" content="#0f172a">
-  
-  <title>Kocekku 2.0 — Your Money. One Clear Picture.</title>
+  <meta name="description" content="Sakku - Money Management, Simplified. Personal and family finance management.">    <meta name="theme-color" content="#FF8A70">    <title>Sakku — Money Management, Simplified</title>
   
   <!-- Favicon -->
-  <link rel="icon" type="image/png" href="icon-192.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="favicon.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
   <link rel="apple-touch-icon" href="icon-192.png">
   <link rel="manifest" href="manifest.json">
   
@@ -27,16 +25,28 @@
         extend: {
           colors: {
             primary: {
-              50: '#fdf8f1',
-              100: '#faebd7',
-              200: '#f4d4a8',
-              300: '#edb96e',
-              400: '#e59b3e',
-              500: '#d97706',
-              600: '#b45309',
-              700: '#92400e',
-              800: '#78350f',
-              900: '#451a03'
+              50: '#FFF5F2',
+              100: '#FFE8E0',
+              200: '#FFD0BF',
+              300: '#FFBCA8',
+              400: '#FF9E87',
+              500: '#FF8A70',
+              600: '#E87A60',
+              700: '#CC6A50',
+              800: '#A85540',
+              900: '#7A3D2E'
+            },
+            accent: {
+              50: '#EFFCFA',
+              100: '#D6F5F3',
+              200: '#B0EBE8',
+              300: '#8DDDDA',
+              400: '#72D4CE',
+              500: '#5CC4BE',
+              600: '#48B0AA',
+              700: '#3A9490',
+              800: '#2E7773',
+              900: '#1F5A57'
             },
             success: {
               50: '#ecfdf5',
@@ -75,16 +85,16 @@
               900: '#881337'
             },
             info: {
-              50: '#eff6ff',
-              100: '#dbeafe',
-              200: '#bfdbfe',
-              300: '#93c5fd',
-              400: '#60a5fa',
-              500: '#3b82f6',
-              600: '#2563eb',
-              700: '#1d4ed8',
-              800: '#1e40af',
-              900: '#1e3a8a'
+              50: '#EFFCFA',
+              100: '#D6F5F3',
+              200: '#B0EBE8',
+              300: '#8DDDDA',
+              400: '#72D4CE',
+              500: '#5CC4BE',
+              600: '#48B0AA',
+              700: '#3A9490',
+              800: '#2E7773',
+              900: '#1F5A57'
             }
           },
           fontFamily: {
@@ -164,15 +174,15 @@
     .spinner {
       width: 40px;
       height: 40px;
-      border: 3px solid #e2e8f0;
-      border-top-color: #d97706;
+      border: 3px solid #FFE8E0;
+      border-top-color: #FF8A70;
       border-radius: 50%;
       animation: spin 1s linear infinite;
     }
     
     .dark .spinner {
-      border-color: #334155;
-      border-top-color: #f59e0b;
+      border-color: #263638;
+      border-top-color: #FF9E87;
     }
     
     @keyframes spin {
@@ -183,15 +193,11 @@
 <body class="bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-gray-100">
   <!-- Loading Screen -->
   <div id="loading-screen" class="fixed inset-0 z-50 flex flex-col items-center justify-center bg-white dark:bg-gray-900">
-    <div class="w-16 h-16 rounded-2xl bg-gradient-to-br from-primary-500 to-primary-600 flex items-center justify-center mb-4">
-      <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-        <path d="M21 12V7H5a2 2 0 0 1 0-4h14v4"></path>
-        <path d="M3 5v14a2 2 0 0 0 2 2h16v-5"></path>
-        <path d="M18 12a2 2 0 0 0 0 4h4v-4Z"></path>
-      </svg>
+    <div class="mb-4">
+      <img src="/sakku_logo_icon.png" alt="Sakku" class="w-16 h-16 rounded-2xl object-cover" />
     </div>
-    <h1 class="text-xl font-bold text-gray-900 dark:text-white mb-1">Kocekku</h1>
-    <p class="text-sm text-gray-500 dark:text-gray-400 mb-6">Loading your finances...</p>
+    <img src="/sakku_wordmark.png" alt="Sakku" class="h-8 w-auto mb-1" data-wordmark />
+    <p class="text-sm text-gray-500 dark:text-gray-400 mb-6">Money Management, Simplified</p>
     <div class="spinner"></div>
   </div>
   

@@ -1,6 +1,6 @@
 /**
  * Application Bootstrap
- * Initializes Kocekku 2.0 and loads data
+ * Initializes Sakku and loads data
  */
 
 import { appState } from './state.js';
@@ -12,7 +12,7 @@ import { migrateData, detectVersion } from '../data/migration.js';
  * @returns {Promise<void>}
  */
 export async function initializeApp() {
-  console.log('[Kocekku] Initializing application...');
+  console.log('[Sakku] Initializing application...');
   
   try {
     // Initialize state preferences
@@ -24,9 +24,9 @@ export async function initializeApp() {
     // Mark loading as complete
     appState.set('isLoading', false);
     
-    console.log('[Kocekku] Application initialized successfully');
+    console.log('[Sakku] Application initialized successfully');
   } catch (error) {
-    console.error('[Kocekku] Initialization error:', error);
+    console.error('[Sakku] Initialization error:', error);
     appState.set('isLoading', false);
     
     appState.showToast({
@@ -41,7 +41,7 @@ export async function initializeApp() {
  * @returns {Promise<void>}
  */
 async function loadData() {
-  console.log('[Kocekku] Loading data from storage...');
+  console.log('[Sakku] Loading data from storage...');
   
   try {
     // Default data structure
@@ -70,10 +70,10 @@ async function loadData() {
     });
     
     if (migrationApplied) {
-      console.log('[Kocekku] Data migration applied from v1 to v2');
+      console.log('[Sakku] Data migration applied from v1 to v2');
     }
     
-    console.log('[Kocekku] Data loaded:', {
+    console.log('[Sakku] Data loaded:', {
       accounts: appState.get('accounts').length,
       transactions: appState.get('transactions').length,
       budgets: appState.get('budgets').length,
@@ -82,7 +82,7 @@ async function loadData() {
       familyMembers: appState.get('familyMembers').length
     });
   } catch (error) {
-    console.error('[Kocekku] Error loading data:', error);
+    console.error('[Sakku] Error loading data:', error);
     throw error;
   }
 }
@@ -115,7 +115,7 @@ export function saveData() {
     
     return saveAllData(data);
   } catch (error) {
-    console.error('[Kocekku] Error saving data:', error);
+    console.error('[Sakku] Error saving data:', error);
     return false;
   }
 }
@@ -177,7 +177,7 @@ export function importData(importData) {
       return { success: false, message: 'Failed to save imported data' };
     }
   } catch (error) {
-    console.error('[Kocekku] Import error:', error);
+    console.error('[Sakku] Import error:', error);
     return { success: false, message: 'Error importing data: ' + error.message };
   }
 }
@@ -191,7 +191,7 @@ export function resetToDemoData() {
     clearAllData();
     return true;
   } catch (error) {
-    console.error('[Kocekku] Error resetting data:', error);
+    console.error('[Sakku] Error resetting data:', error);
     return false;
   }
 }
@@ -214,7 +214,7 @@ export function deleteAllData() {
     });
     return true;
   } catch (error) {
-    console.error('[Kocekku] Error deleting data:', error);
+    console.error('[Sakku] Error deleting data:', error);
     return false;
   }
 }

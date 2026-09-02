@@ -1,6 +1,6 @@
 /**
  * Navigation Configuration
- * Defines the navigation structure for Kocekku 2.0
+ * Defines the navigation structure for Sakku
  */
 
 /**

@@ -1,6 +1,6 @@
 /**
  * Application State Management
- * Centralized state for Kocekku 2.0
+ * Centralized state for Sakku
  */
 
 /**
@@ -212,6 +212,18 @@ class AppState {
     this.set('isDarkMode', isDark);
     document.documentElement.classList.toggle('dark', isDark);
     localStorage.setItem('kocekku-dark-mode', isDark);
+    this.updateWordmarks();
+  }
+
+  /**
+   * Swap all wordmark images between light and dark variants
+   */
+  updateWordmarks() {
+    const isDark = this._state.isDarkMode;
+    const src = isDark ? '/sakku_wordmark-dark.png' : '/sakku_wordmark.png';
+    document.querySelectorAll('img[data-wordmark]').forEach(img => {
+      img.src = src;
+    });
   }
   
   /**
@@ -224,6 +236,7 @@ class AppState {
       this.set('isDarkMode', true);
       document.documentElement.classList.add('dark');
     }
+    this.updateWordmarks();
     
     // Load language preference
     const savedLanguage = localStorage.getItem('kocekku-language');

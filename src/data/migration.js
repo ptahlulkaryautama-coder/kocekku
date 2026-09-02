@@ -1,5 +1,5 @@
 /**
- * Kocekku 2.0 — Data Migration Layer
+ * Sakku — Data Migration Layer
  * 
  * Handles migration from legacy (v1) data format to v2.
  * Preserves all monetary values and financial relationships.
