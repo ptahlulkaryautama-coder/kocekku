@@ -1,7 +1,7 @@
 # Sakku — Project Status
 
 > **Last Updated:** September 2, 2026
-> **Current Phase:** Phase 21 — Multi-Currency Accounts Complete
+> **Current Phase:** Phase 22 — NLP Smart Add Complete
 > **Status:** FUNCTIONAL — Deployed on Vercel
 
 ---
@@ -44,6 +44,7 @@
 | 19 | Advanced Reports (Custom Date Ranges) | ✅ Complete | — |
 | 20 | Virtual Scrolling | ⏭️ Skipped (pagination sufficient) | — |
 | 21 | Multi-Currency Per Account | ✅ Complete | — |
+| 22 | NLP Smart Add | ✅ Complete | — |
 
 **Total tests:** 986+
 **Build:** Clean (no errors, no warnings)
@@ -329,7 +330,7 @@ src/
 - [x] Error boundaries (global + page-level)
 - [x] Empty states (all pages handle zero data)
 - [x] App icon / favicon redesign ✅
-- [ ] NLP-style Smart Add parser ("coffee 5 dollars from cash")
+- [x] NLP-style Smart Add parser ("coffee 5 dollars from cash") ✅
 - [ ] Bank integration
 - [ ] AI financial advisor
 - [ ] Cloud sync / authentication
