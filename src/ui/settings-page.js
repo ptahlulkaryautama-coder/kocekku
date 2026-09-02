@@ -8,6 +8,7 @@ import { t } from '../i18n/index.js';
 import { setLanguage, getLanguage } from '../i18n/index.js';
 import { appState } from '../app/state.js';
 import { exportData, importData, resetToDemoData, deleteAllData, saveData } from '../app/bootstrap.js';
+import { encrypt, decrypt, bufferToBase64, base64ToBuffer, isEncryptedBackup } from '../crypto/encrypt.js';
 
 function getUserCurrency() {
   return appState.get('currency') || 'IDR';
@@ -100,29 +101,53 @@ export function renderSettingsPage() {
       <h2 class="text-lg font-semibold text-gray-900 dark:text-white mb-1">${t('settings.dataManagement')}</h2>
       <p class="text-sm text-gray-500 dark:text-gray-400 mb-4">${t('settings.dataManagementDesc')}</p>
       <div class="space-y-3">
-        <!-- Backup -->
+        <!-- Encrypted Backup -->
+        <div class="p-4 bg-gray-50 dark:bg-gray-700/50 rounded-xl">
+          <div class="flex items-center justify-between mb-3">
+            <div>
+              <p class="text-sm font-medium text-gray-900 dark:text-white">🔒 Encrypted Backup</p>
+              <p class="text-xs text-gray-500 dark:text-gray-400">AES-256 encrypted backup. Only you can decrypt it.</p>
+            </div>
+          </div>
+          <div class="flex gap-2 items-center">
+            <input type="password" id="backup-passphrase" placeholder="Enter passphrase..."
+              class="flex-1 px-3 py-2 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-600 rounded-xl text-sm text-gray-900 dark:text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary-500">
+            <button id="btn-backup-encrypted" class="px-4 py-2 bg-primary-600 text-white text-sm rounded-xl font-medium hover:bg-primary-700 transition-colors flex-shrink-0">
+              <i data-lucide="lock" class="w-4 h-4 inline mr-1"></i>Backup
+            </button>
+          </div>
+        </div>
+
+        <!-- Plain Backup -->
         <div class="flex items-center justify-between p-4 bg-gray-50 dark:bg-gray-700/50 rounded-xl">
           <div>
             <p class="text-sm font-medium text-gray-900 dark:text-white">${t('settings.backup')}</p>
-            <p class="text-xs text-gray-500 dark:text-gray-400">${t('settings.backupDescription')}</p>
+            <p class="text-xs text-gray-500 dark:text-gray-400">Unencrypted JSON backup (for development).</p>
           </div>
-          <button id="btn-backup" class="px-4 py-2 bg-primary-600 text-white text-sm rounded-xl font-medium hover:bg-primary-700 transition-colors">
+          <button id="btn-backup" class="px-4 py-2 border border-gray-200 dark:border-gray-600 text-gray-700 dark:text-gray-300 text-sm rounded-xl font-medium hover:bg-gray-100 dark:hover:bg-gray-600 transition-colors">
             ${t('settings.backup')}
           </button>
         </div>
+
         <!-- Restore -->
         <div class="p-4 bg-gray-50 dark:bg-gray-700/50 rounded-xl">
           <div class="flex items-center justify-between">
             <div>
               <p class="text-sm font-medium text-gray-900 dark:text-white">${t('settings.restore')}</p>
-              <p class="text-xs text-gray-500 dark:text-gray-400">${t('settings.restoreDescription')}</p>
+              <p class="text-xs text-gray-500 dark:text-gray-400">Supports both .json and encrypted .enc files.</p>
             </div>
             <div>
-              <input type="file" id="restore-file" accept=".json" class="hidden">
+              <input type="file" id="restore-file" accept=".json,.enc" class="hidden">
               <button id="btn-restore" class="px-4 py-2 border border-gray-200 dark:border-gray-600 text-gray-700 dark:text-gray-300 text-sm rounded-xl font-medium hover:bg-gray-100 dark:hover:bg-gray-600 transition-colors">
                 ${t('settings.pickFile')}
               </button>
             </div>
+          </div>
+          <!-- Passphrase input for encrypted restore (hidden by default) -->
+          <div id="restore-passphrase-section" class="hidden mt-3">
+            <label class="block text-xs font-medium text-gray-500 dark:text-gray-400 mb-1">Passphrase for decryption</label>
+            <input type="password" id="restore-passphrase" placeholder="Enter passphrase..."
+              class="w-full px-3 py-2 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-600 rounded-xl text-sm text-gray-900 dark:text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary-500">
           </div>
           <!-- Restore preview (hidden until file selected) -->
           <div id="restore-preview" class="hidden mt-3 p-3 bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-600">
@@ -265,7 +290,44 @@ export function renderSettingsPage() {
       });
     }
 
-    // Backup
+    // Encrypted Backup
+    const encBackupBtn = el.querySelector('#btn-backup-encrypted');
+    const encPassphrase = el.querySelector('#backup-passphrase');
+    if (encBackupBtn && encPassphrase) {
+      encBackupBtn.addEventListener('click', async () => {
+        const passphrase = encPassphrase.value.trim();
+        if (!passphrase) {
+          appState.showToast({ type: 'error', message: 'Please enter a passphrase.' });
+          return;
+        }
+        if (passphrase.length < 6) {
+          appState.showToast({ type: 'error', message: 'Passphrase must be at least 6 characters.' });
+          return;
+        }
+        try {
+          encBackupBtn.disabled = true;
+          encBackupBtn.textContent = 'Encrypting...';
+
+          const data = exportData();
+          const json = JSON.stringify(data);
+          const encrypted = await encrypt(json, passphrase);
+          const base64 = bufferToBase64(encrypted);
+
+          downloadFile(base64, `sakku-encrypted-${new Date().toISOString().split('T')[0]}.enc`, 'application/octet-stream');
+          appState.showToast({ type: 'success', message: 'Encrypted backup downloaded.' });
+          encPassphrase.value = '';
+        } catch (err) {
+          console.error('Encryption failed:', err);
+          appState.showToast({ type: 'error', message: 'Encryption failed. Please try again.' });
+        } finally {
+          encBackupBtn.disabled = false;
+          encBackupBtn.innerHTML = '<i data-lucide="lock" class="w-4 h-4 inline mr-1"></i>Backup';
+          if (typeof lucide !== 'undefined') lucide.createIcons({ attrs: { class: 'w-4 h-4' }, nameAttr: 'data-lucide' });
+        }
+      });
+    }
+
+    // Plain Backup
     const backupBtn = el.querySelector('#btn-backup');
     if (backupBtn) {
       backupBtn.addEventListener('click', () => {
@@ -276,14 +338,17 @@ export function renderSettingsPage() {
       });
     }
 
-    // Restore — two-step: Pick file → confirm & restore
+    // Restore — supports both .json and encrypted .enc files
     const restoreBtn = el.querySelector('#btn-restore');
     const restoreFile = el.querySelector('#restore-file');
     const restorePreview = el.querySelector('#restore-preview');
     const restoreFilename = el.querySelector('#restore-filename');
     const restoreConfirm = el.querySelector('#btn-restore-confirm');
     const restoreCancel = el.querySelector('#btn-restore-cancel');
+    const restorePassphraseSection = el.querySelector('#restore-passphrase-section');
+    const restorePassphrase = el.querySelector('#restore-passphrase');
     let pendingRestoreFile = null;
+    let pendingRestoreIsEncrypted = false;
 
     if (restoreBtn && restoreFile) {
       restoreBtn.addEventListener('click', () => restoreFile.click());
@@ -292,16 +357,26 @@ export function renderSettingsPage() {
         const file = e.target.files[0];
         if (!file) return;
         pendingRestoreFile = file;
+        pendingRestoreIsEncrypted = file.name.endsWith('.enc');
         restoreFilename.textContent = file.name;
         restorePreview.classList.remove('hidden');
+
+        // Show passphrase input for encrypted files
+        if (pendingRestoreIsEncrypted && restorePassphraseSection) {
+          restorePassphraseSection.classList.remove('hidden');
+        } else if (restorePassphraseSection) {
+          restorePassphraseSection.classList.add('hidden');
+        }
       });
     }
 
     if (restoreCancel) {
       restoreCancel.addEventListener('click', () => {
         pendingRestoreFile = null;
+        pendingRestoreIsEncrypted = false;
         restoreFile.value = '';
         restorePreview.classList.add('hidden');
+        if (restorePassphraseSection) restorePassphraseSection.classList.add('hidden');
       });
     }
 
@@ -309,21 +384,43 @@ export function renderSettingsPage() {
       restoreConfirm.addEventListener('click', async () => {
         if (!pendingRestoreFile) return;
         try {
-          const text = await pendingRestoreFile.text();
-          const data = JSON.parse(text);
+          let data;
+
+          if (pendingRestoreIsEncrypted) {
+            // Encrypted restore
+            const passphrase = restorePassphrase?.value?.trim();
+            if (!passphrase) {
+              appState.showToast({ type: 'error', message: 'Please enter the passphrase.' });
+              return;
+            }
+            const base64 = await pendingRestoreFile.text();
+            const encrypted = base64ToBuffer(base64);
+            const json = await decrypt(encrypted, passphrase);
+            data = JSON.parse(json);
+          } else {
+            // Plain JSON restore
+            const text = await pendingRestoreFile.text();
+            data = JSON.parse(text);
+          }
+
           const result = importData(data);
           if (result.success) {
-            appState.showToast({ type: 'success', message: t('settings.backupImported') });
+            appState.showToast({ type: 'success', message: 'Backup restored successfully.' });
             window.location.reload();
           } else {
             appState.showToast({ type: 'error', message: result.message || t('settings.invalidBackup') });
           }
         } catch (err) {
-          appState.showToast({ type: 'error', message: t('settings.invalidBackup') });
+          console.error('Restore failed:', err);
+          const msg = pendingRestoreIsEncrypted ? 'Decryption failed. Wrong passphrase?' : t('settings.invalidBackup');
+          appState.showToast({ type: 'error', message: msg });
         }
         pendingRestoreFile = null;
+        pendingRestoreIsEncrypted = false;
         restoreFile.value = '';
         restorePreview.classList.add('hidden');
+        if (restorePassphraseSection) restorePassphraseSection.classList.add('hidden');
+        if (restorePassphrase) restorePassphrase.value = '';
       });
     }
 
