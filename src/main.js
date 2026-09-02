@@ -58,7 +58,6 @@ import {
   findAccountById,
 } from './domain/accounts.js';
 
-import './ui/design-tokens.css';
 import { renderReportsPage } from './ui/reports-page.js';
 import { renderSettingsPage } from './ui/settings-page.js';
 import { renderDebtsPage } from './ui/debts-page.js';
@@ -3865,10 +3864,17 @@ window.addEventListener('unhandledrejection', (e) => {
 
 /* ---- Boot ------------------------------------------------------- */
 
-document.addEventListener('DOMContentLoaded', () => {
+function bootSakku() {
+  if (window.__app) return;
   const app = new SakkuApp();
   window.__app = app;
   app.init();
-});
+}
+
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', bootSakku);
+} else {
+  bootSakku();
+}
 
 export default SakkuApp;
