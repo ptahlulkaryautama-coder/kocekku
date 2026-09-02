@@ -1,7 +1,7 @@
 # Sakku — Project Status
 
 > **Last Updated:** September 2, 2026
-> **Current Phase:** Phase 18 — Accessibility Complete
+> **Current Phase:** Phase 21 — Multi-Currency Accounts Complete
 > **Status:** FUNCTIONAL — Deployed on Vercel
 
 ---
@@ -41,6 +41,9 @@
 | 16 | PWA Install Prompt | ✅ Complete | — |
 | 17 | Performance Optimization | ✅ Complete | — |
 | 18 | Accessibility Audit | ✅ Complete | — |
+| 19 | Advanced Reports (Custom Date Ranges) | ✅ Complete | — |
+| 20 | Virtual Scrolling | ⏭️ Skipped (pagination sufficient) | — |
+| 21 | Multi-Currency Per Account | ✅ Complete | — |
 
 **Total tests:** 986+
 **Build:** Clean (no errors, no warnings)
@@ -364,8 +367,9 @@ src/
 7. ~~Accessibility audit~~ ✅ Skip-to-content, ARIA landmarks, SR live region
 8. **Visual QA** — pixel-level verification at all breakpoints
 9. ~~Install prompt~~ ✅ beforeinstallprompt + banner UI
-10. **Advanced reports** — custom date ranges, more export options
-11. **Virtual scrolling** — large dataset optimization
+10. ~~Advanced reports~~ ✅ Custom date ranges + 6-month trend
+11. ~~Virtual scrolling~~ ✅ Skipped (pagination sufficient)
+12. ~~Multi-currency per account~~ ✅ Currency selector in account form
 
 ---
 
