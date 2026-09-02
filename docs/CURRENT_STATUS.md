@@ -1,7 +1,7 @@
 # Sakku — Project Status
 
 > **Last Updated:** September 2, 2026
-> **Current Phase:** Phase 15 — Sakku Branding Complete
+> **Current Phase:** Phase 18 — Accessibility Complete
 > **Status:** FUNCTIONAL — Deployed on Vercel
 
 ---
@@ -38,6 +38,9 @@
 | 14 | Smart Add / Transaction Entry | ✅ Complete | — |
 | — | Exchange Rate Conversion | ✅ Complete | — |
 | 15 | Sakku Branding & Dark Assets | ✅ Complete | — |
+| 16 | PWA Install Prompt | ✅ Complete | — |
+| 17 | Performance Optimization | ✅ Complete | — |
+| 18 | Accessibility Audit | ✅ Complete | — |
 
 **Total tests:** 986+
 **Build:** Clean (no errors, no warnings)
@@ -357,10 +360,12 @@ src/
 3. ~~PWA offline support~~ ✅
 4. ~~Production polish — error boundaries, empty states~~ ✅
 5. ~~Branding~~ ✅ Sakku identity applied across app, manifest, icons, wordmark
-6. **Performance** — lazy loading, chart optimization, virtual scrolling for large datasets
-7. **Accessibility audit** — keyboard navigation, screen reader, ARIA labels
+6. ~~Performance~~ ✅ Debounce, lazy loading, CSS containment
+7. ~~Accessibility audit~~ ✅ Skip-to-content, ARIA landmarks, SR live region
 8. **Visual QA** — pixel-level verification at all breakpoints
-9. **Install prompt** — beforeinstallprompt event, install banner UI
+9. ~~Install prompt~~ ✅ beforeinstallprompt + banner UI
+10. **Advanced reports** — custom date ranges, more export options
+11. **Virtual scrolling** — large dataset optimization
 
 ---
 
