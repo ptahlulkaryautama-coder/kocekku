@@ -93,20 +93,20 @@ function parseNLP(text, accounts, userCurrency) {
   }
 
   // ── Extract amount ──
-  // Match patterns: "5 dollars", "$5", "5k", "5m", "5.5k", "25000", "Rp 50000"
+  // Match patterns: "5 dollars", "$5", "5k", "5m", "25rb", "50ribu", "1.5jt", "2juta", "Rp 50000"
   const amountPatterns = [
     // "$5" or "$5.50"
     /\$\s*([\d,.]+)/,
-    // "Rp 50000" or "rp50000"
+    // "Rp 50000" or "rp50000" or "idr 50000"
     /(?:rp|idr)\s*([\d,.]+)/i,
     // "5 dollars" or "5 usd" or "5d"
     /([\d,.]+)\s*(?:dollars?|usd|\$)/i,
-    // "5k" or "5.5k" (thousands)
-    /([\d,.]+)\s*k\b/i,
-    // "5m" or "5.5m" (millions)
-    /([\d,.]+)\s*m\b/i,
-    // "5b" (billions)
-    /([\d,.]+)\s*b\b/i,
+    // "25rb" or "25 ribu" or "25k" (thousands)
+    /([\d,.]+)\s*(?:k|rb|ribu)\b/i,
+    // "1.5jt" or "2 juta" or "5m" (millions)
+    /([\d,.]+)\s*(?:m|jt|juta)\b/i,
+    // "5b" or "5 milyar" (billions)
+    /([\d,.]+)\s*(?:b|milyar|miliar)\b/i,
     // Plain number (last resort, must be > 0)
     /\b([\d,.]+)\b/,
   ];
@@ -118,14 +118,9 @@ function parseNLP(text, accounts, userCurrency) {
       if (isNaN(num) || num <= 0) continue;
 
       // Apply suffix multipliers
-      if (/\d+k\b/.test(match[0])) num *= 1000;
-      else if (/\dm\b/.test(match[0])) num *= 1000000;
-      else if (/\db\b/.test(match[0])) num *= 1000000000;
-
-      // If currency is IDR and amount looks like USD (small number), convert
-      if (userCurrency === 'IDR' && num < 1000 && !/\b(rp|idr|k|m|b)\b/.test(match[0]) && !/\$/.test(match[0])) {
-        // Could be USD — leave as is, user can adjust
-      }
+      if (/(?:k|rb|ribu)\b/i.test(match[0])) num *= 1000;
+      else if (/(?:m|jt|juta)\b/i.test(match[0])) num *= 1000000;
+      else if (/(?:b|milyar|miliar)\b/i.test(match[0])) num *= 1000000000;
 
       result.amount = Math.round(num);
       break;
@@ -264,16 +259,20 @@ export function showSmartAddModal(app, initialType) {
           </button>
         </div>
 
-        <!-- NLP Input + OCR -->
+        <!-- NLP Input + OCR + Voice -->
         <div class="bg-gray-50 dark:bg-gray-800 rounded-xl p-3 border border-gray-200 dark:border-gray-700">
           <div class="flex items-center gap-2">
             <i data-lucide="sparkles" class="w-4 h-4 text-primary-500 flex-shrink-0"></i>
-            <input id="sa-nlp" type="text" placeholder='Try: "coffee 5 dollars from cash"'
+            <input id="sa-nlp" type="text" placeholder="${t('smartAdd.placeholder')}"
               class="flex-1 bg-transparent text-sm text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 focus:outline-none"
               autocomplete="off">
-            <button id="sa-scan" type="button" title="Scan receipt"
-              class="p-1.5 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors flex-shrink-0">
-              <i data-lucide="camera" class="w-4 h-4 text-gray-500 dark:text-gray-400"></i>
+            <button id="sa-voice" type="button" title="${t('smartAdd.voiceInput')}"
+              class="p-1.5 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors flex-shrink-0 text-gray-500 dark:text-gray-400">
+              <i data-lucide="mic" class="w-4 h-4"></i>
+            </button>
+            <button id="sa-scan" type="button" title="${t('smartAdd.scanReceipt')}"
+              class="p-1.5 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors flex-shrink-0 text-gray-500 dark:text-gray-400">
+              <i data-lucide="camera" class="w-4 h-4"></i>
             </button>
             <input type="file" id="sa-scan-file" accept="image/*" capture="environment" class="hidden">
           </div>
@@ -281,8 +280,8 @@ export function showSmartAddModal(app, initialType) {
           <!-- OCR progress -->
           <div id="sa-ocr-progress" class="hidden mt-2">
             <div class="flex items-center gap-2 text-xs text-gray-500 dark:text-gray-400">
-              <i data-lucide="scan" class="w-3 h-3 animate-pulse"></i>
-              <span id="sa-ocr-status">Scanning receipt...</span>
+              <i data-lucide="scan" class="w-3 h-3 animate-pulse text-primary-500"></i>
+              <span id="sa-ocr-status">${t('smartAdd.ocrProcessing')}</span>
             </div>
             <div class="mt-1 h-1.5 bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden">
               <div id="sa-ocr-bar" class="h-full bg-primary-500 rounded-full transition-all" style="width:0%"></div>
@@ -617,6 +616,69 @@ export function showSmartAddModal(app, initialType) {
           app.renderContent();
         }
       });
+
+      // Voice-to-Text handler
+      const voiceBtn = modal.querySelector('#sa-voice');
+      let recognition = null;
+      let isListening = false;
+
+      const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+      if (voiceBtn) {
+        if (!SpeechRecognition) {
+          voiceBtn.title = 'Speech recognition not supported in this browser';
+          voiceBtn.classList.add('opacity-50');
+        } else {
+          voiceBtn.addEventListener('click', () => {
+            if (isListening && recognition) {
+              recognition.stop();
+              return;
+            }
+
+            try {
+              recognition = new SpeechRecognition();
+              const appLang = appState.get('language') || 'id';
+              recognition.lang = appLang === 'id' ? 'id-ID' : 'en-US';
+              recognition.interimResults = false;
+              recognition.maxAlternatives = 1;
+
+              recognition.onstart = () => {
+                isListening = true;
+                voiceBtn.classList.add('text-red-500', 'animate-pulse', 'bg-red-50', 'dark:bg-red-900/30');
+                if (nlpHint) {
+                  nlpHint.classList.remove('hidden');
+                  nlpHint.textContent = `🎙️ ${t('smartAdd.listening') || 'Mendengarkan suara...'}`;
+                }
+              };
+
+              recognition.onresult = (event) => {
+                const speechResult = event.results[0][0].transcript;
+                if (nlpInput) {
+                  nlpInput.value = speechResult;
+                  nlpInput.dispatchEvent(new Event('input'));
+                }
+                appState.showToast({ type: 'success', message: `Suara: "${speechResult}"` });
+              };
+
+              recognition.onerror = (event) => {
+                console.warn('Speech recognition error:', event.error);
+                if (nlpHint) nlpHint.classList.add('hidden');
+                appState.showToast({ type: 'error', message: 'Gagal mendengarkan suara.' });
+              };
+
+              recognition.onend = () => {
+                isListening = false;
+                voiceBtn.classList.remove('text-red-500', 'animate-pulse', 'bg-red-50', 'dark:bg-red-900/30');
+              };
+
+              recognition.start();
+            } catch (err) {
+              console.error('Failed to start speech recognition:', err);
+              isListening = false;
+              voiceBtn.classList.remove('text-red-500', 'animate-pulse', 'bg-red-50', 'dark:bg-red-900/30');
+            }
+          });
+        }
+      }
 
       // OCR Scan button
       const scanBtn = modal.querySelector('#sa-scan');

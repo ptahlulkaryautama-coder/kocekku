@@ -356,3 +356,119 @@ button, a, [role="button"] {
 .dark .bg-gray-800, .dark .bg-gray-900 {
   will-change: auto;
 }
+
+/* ================================================================
+ * IMPERIAL GOLD THEME (Signature Luxury)
+ * ================================================================ */
+[data-theme-style="gold"],
+[data-theme-style="gold"][data-theme="light"] {
+  --color-primary: #855F1B;
+  --color-primary-hover: #6E4E14;
+  --color-primary-light: #F4E8CB;
+  --color-primary-ghost: rgba(212, 175, 55, 0.1);
+  --color-primary-border: rgba(133, 95, 27, 0.25);
+
+  --color-accent: #0F766E;
+  --color-accent-hover: #0D9488;
+  --color-accent-light: #CCFBF1;
+  --color-accent-ghost: rgba(15, 118, 110, 0.08);
+
+  --color-bg: #F5F3EC;
+  --color-bg-subtle: #ECE8DE;
+  --color-surface: #FCFAF6;
+  --color-surface-hover: #FFFFFF;
+  --color-surface-elevated: #FFFFFF;
+  --color-border: #DFD9CC;
+  --color-border-subtle: #E9E5DC;
+  --color-border-strong: #C4B9A3;
+
+  --scrollbar-thumb: rgba(133, 95, 27, 0.25);
+  --chart-income: #0F766E;
+  --chart-expense: #855F1B;
+  --chart-net: #D4AF37;
+}
+
+[data-theme-style="gold"][data-theme="dark"],
+.dark[data-theme-style="gold"],
+[data-theme-style="gold"] .dark,
+html.dark[data-theme-style="gold"] {
+  --color-primary: #E5C378;
+  --color-primary-hover: #F0D597;
+  --color-primary-light: rgba(229, 195, 120, 0.2);
+  --color-primary-ghost: rgba(229, 195, 120, 0.12);
+  --color-primary-border: rgba(229, 195, 120, 0.25);
+
+  --color-accent: #2DD4BF;
+  --color-accent-hover: #5EEAD4;
+  --color-accent-light: rgba(45, 212, 191, 0.2);
+
+  --color-bg: #141310;
+  --color-bg-subtle: #1C1A15;
+  --color-surface: #22201A;
+  --color-surface-hover: #2B2822;
+  --color-surface-elevated: #2B2822;
+  --color-border: rgba(229, 195, 120, 0.15);
+  --color-border-subtle: rgba(229, 195, 120, 0.08);
+  --color-border-strong: rgba(229, 195, 120, 0.28);
+
+  --scrollbar-thumb: rgba(229, 195, 120, 0.2);
+  --chart-income: #2DD4BF;
+  --chart-expense: #E5C378;
+  --chart-net: #F0D597;
+}
+
+/* Luxury Grid Texture */
+[data-theme-style="gold"] body {
+  background-image: linear-gradient(rgba(133, 95, 27, 0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(133, 95, 27, 0.03) 1px, transparent 1px);
+  background-size: 32px 32px;
+}
+
+html.dark[data-theme-style="gold"] body,
+.dark[data-theme-style="gold"] body,
+[data-theme-style="gold"][data-theme="dark"] body {
+  background-image: linear-gradient(rgba(229, 195, 120, 0.035) 1px, transparent 1px), linear-gradient(90deg, rgba(229, 195, 120, 0.035) 1px, transparent 1px);
+  background-size: 32px 32px;
+}
+
+/* Primary Button & Text Overrides in Gold Theme */
+[data-theme-style="gold"] .bg-primary-600 {
+  background-color: #855F1B !important;
+  color: #FFFFFF !important;
+}
+[data-theme-style="gold"] .bg-primary-600:hover {
+  background-color: #6E4E14 !important;
+}
+[data-theme-style="gold"] .text-primary-600 {
+  color: #855F1B !important;
+}
+[data-theme-style="gold"] .text-primary-700 {
+  color: #6E4E14 !important;
+}
+[data-theme-style="gold"] .border-primary-500,
+[data-theme-style="gold"] .border-primary-600 {
+  border-color: #855F1B !important;
+}
+[data-theme-style="gold"] .bg-primary-50 {
+  background-color: #FAF5EA !important;
+}
+[data-theme-style="gold"] .bg-primary-100 {
+  background-color: #F4E8CB !important;
+}
+[data-theme-style="gold"] .text-primary-500 {
+  color: #855F1B !important;
+}
+
+html.dark[data-theme-style="gold"] .bg-primary-600,
+.dark[data-theme-style="gold"] .bg-primary-600 {
+  background-color: #D4AF37 !important;
+  color: #141310 !important;
+}
+html.dark[data-theme-style="gold"] .bg-primary-600:hover,
+.dark[data-theme-style="gold"] .bg-primary-600:hover {
+  background-color: #E5C378 !important;
+}
+html.dark[data-theme-style="gold"] .text-primary-400,
+.dark[data-theme-style="gold"] .text-primary-400 {
+  color: #E5C378 !important;
+}
+

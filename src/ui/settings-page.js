@@ -27,12 +27,14 @@ function downloadFile(content, filename, type) {
 }
 
 const SUPPORTED_LANGUAGES = [
+  { code: 'id', name: 'Bahasa Indonesia (Utama)' },
   { code: 'en', name: 'English' },
 ];
 
 export function renderSettingsPage() {
   const currency = getUserCurrency();
   const isDark = appState.get('isDarkMode');
+  const themeStyle = appState.get('themeStyle') || 'gold';
   const userName = appState.get('user')?.name || '';
 
   const el = document.createElement('div');
@@ -69,30 +71,62 @@ export function renderSettingsPage() {
         <div>
           <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">${t('settings.language')}</label>
           <p class="text-xs text-gray-500 dark:text-gray-400 mb-2">${t('settings.languageDesc')}</p>
-          <select id="settings-language" disabled
-            class="w-full px-3 py-2.5 bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-xl text-sm text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary-500 opacity-60">
+          <select id="settings-language"
+            class="w-full px-3 py-2.5 bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-xl text-sm text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary-500">
             ${SUPPORTED_LANGUAGES.map(l =>
               `<option value="${l.code}" ${getLanguage() === l.code ? 'selected' : ''}>${l.name}</option>`
             ).join('')}
           </select>
-          <p class="text-xs text-gray-400 dark:text-gray-500 mt-1">More languages coming soon</p>
         </div>
       </div>
     </section>
 
-    <!-- APPEARANCE -->
-    <section class="bg-white dark:bg-gray-800 rounded-2xl border border-gray-100 dark:border-gray-700 p-5">
-      <h2 class="text-lg font-semibold text-gray-900 dark:text-white mb-1">${t('settings.appearance')}</h2>
-      <p class="text-sm text-gray-500 dark:text-gray-400 mb-4">${t('settings.appearanceDesc')}</p>
-      <div class="flex gap-3">
-        <button id="theme-light" class="flex-1 px-4 py-3 rounded-xl text-sm font-medium border-2 transition-all ${!isDark ? 'border-primary-500 bg-primary-50 dark:bg-primary-900/20 text-primary-700 dark:text-primary-400' : 'border-gray-200 dark:border-gray-600 text-gray-600 dark:text-gray-400 hover:border-gray-300 dark:hover:border-gray-500'}">
-          <i data-lucide="sun" class="w-5 h-5 mx-auto mb-1"></i>
-          ${t('settings.light')}
-        </button>
-        <button id="theme-dark" class="flex-1 px-4 py-3 rounded-xl text-sm font-medium border-2 transition-all ${isDark ? 'border-primary-500 bg-primary-50 dark:bg-primary-900/20 text-primary-700 dark:text-primary-400' : 'border-gray-200 dark:border-gray-600 text-gray-600 dark:text-gray-400 hover:border-gray-300 dark:hover:border-gray-500'}">
-          <i data-lucide="moon" class="w-5 h-5 mx-auto mb-1"></i>
-          ${t('settings.dark')}
-        </button>
+    <!-- APPEARANCE & THEMES -->
+    <section class="bg-white dark:bg-gray-800 rounded-2xl border border-gray-100 dark:border-gray-700 p-5 space-y-5">
+      <div>
+        <h2 class="text-lg font-semibold text-gray-900 dark:text-white mb-1">${t('settings.appearance')}</h2>
+        <p class="text-sm text-gray-500 dark:text-gray-400">${t('settings.appearanceDesc')}</p>
+      </div>
+
+      <!-- THEME STYLE (GOLD VS CORAL) -->
+      <div>
+        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">${t('settings.themeStyle')}</label>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <button id="theme-style-gold" class="flex items-center gap-3 p-3.5 rounded-xl border-2 transition-all text-left ${themeStyle === 'gold' ? 'border-primary-500 bg-primary-50 dark:bg-primary-900/20 shadow-sm' : 'border-gray-200 dark:border-gray-700 hover:border-gray-300 dark:hover:border-gray-600'}">
+            <div class="w-8 h-8 rounded-lg bg-amber-600 flex items-center justify-center text-white flex-shrink-0 shadow-inner">
+              <i data-lucide="crown" class="w-4 h-4 text-amber-100"></i>
+            </div>
+            <div>
+              <div class="text-sm font-semibold text-gray-900 dark:text-white">${t('settings.themeGold')}</div>
+              <div class="text-xs text-gray-500 dark:text-gray-400">Emas Alabaster & Tekstur Linen Mewah</div>
+            </div>
+          </button>
+
+          <button id="theme-style-coral" class="flex items-center gap-3 p-3.5 rounded-xl border-2 transition-all text-left ${themeStyle === 'coral' ? 'border-primary-500 bg-primary-50 dark:bg-primary-900/20 shadow-sm' : 'border-gray-200 dark:border-gray-700 hover:border-gray-300 dark:hover:border-gray-600'}">
+            <div class="w-8 h-8 rounded-lg bg-orange-500 flex items-center justify-center text-white flex-shrink-0 shadow-inner">
+              <i data-lucide="sparkles" class="w-4 h-4 text-orange-100"></i>
+            </div>
+            <div>
+              <div class="text-sm font-semibold text-gray-900 dark:text-white">${t('settings.themeCoral')}</div>
+              <div class="text-xs text-gray-500 dark:text-gray-400">Oranye Coral & Aksen Toska Modern</div>
+            </div>
+          </button>
+        </div>
+      </div>
+
+      <!-- LIGHT / DARK MODE -->
+      <div>
+        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">${t('settings.theme')}</label>
+        <div class="flex gap-3">
+          <button id="theme-light" class="flex-1 px-4 py-3 rounded-xl text-sm font-medium border-2 transition-all ${!isDark ? 'border-primary-500 bg-primary-50 dark:bg-primary-900/20 text-primary-700 dark:text-primary-400' : 'border-gray-200 dark:border-gray-600 text-gray-600 dark:text-gray-400 hover:border-gray-300 dark:hover:border-gray-500'}">
+            <i data-lucide="sun" class="w-5 h-5 mx-auto mb-1"></i>
+            ${t('settings.light')}
+          </button>
+          <button id="theme-dark" class="flex-1 px-4 py-3 rounded-xl text-sm font-medium border-2 transition-all ${isDark ? 'border-primary-500 bg-primary-50 dark:bg-primary-900/20 text-primary-700 dark:text-primary-400' : 'border-gray-200 dark:border-gray-600 text-gray-600 dark:text-gray-400 hover:border-gray-300 dark:hover:border-gray-500'}">
+            <i data-lucide="moon" class="w-5 h-5 mx-auto mb-1"></i>
+            ${t('settings.dark')}
+          </button>
+        </div>
       </div>
     </section>
 
@@ -247,6 +281,49 @@ export function renderSettingsPage() {
         const parent = el.parentNode;
         if (parent) {
           parent.replaceChild(renderSettingsPage(), el);
+        }
+      });
+    }
+
+    // Language change
+    const langSelect = el.querySelector('#settings-language');
+    if (langSelect) {
+      langSelect.addEventListener('change', (e) => {
+        const newLang = e.target.value;
+        setLanguage(newLang);
+        appState.set('language', newLang);
+        appState.showToast({ type: 'success', message: t('settings.languageChanged') });
+        if (window.__app) {
+          window.__app.buildShell();
+          window.__app.renderContent();
+        }
+      });
+    }
+
+    // Theme Style change
+    const goldBtn = el.querySelector('#theme-style-gold');
+    const coralBtn = el.querySelector('#theme-style-coral');
+    if (goldBtn) {
+      goldBtn.addEventListener('click', () => {
+        appState.setThemeStyle('gold');
+        appState.showToast({ type: 'success', message: 'Gaya visual Imperial Gold aktif' });
+        const parent = el.parentNode;
+        if (parent) parent.replaceChild(renderSettingsPage(), el);
+        if (window.__app) {
+          window.__app.buildShell();
+          window.__app.renderContent();
+        }
+      });
+    }
+    if (coralBtn) {
+      coralBtn.addEventListener('click', () => {
+        appState.setThemeStyle('coral');
+        appState.showToast({ type: 'success', message: 'Gaya visual Coral Modern aktif' });
+        const parent = el.parentNode;
+        if (parent) parent.replaceChild(renderSettingsPage(), el);
+        if (window.__app) {
+          window.__app.buildShell();
+          window.__app.renderContent();
         }
       });
     }

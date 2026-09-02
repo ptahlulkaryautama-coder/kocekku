@@ -6,9 +6,10 @@
  */
 
 import en from './en.js';
+import id from './id.js';
 
-const translations = { en };
-let currentLanguage = 'en';
+const translations = { en, id };
+let currentLanguage = (typeof localStorage !== 'undefined' && localStorage.getItem('sakku-language')) || 'id';
 
 /**
  * Get a translation by dot-notation path.
@@ -56,6 +57,9 @@ export function t(path, params = {}) {
 export function setLanguage(lang) {
   if (translations[lang]) {
     currentLanguage = lang;
+    if (typeof localStorage !== 'undefined') {
+      localStorage.setItem('sakku-language', lang);
+    }
     document.documentElement.lang = lang === 'en' ? 'en' : lang;
   }
 }

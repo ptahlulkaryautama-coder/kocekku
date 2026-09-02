@@ -26,7 +26,8 @@ class AppState {
       // UI State
       isLoading: true,
       isDarkMode: false,
-      language: 'en',
+      themeStyle: 'gold',
+      language: 'id',
       currency: 'IDR',
       
       // Modal State
@@ -216,26 +217,51 @@ class AppState {
   }
 
   /**
+   * Set theme visual style ('gold' or 'coral')
+   */
+  setThemeStyle(style) {
+    this.set('themeStyle', style);
+    if (typeof document !== 'undefined' && document.documentElement) {
+      document.documentElement.setAttribute('data-theme-style', style);
+    }
+    if (typeof localStorage !== 'undefined') {
+      localStorage.setItem('sakku-theme-style', style);
+    }
+  }
+
+  /**
    * Swap all wordmark images between light and dark variants
    */
   updateWordmarks() {
     const isDark = this._state.isDarkMode;
     const src = isDark ? './sakku_wordmark-dark.png' : './sakku_wordmark.png';
-    document.querySelectorAll('img[data-wordmark]').forEach(img => {
-      img.src = src;
-    });
+    if (typeof document !== 'undefined') {
+      document.querySelectorAll('img[data-wordmark]').forEach(img => {
+        img.src = src;
+      });
+    }
   }
   
   /**
    * Initialize state from localStorage
    */
   initialize() {
+    // Load theme visual style (Imperial Gold by default)
+    let savedThemeStyle = typeof localStorage !== 'undefined' ? localStorage.getItem('sakku-theme-style') : null;
+    if (!savedThemeStyle) savedThemeStyle = 'gold';
+    this.set('themeStyle', savedThemeStyle);
+    if (typeof document !== 'undefined' && document.documentElement) {
+      document.documentElement.setAttribute('data-theme-style', savedThemeStyle);
+    }
+
     // Load dark mode preference (bridge: read old key if new key not set)
-    let savedDarkMode = localStorage.getItem('sakku-dark-mode');
-    if (savedDarkMode === null) savedDarkMode = localStorage.getItem('kocekku-dark-mode');
+    let savedDarkMode = typeof localStorage !== 'undefined' ? localStorage.getItem('sakku-dark-mode') : null;
+    if (savedDarkMode === null && typeof localStorage !== 'undefined') savedDarkMode = localStorage.getItem('kocekku-dark-mode');
     if (savedDarkMode === 'true') {
       this.set('isDarkMode', true);
-      document.documentElement.classList.add('dark');
+      if (typeof document !== 'undefined' && document.documentElement) {
+        document.documentElement.classList.add('dark');
+      }
     }
     this.updateWordmarks();
     
@@ -244,6 +270,8 @@ class AppState {
     if (savedLanguage === null) savedLanguage = localStorage.getItem('kocekku-language');
     if (savedLanguage) {
       this.set('language', savedLanguage);
+    } else {
+      this.set('language', 'id');
     }
     
     // Load currency preference (bridge)

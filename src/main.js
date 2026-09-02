@@ -914,17 +914,21 @@ class SakkuApp {
   buildSmartAddCard() {
     const el = card();
     el.innerHTML = `
-      <div class="flex items-center gap-3">
-        <div class="w-10 h-10 rounded-xl bg-primary-100 dark:bg-primary-900/30 flex items-center justify-center flex-shrink-0">
-          <i data-lucide="zap" class="w-5 h-5 text-primary-600"></i>
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-xl bg-primary-100 dark:bg-primary-900/30 flex items-center justify-center flex-shrink-0">
+            <i data-lucide="zap" class="w-5 h-5 text-primary-600"></i>
+          </div>
+          <div>
+            <p class="text-sm font-semibold text-gray-900 dark:text-white">${t('smartAdd.title')}</p>
+            <p class="text-xs text-gray-500 dark:text-gray-400">${t('smartAdd.subtitle')}</p>
+          </div>
         </div>
-        <div class="flex-1">
-          <p class="text-sm font-semibold text-gray-900 dark:text-white">Quick Add Transaction</p>
-          <p class="text-xs text-gray-500 dark:text-gray-400">Record income, expense, or transfer in seconds.</p>
+        <div class="flex items-center gap-2">
+          <button id="sa-open" class="flex-1 sm:flex-none flex items-center justify-center gap-2 px-4 py-2.5 bg-primary-600 text-white rounded-xl hover:bg-primary-700 transition-colors text-sm font-medium shadow-sm">
+            <i data-lucide="plus" class="w-4 h-4"></i>${t('nav.add')}
+          </button>
         </div>
-        <button id="sa-open" class="flex items-center gap-2 px-4 py-2.5 bg-primary-600 text-white rounded-xl hover:bg-primary-700 transition-colors text-sm font-medium">
-          <i data-lucide="plus" class="w-4 h-4"></i>Add
-        </button>
       </div>`;
 
     el.querySelector('#sa-open')?.addEventListener('click', () => this.showSmartAddModal());
