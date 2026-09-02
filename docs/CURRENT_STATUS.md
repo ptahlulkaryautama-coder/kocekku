@@ -239,7 +239,8 @@ ACCOUNT_CLASSIFICATION = {
 |-------|------|-------|
 | **v2 (primary)** | `kocekku2:accounts`, `kocekku2:transactions`, etc. | Current storage |
 | **Legacy v1** | `kocekku_dompet`, `kocekku_transaksi`, etc. | Auto-migrated on first load |
-| **Preferences** | `kocekku_theme`, `kocekku_user` | Theme, user settings |
+| **Preferences** | `sakku-dark-mode`, `sakku-language`, `sakku-currency` | Theme, language, currency |
+| **Legacy Preferences** | `kocekku_theme`, `kocekku_user` | Backward compat (read-only) |
 | **Exchange rates** | `kocekku_exchange_rates` | Cached 24h |
 
 Migration: `src/data/migration.js` + `src/data/legacy-adapter.js`

@@ -175,5 +175,5 @@ Verified in live browser:
 ## 12. Known Limitations
 
 1. **No projected completion date on cards** — `projectCompletionDate()` exists but requires transaction history matching by goal name; can be added later
-2. **Contribution transactions use goal name as category** — may appear in budget spending if a matching budget exists (existing Kocekku behavior)
+2. **Contribution transactions use goal name as category** — may appear in budget spending if a matching budget exists (existing Sakku behavior)
 3. **No contribution history view** — individual contributions not displayed on the goal card

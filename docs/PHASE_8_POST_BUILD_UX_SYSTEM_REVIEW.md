@@ -1,8 +1,8 @@
-# KOCEKKU 2.0 — PHASE 8 POST-BUILD UX & SYSTEM REVIEW
+# SAKKU — PHASE 8 POST-BUILD UX & SYSTEM REVIEW
 
 ## 1. Executive Summary
 
-Kocekku 2.0 has completed 8 development phases (2.5 through 8), delivering: Dashboard, Transactions, Accounts, Budgets, Goals, Bills & Recurring Expenses, and foundational domain architecture. The application has **840 passing tests** across 7 test suites and a clean production build.
+Sakku has completed 8 development phases (2.5 through 8), delivering: Dashboard, Transactions, Accounts, Budgets, Goals, Bills & Recurring Expenses, and foundational domain architecture. The application has **840 passing tests** across 7 test suites and a clean production build.
 
 **Overall assessment: CONDITIONALLY READY for Phase 9.**
 
@@ -58,7 +58,7 @@ All P1 issues resolved. P1-1 + P1-2 (goal contribution transaction types) resolv
 
 **Expected behavior:** Goal allocation should be modeled as a transfer (account → goal), NOT as an expense. The money is still the user's — it's been reallocated, not spent.
 
-**Current behavior:** Preserved from original Kocekku. The Phase 7 report explicitly documented this: *"Goal contributions ARE recorded as ordinary transactions — this is the existing behavior preserved for audit trail."*
+**Current behavior:** Preserved from original Sakku. The Phase 7 report explicitly documented this: *"Goal contributions ARE recorded as ordinary transactions — this is the existing behavior preserved for audit trail."*
 
 **Verdict:** Documented but NOT acceptable for an international finance product. This is a P1 semantic issue.
 

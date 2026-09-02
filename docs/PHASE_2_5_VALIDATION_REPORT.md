@@ -1,7 +1,7 @@
 # PHASE 2.5 VALIDATION REPORT
 
 **Date:** August 29, 2026  
-**Application:** Kocekku 2.0  
+**Application:** Sakku  
 **Status:** ✅ READY FOR PHASE 3
 
 ---
@@ -191,7 +191,7 @@
 ## 13. Bugs Fixed
 
 ### P0-001: Storage Key Prefix Mismatch
-- **Before:** storage.js used prefix `"rumah-ringkas:"` which doesn't match original Kocekku
+- **Before:** storage.js used prefix `"rumah-ringkas:"` which doesn't match original Sakku
 - **After:** storage.js reads from `"kocekku_"` prefix (matches original)
 - **Impact:** Legacy data now loads correctly
 

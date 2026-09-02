@@ -1,4 +1,4 @@
-# KOCEKKU 2.0 — PHASE 3/4 REVIEW GATE
+# SAKKU — PHASE 3/4 REVIEW GATE
 
 Generated: August 29, 2026
 
@@ -193,7 +193,7 @@ The "0 mo" display in the snapshot may be a timing issue with the test data not 
 | **Actual** | 0%, "Healthy" |
 | **Verdict** | **CORRECT** |
 
-**Note:** The debt burden calculation depends on having a category named exactly "Bayar Utang" or "Debt Payment." If users use different category names for debt payments, these will not be detected. This is a known limitation inherited from the original Kocekku app.
+**Note:** The debt burden calculation depends on having a category named exactly "Bayar Utang" or "Debt Payment." If users use different category names for debt payments, these will not be detected. This is a known limitation inherited from the original Sakku app.
 
 ---
 

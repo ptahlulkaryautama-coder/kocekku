@@ -1,4 +1,4 @@
-# KOCEKKU 2.0 — PHASE 5: ACCOUNTS PAGE
+# SAKKU — PHASE 5: ACCOUNTS PAGE
 
 **Date:** August 29, 2026
 **Status:** ✅ COMPLETE

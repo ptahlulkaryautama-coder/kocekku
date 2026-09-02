@@ -211,7 +211,7 @@ class AppState {
     const isDark = !this._state.isDarkMode;
     this.set('isDarkMode', isDark);
     document.documentElement.classList.toggle('dark', isDark);
-    localStorage.setItem('kocekku-dark-mode', isDark);
+    localStorage.setItem('sakku-dark-mode', isDark);
     this.updateWordmarks();
   }
 
@@ -230,22 +230,25 @@ class AppState {
    * Initialize state from localStorage
    */
   initialize() {
-    // Load dark mode preference
-    const savedDarkMode = localStorage.getItem('kocekku-dark-mode');
+    // Load dark mode preference (bridge: read old key if new key not set)
+    let savedDarkMode = localStorage.getItem('sakku-dark-mode');
+    if (savedDarkMode === null) savedDarkMode = localStorage.getItem('kocekku-dark-mode');
     if (savedDarkMode === 'true') {
       this.set('isDarkMode', true);
       document.documentElement.classList.add('dark');
     }
     this.updateWordmarks();
     
-    // Load language preference
-    const savedLanguage = localStorage.getItem('kocekku-language');
+    // Load language preference (bridge)
+    let savedLanguage = localStorage.getItem('sakku-language');
+    if (savedLanguage === null) savedLanguage = localStorage.getItem('kocekku-language');
     if (savedLanguage) {
       this.set('language', savedLanguage);
     }
     
-    // Load currency preference
-    const savedCurrency = localStorage.getItem('kocekku-currency');
+    // Load currency preference (bridge)
+    let savedCurrency = localStorage.getItem('sakku-currency');
+    if (savedCurrency === null) savedCurrency = localStorage.getItem('kocekku-currency');
     if (savedCurrency) {
       this.set('currency', savedCurrency);
     }

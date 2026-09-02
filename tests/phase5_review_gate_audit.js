@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /**
- * Kocekku 2.0 — Phase 5 Independent Review Gate Audit
+ * Sakku — Phase 5 Independent Review Gate Audit
  * Formulas, Transaction Integrity, CRUD, Legacy, i18n
  */
 

@@ -2,7 +2,7 @@
 
 ## Executive Summary
 
-The Kocekku 2.0 Home Dashboard has been fully redesigned from hardcoded dummy data to a **real data-driven financial decision surface**. Every metric, chart, and widget now pulls from actual application state via pure domain functions.
+The Sakku Home Dashboard has been fully redesigned from hardcoded dummy data to a **real data-driven financial decision surface**. Every metric, chart, and widget now pulls from actual application state via pure domain functions.
 
 ---
 

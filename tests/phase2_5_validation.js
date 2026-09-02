@@ -1,6 +1,6 @@
 /**
  * PHASE 2.5 — VALIDATION TEST SUITE
- * Kocekku 2.0 Foundation Validation
+ * Sakku Foundation Validation
  * 
  * Run with: node tests/phase2_5_validation.js
  */

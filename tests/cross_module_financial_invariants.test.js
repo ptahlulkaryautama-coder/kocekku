@@ -37,6 +37,13 @@ import {
   createTransaction,
 } from '../src/domain/transactions.js';
 
+// Dynamic date helper — tests must work regardless of the current month
+const NOW = new Date();
+const CURRENT_YEAR = NOW.getFullYear();
+const CURRENT_MONTH = NOW.getMonth();
+const txDate = `${CURRENT_YEAR}-${String(CURRENT_MONTH + 1).padStart(2, '0')}-15`;
+const txDate2 = `${CURRENT_YEAR}-${String(CURRENT_MONTH + 1).padStart(2, '0')}-10`;
+
 let passed = 0;
 let failed = 0;
 const failures = [];
@@ -74,7 +81,7 @@ console.log('\n--- Scenario A: Goal deposit must NOT inflate expenses ---');
     jumlah: 2000000,
     dompet: 'acc1',
     kategori: 'Emergency Fund',
-    tanggal: '2026-08-30',
+    tanggal: txDate,
   });
   
   // Verify transaction type
@@ -102,7 +109,7 @@ console.log('\n--- Scenario A: Goal deposit must NOT inflate expenses ---');
     jumlah: 10000000,
     dompet: 'acc1',
     kategori: 'Salary',
-    tanggal: '2026-08-30',
+    tanggal: txDate,
   });
   
   const allTxns = [incomeTxn, txn]; // income + goal deposit
@@ -142,7 +149,7 @@ console.log('\n--- Scenario B: Goal withdrawal must NOT inflate income ---');
     jumlah: 1000000,
     dompet: 'acc1',
     kategori: 'Emergency Fund',
-    tanggal: '2026-08-30',
+    tanggal: txDate,
   });
   
   // Verify transaction type
@@ -170,7 +177,7 @@ console.log('\n--- Scenario B: Goal withdrawal must NOT inflate income ---');
     jumlah: 500000,
     dompet: 'acc1',
     kategori: 'Food',
-    tanggal: '2026-08-30',
+    tanggal: txDate,
   });
   
   const allTxns = [expenseTxn, txn]; // expense + goal withdrawal
@@ -298,7 +305,7 @@ console.log('\n--- Scenario F: projectCompletionDate matches transfer transactio
   const transactions = [
     createTransaction({ tipe: 'transfer', keterangan: 'Goal: Car Fund - Deposit', jumlah: 2000000, dompet: 'acc1', kategori: 'Car Fund', tanggal: '2026-06-15' }),
     createTransaction({ tipe: 'transfer', keterangan: 'Goal: Car Fund - Deposit', jumlah: 2000000, dompet: 'acc1', kategori: 'Car Fund', tanggal: '2026-07-15' }),
-    createTransaction({ tipe: 'transfer', keterangan: 'Goal: Car Fund - Deposit', jumlah: 2000000, dompet: 'acc1', kategori: 'Car Fund', tanggal: '2026-08-15' }),
+    createTransaction({ tipe: 'transfer', keterangan: 'Goal: Car Fund - Deposit', jumlah: 2000000, dompet: 'acc1', kategori: 'Car Fund', tanggal: txDate }),
   ];
   
   const projected = projectCompletionDate(goal, transactions, 3);
@@ -309,7 +316,7 @@ console.log('\n--- Scenario F: projectCompletionDate matches transfer transactio
   assert(projected !== null, 'projectCompletionDate should return a date');
   
   if (projected) {
-    assert(projected > new Date('2026-08-30'), 'Projected date should be in the future');
+    assert(projected > NOW, 'Projected date should be in the future');
     assert(projected <= new Date('2027-06-01'), 'Projected date should be reasonable');
   }
 }

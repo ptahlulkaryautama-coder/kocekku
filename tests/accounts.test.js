@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /**
- * Kocekku 2.0 — Phase 5: Accounts Tests
+ * Sakku — Phase 5: Accounts Tests
  * Account classification, CRUD, legacy compatibility, balance integrity
  * 
  * Run: node tests/accounts.test.js
@@ -82,7 +82,7 @@ const INACTIVE_ACCOUNT = mkAccount('a9', 'Old Account', 'cash', 100000);
 INACTIVE_ACCOUNT.aktif = false;
 
 console.log('\n' + '='.repeat(70));
-console.log('  KOCEKKU 2.0 — PHASE 5: ACCOUNTS TESTS');
+console.log('  SAKKU — PHASE 5: ACCOUNTS TESTS');
 console.log('='.repeat(70));
 
 /* =========================================================

@@ -1,4 +1,4 @@
-# Kocekku 2.0 — Branding Research & Name Suggestions
+# Sakku — Branding Research & Name Suggestions
 
 ---
 

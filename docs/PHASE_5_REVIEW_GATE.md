@@ -1,4 +1,4 @@
-# KOCEKKU 2.0 — PHASE 5 REVIEW GATE
+# SAKKU — PHASE 5 REVIEW GATE
 
 **Date:** August 29, 2026
 **Auditor:** Independent review of Phase 5 Accounts implementation

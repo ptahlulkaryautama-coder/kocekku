@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /**
- * Kocekku 2.0 — Phase 3/4 Remediation Tests
+ * Sakku — Phase 3/4 Remediation Tests
  * Dashboard-specific tests + Transaction CRUD tests
  * 
  * Run: node tests/dashboard_and_transactions.test.js
@@ -138,7 +138,7 @@ const TEST_BILLS = [
 ];
 
 console.log('\n' + '='.repeat(70));
-console.log('  KOCEKKU 2.0 — PHASE 3/4 REMEDIATION TESTS');
+console.log('  SAKKU — PHASE 3/4 REMEDIATION TESTS');
 console.log('='.repeat(70));
 
 /* =========================================================

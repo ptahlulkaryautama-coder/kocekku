@@ -296,7 +296,8 @@ console.log('\n=== GET BILLS BY STATUS ===');
     makeBill({ nama: 'Upcoming', tanggalJatuhTempo: 25 }),
   ];
   
-  const groups = getBillsByStatus(bills, new Date(2026, 7, 1));
+  const now = new Date();
+  const groups = getBillsByStatus(bills, new Date(now.getFullYear(), now.getMonth(), 1));
   assert(Array.isArray(groups.paid), 'Paid group is array');
   assert(Array.isArray(groups.inactive), 'Inactive group is array');
   assert(Array.isArray(groups.upcoming), 'Upcoming group is array');

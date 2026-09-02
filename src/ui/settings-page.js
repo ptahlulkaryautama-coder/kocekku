@@ -216,7 +216,7 @@ export function renderSettingsPage() {
       currencySelect.addEventListener('change', (e) => {
         const newCurrency = e.target.value;
         appState.set('currency', newCurrency);
-        localStorage.setItem('kocekku-currency', newCurrency);
+        localStorage.setItem('sakku-currency', newCurrency);
         appState.showToast({ type: 'success', message: t('settings.currencyChanged', { currency: newCurrency }) });
         // Re-render to update preview
         const parent = el.parentNode;
