@@ -264,15 +264,30 @@ export function showSmartAddModal(app, initialType) {
           </button>
         </div>
 
-        <!-- NLP Input -->
+        <!-- NLP Input + OCR -->
         <div class="bg-gray-50 dark:bg-gray-800 rounded-xl p-3 border border-gray-200 dark:border-gray-700">
           <div class="flex items-center gap-2">
             <i data-lucide="sparkles" class="w-4 h-4 text-primary-500 flex-shrink-0"></i>
             <input id="sa-nlp" type="text" placeholder='Try: "coffee 5 dollars from cash"'
               class="flex-1 bg-transparent text-sm text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 focus:outline-none"
               autocomplete="off">
+            <button id="sa-scan" type="button" title="Scan receipt"
+              class="p-1.5 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors flex-shrink-0">
+              <i data-lucide="camera" class="w-4 h-4 text-gray-500 dark:text-gray-400"></i>
+            </button>
+            <input type="file" id="sa-scan-file" accept="image/*" capture="environment" class="hidden">
           </div>
           <p id="sa-nlp-hint" class="text-[11px] text-gray-400 dark:text-gray-500 mt-1 hidden"></p>
+          <!-- OCR progress -->
+          <div id="sa-ocr-progress" class="hidden mt-2">
+            <div class="flex items-center gap-2 text-xs text-gray-500 dark:text-gray-400">
+              <i data-lucide="scan" class="w-3 h-3 animate-pulse"></i>
+              <span id="sa-ocr-status">Scanning receipt...</span>
+            </div>
+            <div class="mt-1 h-1.5 bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden">
+              <div id="sa-ocr-bar" class="h-full bg-primary-500 rounded-full transition-all" style="width:0%"></div>
+            </div>
+          </div>
         </div>
 
         <!-- Type Tabs -->
@@ -602,6 +617,97 @@ export function showSmartAddModal(app, initialType) {
           app.renderContent();
         }
       });
+
+      // OCR Scan button
+      const scanBtn = modal.querySelector('#sa-scan');
+      const scanFile = modal.querySelector('#sa-scan-file');
+      const ocrProgress = modal.querySelector('#sa-ocr-progress');
+      const ocrStatus = modal.querySelector('#sa-ocr-status');
+      const ocrBar = modal.querySelector('#sa-ocr-bar');
+
+      if (scanBtn && scanFile) {
+        scanBtn.addEventListener('click', () => scanFile.click());
+
+        scanFile.addEventListener('change', async (e) => {
+          const file = e.target.files[0];
+          if (!file) return;
+
+          try {
+            // Show progress
+            if (ocrProgress) ocrProgress.classList.remove('hidden');
+            if (ocrStatus) ocrStatus.textContent = 'Loading OCR engine...';
+            if (ocrBar) ocrBar.style.width = '10%';
+
+            // Dynamically import OCR module
+            const { performOCR, parseReceipt } = await import('../ocr/receipt-parser.js');
+
+            if (ocrStatus) ocrStatus.textContent = 'Scanning receipt...';
+            if (ocrBar) ocrBar.style.width = '30%';
+
+            // Perform OCR
+            const ocrText = await performOCR(file, (progress) => {
+              if (ocrBar) ocrBar.style.width = `${30 + progress * 0.6}%`;
+              if (ocrStatus) ocrStatus.textContent = `Scanning... ${progress}%`;
+            });
+
+            if (ocrBar) ocrBar.style.width = '95%';
+            if (ocrStatus) ocrStatus.textContent = 'Parsing receipt...';
+
+            // Parse receipt
+            const parsed = parseReceipt(ocrText, currency);
+
+            if (ocrBar) ocrBar.style.width = '100%';
+
+            if (parsed && parsed.total > 0) {
+              // Auto-fill form
+              const amountInput = modal.querySelector('#sa-amount');
+              if (amountInput) amountInput.value = parsed.total;
+
+              const descInput = modal.querySelector('#sa-desc');
+              if (descInput) descInput.value = parsed.store || parsed.description || '';
+
+              // Set date
+              if (parsed.date) {
+                const dateInput = modal.querySelector('#sa-date');
+                if (dateInput) dateInput.value = parsed.date;
+              }
+
+              // Auto-detect category
+              if (parsed.category) {
+                selectedCategory = parsed.category;
+                // Highlight category button
+                const cats = currentType === 'masuk' ? INCOME_CATEGORIES : EXPENSE_CATEGORIES;
+                modal.querySelectorAll('.sa-cat').forEach(btn => {
+                  btn.classList.remove('ring-2');
+                  if (btn.dataset.cat === parsed.category) {
+                    const cm = COLOR_MAP[cats.find(c => c.key === parsed.category)?.color] || COLOR_MAP.gray;
+                    btn.classList.add('ring-2', cm.ring);
+                  }
+                });
+              }
+
+              // Show hint
+              if (nlpHint) {
+                nlpHint.classList.remove('hidden');
+                nlpHint.textContent = `📸 ${parsed.store ? parsed.store + ' · ' : ''}${fc(parsed.total)}${parsed.category ? ' · ' + parsed.category : ''}`;
+              }
+
+              appState.showToast({ type: 'success', message: `Receipt scanned: ${parsed.store || 'Unknown'} — ${fc(parsed.total)}` });
+            } else {
+              // Put raw OCR text in NLP input for manual parsing
+              if (nlpInput) nlpInput.value = ocrText.split('\n').slice(0, 3).join(' ');
+              appState.showToast({ type: 'warning', message: 'Could not extract amount. Text placed in input for manual editing.' });
+            }
+          } catch (err) {
+            console.error('OCR failed:', err);
+            appState.showToast({ type: 'error', message: 'OCR failed. Please try again or enter manually.' });
+          } finally {
+            if (ocrProgress) ocrProgress.classList.add('hidden');
+            if (ocrBar) ocrBar.style.width = '0%';
+            scanFile.value = '';
+          }
+        });
+      }
 
       // Focus NLP input
       setTimeout(() => nlpInput?.focus(), 100);
