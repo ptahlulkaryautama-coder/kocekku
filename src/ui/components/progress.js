@@ -1,6 +1,6 @@
 /**
  * Progress Components
- * Reusable progress bar primitives for Kocekku 2.0
+ * Reusable progress bar primitives for Sakku
  */
 
 /**

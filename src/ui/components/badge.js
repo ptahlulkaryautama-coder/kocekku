@@ -1,6 +1,6 @@
 /**
  * Badge and Avatar Components
- * Reusable display primitives for Kocekku 2.0
+ * Reusable display primitives for Sakku
  */
 
 /**

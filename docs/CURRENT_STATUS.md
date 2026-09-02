@@ -1,7 +1,7 @@
-# Kocekku 2.0 — Project Status
+# Sakku — Project Status
 
-> **Last Updated:** August 31, 2026
-> **Current Phase:** Phase 14 + Transfers + PWA Complete
+> **Last Updated:** September 2, 2026
+> **Current Phase:** Phase 15 — Sakku Branding Complete
 > **Status:** FUNCTIONAL — Deployed on Vercel
 
 ---
@@ -37,6 +37,7 @@
 | 13 | Responsive & Mobile Polish | ✅ Complete | — |
 | 14 | Smart Add / Transaction Entry | ✅ Complete | — |
 | — | Exchange Rate Conversion | ✅ Complete | — |
+| 15 | Sakku Branding & Dark Assets | ✅ Complete | — |
 
 **Total tests:** 986+
 **Build:** Clean (no errors, no warnings)
@@ -154,6 +155,17 @@
 - Validation
 - Balance adjustment on save
 - Mobile bottom sheet
+
+### ✅ Sakku Branding (Phase 15)
+- App renamed from Kocekku to Sakku
+- Brand assets: wordmark, full logo, icon PNGs
+- Dark-mode wordmark with brand colors (#F08A62 coral, #6DD4D4 teal)
+- Dark-mode app icons (192px, 512px)
+- Theme-aware wordmark swap on dark/light toggle
+- Brand guidelines documented in docs/SAKKU_BRAND_GUIDELINES.md
+- Download filenames use "sakku-" prefix
+- Service worker cache renamed to sakku-v1
+- localStorage keys preserved for backward compatibility
 
 ### ✅ Exchange Rate Conversion
 - Live rates from frankfurter.app (free, no API key)
@@ -309,6 +321,7 @@ src/
 - [x] PWA offline mode (service worker registered, caching active)
 - [x] Error boundaries (global + page-level)
 - [x] Empty states (all pages handle zero data)
+- [x] App icon / favicon redesign ✅
 - [ ] NLP-style Smart Add parser ("coffee 5 dollars from cash")
 - [ ] Bank integration
 - [ ] AI financial advisor
@@ -317,7 +330,6 @@ src/
 - [ ] Tax system
 - [ ] Advanced reports / custom date ranges
 - [ ] Multi-currency per-account display
-- [ ] App icon / favicon redesign (still default)
 
 ---
 
@@ -343,7 +355,7 @@ src/
 2. ~~Transfers page~~ ✅
 3. ~~PWA offline support~~ ✅
 4. ~~Production polish — error boundaries, empty states~~ ✅
-5. **Branding** — rename to "Sakku" when ready (apply to title, manifest, meta, about)
+5. ~~Branding~~ ✅ Sakku identity applied across app, manifest, icons, wordmark
 6. **Performance** — lazy loading, chart optimization, virtual scrolling for large datasets
 7. **Accessibility audit** — keyboard navigation, screen reader, ARIA labels
 8. **Visual QA** — pixel-level verification at all breakpoints
@@ -351,15 +363,16 @@ src/
 
 ---
 
-## Branding (Future)
+## Branding
 
-| Item | Current | Future |
-|------|---------|--------|
-| App Name | Kocekku | Sakku (when ready) |
-| Tagline | "Your Money. One Clear Picture." | TBD |
-| Portfolio | — | ahlul-firdaus.com |
-| Domain | kocek-2-0.vercel.app | TBD |
+| Item | Value |
+|------|-------|
+| App Name | Sakku |
+| Tagline | "Money Management, Simplified" |
+| Portfolio | ahlul-firdaus.com |
+| Domain | kocek-2-0.vercel.app |
+| Brand Guidelines | docs/SAKKU_BRAND_GUIDELINES.md |
 
 ---
 
-*This document is the single source of truth for Kocekku 2.0 project status.*
+*This document is the single source of truth for Sakku project status.*

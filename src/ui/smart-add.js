@@ -56,7 +56,7 @@ const COLOR_MAP = {
 
 /**
  * Show the Smart Add modal
- * @param {Object} app - the KocekkuApp instance
+ * @param {Object} app - the SakkuApp instance
  */
 export function showSmartAddModal(app, initialType) {
   const accounts  = appState.get('accounts') || [];

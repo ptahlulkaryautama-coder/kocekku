@@ -1,4 +1,4 @@
-const CACHE_NAME = 'kocekku-v3';
+const CACHE_NAME = 'sakku-v1';
 const PRECACHE = ['./index.html', './manifest.json', './icon-192.png', './icon-512.png'];
 
 // Install: pre-cache shell assets

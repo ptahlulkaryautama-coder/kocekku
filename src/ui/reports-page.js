@@ -261,7 +261,7 @@ export function renderReportsPage(year, month) {
       csvBtn.addEventListener('click', () => {
         const csv = generateCSV(periodTxns, accounts);
         const monthName = new Date(year, month).toLocaleString('en', { month: 'long', year: 'numeric' });
-        downloadFile(csv, `kocekku-report-${monthName.replace(' ', '-')}.csv`, 'text/csv');
+        downloadFile(csv, `sakku-report-${monthName.replace(' ', '-')}.csv`, 'text/csv');
         appState.showToast({ type: 'success', message: t('reports.csvSuccess') });
       });
     }
@@ -281,7 +281,7 @@ export function renderReportsPage(year, month) {
           }
         };
         const json = JSON.stringify(data, null, 2);
-        downloadFile(json, `kocekku-backup-${new Date().toISOString().split('T')[0]}.json`, 'application/json');
+        downloadFile(json, `sakku-backup-${new Date().toISOString().split('T')[0]}.json`, 'application/json');
         appState.showToast({ type: 'success', message: t('reports.jsonSuccess') });
       });
     }

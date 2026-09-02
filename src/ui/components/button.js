@@ -1,6 +1,6 @@
 /**
  * Button Components
- * Reusable button primitives for Kocekku 2.0
+ * Reusable button primitives for Sakku
  */
 
 /**

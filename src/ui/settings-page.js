@@ -271,7 +271,7 @@ export function renderSettingsPage() {
       backupBtn.addEventListener('click', () => {
         const data = exportData();
         const json = JSON.stringify(data, null, 2);
-        downloadFile(json, `kocekku-backup-${new Date().toISOString().split('T')[0]}.json`, 'application/json');
+        downloadFile(json, `sakku-backup-${new Date().toISOString().split('T')[0]}.json`, 'application/json');
         appState.showToast({ type: 'success', message: t('settings.backupExported') });
       });
     }
@@ -353,7 +353,7 @@ export function renderSettingsPage() {
         });
 
         const csv = [header, ...rows].join('\n');
-        downloadFile(csv, `kocekku-transactions-${new Date().toISOString().split('T')[0]}.csv`, 'text/csv');
+        downloadFile(csv, `sakku-transactions-${new Date().toISOString().split('T')[0]}.csv`, 'text/csv');
         appState.showToast({ type: 'success', message: t('reports.csvSuccess') });
       });
     }

@@ -1,6 +1,6 @@
 /**
  * State Components
- * Empty, Loading, and Error state primitives for Kocekku 2.0
+ * Empty, Loading, and Error state primitives for Sakku
  */
 
 /**

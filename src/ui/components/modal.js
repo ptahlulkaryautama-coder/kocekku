@@ -1,6 +1,6 @@
 /**
  * Modal Components
- * Reusable modal primitives for Kocekku 2.0
+ * Reusable modal primitives for Sakku
  */
 
 /**

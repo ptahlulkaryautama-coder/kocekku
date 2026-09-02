@@ -1,6 +1,6 @@
 /**
  * Input Components
- * Reusable input primitives for Kocekku 2.0
+ * Reusable input primitives for Sakku
  */
 
 /**

@@ -1,6 +1,6 @@
 /**
  * UI Components Index
- * Exports all reusable UI components for Kocekku 2.0
+ * Exports all reusable UI components for Sakku
  */
 
 export { Button, IconButton } from './button.js';

@@ -1,6 +1,6 @@
 /**
  * Card Components
- * Reusable card primitives for Kocekku 2.0
+ * Reusable card primitives for Sakku
  */
 
 /**

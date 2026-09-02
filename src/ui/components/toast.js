@@ -1,6 +1,6 @@
 /**
  * Toast Component
- * Toast notification system for Kocekku 2.0
+ * Toast notification system for Sakku
  */
 
 /**

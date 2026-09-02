@@ -106,7 +106,7 @@ function card(extraClass = '') {
 /*  Application Class                                                 */
 /* ------------------------------------------------------------------ */
 
-class KocekkuApp {
+class SakkuApp {
   constructor() {
     this.sidebar = null;
     this.mainContent = null;
@@ -3846,9 +3846,9 @@ window.addEventListener('unhandledrejection', (e) => {
 /* ---- Boot ------------------------------------------------------- */
 
 document.addEventListener('DOMContentLoaded', () => {
-  const app = new KocekkuApp(); // class name kept for backward compat
+  const app = new SakkuApp();
   window.__app = app;
   app.init();
 });
 
-export default KocekkuApp;
+export default SakkuApp;

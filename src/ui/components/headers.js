@@ -1,6 +1,6 @@
 /**
  * Header Components
- * PageHeader and SectionHeader primitives for Kocekku 2.0
+ * PageHeader and SectionHeader primitives for Sakku
  */
 
 /**

@@ -1,6 +1,6 @@
 /**
  * Data Table Components
- * Reusable table primitives for Kocekku 2.0
+ * Reusable table primitives for Sakku
  */
 
 /**

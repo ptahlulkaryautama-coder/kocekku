@@ -1,7 +1,7 @@
 {
   "name": "kocekku",
   "version": "2.0.0",
-  "description": "Kocekku 2.0 — Your Money. One Clear Picture.",
+  "description": "Sakku — Money Management, Simplified",
   "private": true,
   "type": "module",
   "scripts": {
