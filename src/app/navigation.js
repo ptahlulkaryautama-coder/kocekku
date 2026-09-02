@@ -20,7 +20,8 @@ export const NAV_ITEMS = [
     children: [
       { id: 'accounts', label: 'nav.accounts', icon: 'credit-card' },
       { id: 'transactions', label: 'nav.transactions', icon: 'list' },
-      { id: 'transfers', label: 'nav.transfers', icon: 'arrow-left-right' }
+      { id: 'transfers', label: 'nav.transfers', icon: 'arrow-left-right' },
+      { id: 'debts', label: 'nav.debts', icon: 'hand-coins' }
     ]
   },
   {

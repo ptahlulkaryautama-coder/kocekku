@@ -61,6 +61,7 @@ import {
 import './ui/design-tokens.css';
 import { renderReportsPage } from './ui/reports-page.js';
 import { renderSettingsPage } from './ui/settings-page.js';
+import { renderDebtsPage } from './ui/debts-page.js';
 import { showSmartAddModal } from './ui/smart-add.js';
 
 import {
@@ -404,6 +405,7 @@ class SakkuApp {
       case 'family':     return this.renderFamily();
       case 'reports':    return this.renderReports();
       case 'settings':   return this.renderSettings();
+      case 'debts':      return renderDebtsPage();
       default:           return this.renderPlaceholder(tabId);
     }
   }
