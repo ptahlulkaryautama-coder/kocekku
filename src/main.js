@@ -9,7 +9,7 @@ import { appState } from './app/state.js';
 import { initializeApp, saveData } from './app/bootstrap.js';
 import { NAV_ITEMS, MOBILE_NAV_ITEMS, isNavActive, shouldExpandNavItem } from './app/navigation.js';
 import { t } from './i18n/index.js';
-import { formatCurrency, detectDominantCurrency } from './formatting/currency.js';
+import { formatCurrency, detectDominantCurrency, CURRENCIES } from './formatting/currency.js';
 import { initExchangeRates } from './data/exchange-rates.js';
 import { formatDate, formatMonth } from './formatting/dates.js';
 import { toast } from './ui/components/toast.js';
@@ -1630,9 +1630,17 @@ class SakkuApp {
           </select>
         </div>
         <div>
-          <label class="block text-xs font-medium text-gray-500 dark:text-gray-400 mb-1">Balance (${currency})</label>
+          <label class="block text-xs font-medium text-gray-500 dark:text-gray-400 mb-1">Balance</label>
           <input id="acc-balance" type="number" step="any" value="${isEdit ? existingAcc.saldo : '0'}" placeholder="0" class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg text-sm bg-white dark:bg-gray-900 text-gray-900 dark:text-white focus:ring-2 focus:ring-primary-500 focus:border-primary-500 outline-none">
           <p class="text-[11px] text-gray-400 mt-1">Use negative for credit cards and loans.</p>
+        </div>
+        <div>
+          <label class="block text-xs font-medium text-gray-500 dark:text-gray-400 mb-1">Currency</label>
+          <select id="acc-currency" class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg text-sm bg-white dark:bg-gray-900 text-gray-900 dark:text-white focus:ring-2 focus:ring-primary-500 focus:border-primary-500 outline-none">
+            ${Object.entries(CURRENCIES).map(([code, c]) =>
+              `<option value="${code}" ${(isEdit ? existingAcc.mataUang : currency) === code ? 'selected' : ''}>${c.symbol} ${c.name} (${code})</option>`
+            ).join('')}
+          </select>
         </div>
         <div id="acc-error" class="text-sm text-rose-600 hidden"></div>
       </div>
@@ -1655,6 +1663,7 @@ class SakkuApp {
       const name = modal.querySelector('#acc-name').value.trim();
       const type = modal.querySelector('#acc-type').value;
       const balance = parseFloat(modal.querySelector('#acc-balance').value) || 0;
+      const accCurrency = modal.querySelector('#acc-currency').value;
       const errorEl = modal.querySelector('#acc-error');
 
       const testAcc = { nama: name, jenis: type, saldo: balance };
@@ -1667,9 +1676,9 @@ class SakkuApp {
 
       let accounts = [...(appState.get('accounts') || [])];
       if (isEdit) {
-        accounts = accounts.map(a => a.id === existingAcc.id ? { ...a, nama: name, jenis: type, saldo: balance } : a);
+        accounts = accounts.map(a => a.id === existingAcc.id ? { ...a, nama: name, jenis: type, saldo: balance, mataUang: accCurrency } : a);
       } else {
-        accounts.push(createAccount({ nama: name, jenis: type, saldo: balance, mataUang: currency }));
+        accounts.push(createAccount({ nama: name, jenis: type, saldo: balance, mataUang: accCurrency }));
       }
       appState.set('accounts', accounts);
       saveData();
