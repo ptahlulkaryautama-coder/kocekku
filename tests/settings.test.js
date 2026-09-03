@@ -105,29 +105,29 @@ describe('Currency System', () => {
    ============================================ */
 
 describe('Language / i18n', () => {
-  it('should return en as default language', () => {
+  it('should return id as default language', () => {
     const lang = getLanguage();
-    assert.equal(lang, 'en');
+    assert.equal(lang, 'id');
   });
 
   it('should translate basic keys', () => {
     const homeLabel = t('nav.home');
-    assert.equal(homeLabel, 'Home');
+    assert.equal(homeLabel, 'Beranda');
   });
 
   it('should translate dashboard keys', () => {
     const title = t('dashboard.netWorth');
-    assert.equal(title, 'Net Worth');
+    assert.equal(title, 'Kekayaan Bersih');
   });
 
   it('should translate settings keys', () => {
     const title = t('settings.title');
-    assert.equal(title, 'Settings');
+    assert.equal(title, 'Pengaturan & Preferensi');
   });
 
   it('should translate reports keys', () => {
     const title = t('reports.title');
-    assert.equal(title, 'Reports');
+    assert.equal(title, 'Laporan Finansial');
   });
 
   it('should return path for missing keys', () => {
@@ -143,27 +143,27 @@ describe('Language / i18n', () => {
 
   it('should translate family keys', () => {
     const title = t('family.title');
-    assert.equal(title, 'Family');
+    assert.equal(title, 'Keuangan Keluarga');
   });
 
   it('should translate budget keys', () => {
     const title = t('budgets.title');
-    assert.equal(title, 'Budgets');
+    assert.equal(title, 'Pos Anggaran Bulanan');
   });
 
   it('should translate goal keys', () => {
     const title = t('goals.title');
-    assert.equal(title, 'Financial Goals');
+    assert.equal(title, 'Target Tabungan Impian');
   });
 
   it('should translate bill keys', () => {
     const title = t('bills.title');
-    assert.equal(title, 'Bills & Subscriptions');
+    assert.equal(title, 'Tagihan & Langganan');
   });
 
   it('should translate health keys', () => {
     const title = t('health.title');
-    assert.equal(title, 'Financial Health');
+    assert.equal(title, 'Kesehatan Finansial');
   });
 });
 
@@ -339,7 +339,7 @@ describe('Edge Cases', () => {
 
   it('i18n should handle deep nested key', () => {
     const result = t('health.status.safe');
-    assert.equal(result, 'SAFE');
+    assert.equal(result, 'AMAN');
   });
 
   it('i18n should handle array-like keys gracefully', () => {
